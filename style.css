@@ -15,3 +15,18 @@ nav a {
 body {
   background-color: pink;
 }
+.product {
+  margin-bottom: 30px;
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+.product img {
+  max-width: 100%;
+  border-radius: 8px;
+}
+.product p {
+  font-size: 16px;
+  color: #333;
+}
