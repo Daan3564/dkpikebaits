@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <title>Betalen</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Bestelling afronden</h1>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="producten.html">Producten</a>
+    <a href="winkelmand.html">Winkelmand</a>
+    <a href="betaal.html">Betalen</a>
+  </nav>
+
+  <form>
+    <label>Naam:</label><br>
+    <input type="text" name="naam" required><br><br>
+
+    <label>Adres:</label><br>
+    <input type="text" name="adres" required><br><br>
+
+    <label>Email:</label><br>
+    <input type="email" name="email" required><br><br>
+
+    <label>Betaalmethode:</label><br>
+    <select name="methode">
+      <option>iDEAL</option>
+      <option>PayPal</option>
+      <option>Creditcard</option>
+    </select><br><br>
+
+    <button type="submit">Bestelling plaatsen</button>
+  </form>
+
+  <footer>
+    <p>&copy; 2025 DK Pike Baits</p>
+  </footer>
+</body>
+</html>
