@@ -1,0 +1,14 @@
+body {
+  background-color: #f9f9f9;
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+img {
+  max-width: 300px;
+  border-radius: 8px;
+}
+nav a {
+  margin-right: 15px;
+  text-decoration: none;
+  color: #0077cc;
+}
