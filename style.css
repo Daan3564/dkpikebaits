@@ -19,7 +19,7 @@ p {
 }
 
 nav {
-  margin-top: 30px;
+  margin-bottom: 30px;
 }
 nav a {
   margin-right: 20px;
@@ -31,7 +31,7 @@ nav a:hover {
   color: #005999;
 }
 
-.product {
+.product, .mand-item {
   background-color: #fff;
   padding: 20px;
   border-radius: 10px;
@@ -43,9 +43,20 @@ nav a:hover {
   border-radius: 8px;
   margin-bottom: 10px;
 }
-.product p {
-  font-size: 17px;
-  color: #444;
+.product h2, .mand-item h2 {
+  margin-top: 0;
+  color: #004d66;
+}
+button {
+  background-color: #0077cc;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+button:hover {
+  background-color: #005999;
 }
 
 footer {
@@ -54,5 +65,3 @@ footer {
   color: #777;
   margin-top: 50px;
 }
-
-
