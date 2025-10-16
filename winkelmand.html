@@ -5,47 +5,14 @@
   <title>Winkelmand – DK Pike Baits</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body {
-      font-family: 'Roboto', sans-serif;
-      background-color: #f5f5f5;
-      padding: 30px;
-      max-width: 800px;
-      margin: auto;
-    }
-    h1 {
-      color: #004d66;
-      text-align: center;
-    }
-    nav {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-    nav a {
-      margin: 0 15px;
-      text-decoration: none;
-      color: #0077cc;
-      font-weight: bold;
-    }
-    ul {
-      list-style: none;
-      padding: 0;
-    }
-    li {
-      background-color: #fff;
-      padding: 15px;
-      margin-bottom: 10px;
-      border-radius: 8px;
-      box-shadow: 0 0 5px rgba(0,0,0,0.1);
-    }
-    button {
-      background-color: #cc0000;
-      color: white;
-      border: none;
-      padding: 5px 10px;
-      border-radius: 5px;
-      cursor: pointer;
-      float: right;
-    }
+    body { font-family: 'Roboto', sans-serif; background-color: #f5f5f5; padding: 30px; max-width: 800px; margin: auto; }
+    h1 { color: #004d66; text-align: center; }
+    nav { text-align: center; margin-bottom: 30px; }
+    nav a { margin: 0 15px; text-decoration: none; color: #0077cc; font-weight: bold; }
+    ul { list-style: none; padding: 0; }
+    li { background-color: #fff; padding: 15px; margin-bottom: 10px; border-radius: 8px; box-shadow: 0 0 5px rgba(0,0,0,0.1); }
+    button { background-color: #cc0000; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; float: right; }
+    #totaal { font-weight: bold; margin-top: 20px; text-align: center; }
   </style>
 </head>
 <body>
@@ -56,17 +23,37 @@
     <a href="betaal.html">Betalen</a>
   </nav>
   <ul id="mand"></ul>
+  <div id="totaal"></div>
   <script>
     let mand = JSON.parse(localStorage.getItem("winkelmand")) || [];
     const lijst = document.getElementById("mand");
+    const totaalDiv = document.getElementById("totaal");
 
     function toonMand() {
       lijst.innerHTML = "";
+      let totaal = 0;
       if (mand.length === 0) {
         lijst.innerHTML = "<li>Je winkelmand is leeg.</li>";
+        totaalDiv.innerHTML = "";
         return;
       }
       mand.forEach((item, index) => {
+        totaal += item.prijs * item.aantal;
         const li = document.createElement("li");
         li.innerHTML = `${item.naam} – €${item.prijs.toFixed(2)} (${item.aantal}x)
-          <button onclick="verwijder(${index})">Ver
+          <button onclick="verwijder(${index})">Verwijder</button>`;
+        lijst.appendChild(li);
+      });
+      totaalDiv.innerHTML = `Totaal: €${totaal.toFixed(2)}`;
+    }
+
+    function verwijder(index) {
+      mand.splice(index, 1);
+      localStorage.setItem("winkelmand", JSON.stringify(mand));
+      toonMand();
+    }
+
+    toonMand();
+  </script>
+</body>
+</html>
