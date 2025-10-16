@@ -19,10 +19,22 @@
 
   <main>
     <form id="bestelform" action="https://formspree.io/f/xnngwjrb" method="POST">
+      <h2>Jouw gegevens</h2>
       <input type="text" name="voornaam" placeholder="Voornaam" required>
       <input type="text" name="achternaam" placeholder="Achternaam" required>
       <input type="email" name="email" placeholder="E-mailadres" required>
 
+      <h2>Betaalmethode</h2>
+      <select name="bank" required>
+        <option value="">Kies je bank</option>
+        <option value="ING">ING</option>
+        <option value="Rabobank">Rabobank</option>
+        <option value="ABN AMRO">ABN AMRO</option>
+        <option value="SNS">SNS</option>
+        <option value="Bunq">Bunq</option>
+      </select>
+
+      <h2>Bestelling</h2>
       <textarea name="bestelling" id="bestelling" rows="6" readonly></textarea>
       <h3 id="totaal">Totaal: €0.00</h3>
 
@@ -62,5 +74,4 @@
   </script>
 </body>
 </html>
-
 
