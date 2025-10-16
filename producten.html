@@ -60,10 +60,6 @@
       border-radius: 5px;
       cursor: pointer;
     }
-    .product-card button:disabled {
-      background-color: #ccc;
-      cursor: not-allowed;
-    }
   </style>
 </head>
 <body>
@@ -75,33 +71,36 @@
   </nav>
   <div id="product-grid" class="product-grid"></div>
   <script>
-    const producten = JSON.parse(localStorage.getItem("beheerProducten")) || [];
-    const winkelmand = JSON.parse(localStorage.getItem("winkelmand")) || [];
-    const grid = document.getElementById("product-grid");
+    fetch('producten.json')
+      .then(response => response.json())
+      .then(producten => {
+        const grid = document.getElementById("product-grid");
+        producten.forEach(p => {
+          const kaart = document.createElement("div");
+          kaart.className = "product-card";
+          kaart.innerHTML = `
+            <img src="${p.afbeelding}" alt="${p.naam}">
+            <h2>${p.naam}</h2>
+            <p>Prijs: €${p.prijs.toFixed(2)}</p>
+            <p>Voorraad: ${p.voorraad > 0 ? p.voorraad : "Uitverkocht"}</p>
+            <button onclick='toevoegen(${JSON.stringify(p)})'>Toevoegen aan winkelmand</button>
+          `;
+          grid.appendChild(kaart);
+        });
+      });
 
-    function voegToe(product) {
-      const bestaand = winkelmand.find(p => p.naam === product.naam);
+    function toevoegen(product) {
+      const mand = JSON.parse(localStorage.getItem("winkelmand")) || [];
+      const bestaand = mand.find(p => p.naam === product.naam);
       if (bestaand) {
         bestaand.aantal += 1;
       } else {
-        winkelmand.push({ ...product, aantal: 1 });
+        mand.push({ ...product, aantal: 1 });
       }
-      localStorage.setItem("winkelmand", JSON.stringify(winkelmand));
+      localStorage.setItem("winkelmand", JSON.stringify(mand));
       alert(`${product.naam} toegevoegd aan winkelmand`);
     }
-
-    producten.forEach(p => {
-      const kaart = document.createElement("div");
-      kaart.className = "product-card";
-      kaart.innerHTML = `
-        <img src="${p.afbeelding}" alt="${p.naam}">
-        <h2>${p.naam}</h2>
-        <p>Prijs: €${p.prijs.toFixed(2)}</p>
-        <p>Voorraad: ${p.voorraad > 0 ? p.voorraad : "Uitverkocht"}</p>
-        <button ${p.voorraad === 0 ? "disabled" : ""} onclick='voegToe(${JSON.stringify(p)})'>Toevoegen aan winkelmand</button>
-      `;
-      grid.appendChild(kaart);
-    });
   </script>
 </body>
 </html>
+
