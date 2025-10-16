@@ -2,17 +2,12 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8">
-  <title>Producten – DK Pike Baits</title>
+  <title>Onze producten</title>
   <link rel="stylesheet" href="producten.css">
 </head>
 <body>
-  <header>
-    <h1>Onze producten</h1>
-  </header>
-
-  <main>
-    <div id="product-container"></div>
-  </main>
+  <h1>Onze producten</h1>
+  <div id="product-container"></div>
 
   <script>
     const opgeslagen = localStorage.getItem("producten");
@@ -52,12 +47,13 @@
       if (!gekozen || gekozen.voorraad <= 0) return alert("Niet op voorraad!");
 
       const mand = JSON.parse(localStorage.getItem("winkelmand")) || [];
-      mand.push({ naam: gekozen.naam, prijs: gekozen.prijs });
+      mand.push({ id: gekozen.id, naam: gekozen.naam, prijs: gekozen.prijs });
       localStorage.setItem("winkelmand", JSON.stringify(mand));
       alert("Toegevoegd aan winkelmand!");
     }
   </script>
 </body>
 </html>
+
 
 
