@@ -2,7 +2,7 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8">
-  <title>Winkelmand</title>
+  <title>Winkelmand – DK Pike Baits</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,18 +12,28 @@
     <a href="index.html">Home</a>
     <a href="producten.html">Producten</a>
     <a href="winkelmand.html">Winkelmand</a>
-    <a href="betaal.html">Betalen</a>
   </nav>
 
-  <div class="mand-item">
-    <h2>Rode spinner met rozetstaart</h2>
-    <p>Aantal: 1</p>
-    <p>Totaal: €12,95</p>
-    <button>Verwijder</button>
-  </div>
+  <ul id="mand-items"></ul>
+
+  <script>
+    const mand = JSON.parse(localStorage.getItem("winkelmand")) || {};
+    const lijst = document.getElementById("mand-items");
+
+    if (Object.keys(mand).length === 0) {
+      lijst.innerHTML = "<li>Je winkelmand is leeg.</li>";
+    } else {
+      for (const naam in mand) {
+        const li = document.createElement("li");
+        li.textContent = `${naam} × ${mand[naam]}`;
+        lijst.appendChild(li);
+      }
+    }
+  </script>
 
   <footer>
     <p>&copy; 2025 DK Pike Baits</p>
   </footer>
 </body>
 </html>
+
