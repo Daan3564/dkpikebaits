@@ -60,19 +60,19 @@
       margin: 5px 0;
     }
 
-    .product-card a {
-      display: inline-block;
+    .product-card button {
       margin-top: 10px;
       background-color: #0077cc;
       color: white;
       padding: 10px 15px;
+      border: none;
       border-radius: 5px;
-      text-decoration: none;
+      cursor: pointer;
     }
 
-    .product-card a.disabled {
+    .product-card button:disabled {
       background-color: #ccc;
-      pointer-events: none;
+      cursor: not-allowed;
     }
   </style>
 </head>
@@ -88,7 +88,19 @@
 
   <script>
     const producten = JSON.parse(localStorage.getItem("beheerProducten")) || [];
+    const winkelmand = JSON.parse(localStorage.getItem("winkelmand")) || [];
     const grid = document.getElementById("product-grid");
+
+    function voegToe(product) {
+      const bestaand = winkelmand.find(p => p.naam === product.naam);
+      if (bestaand) {
+        bestaand.aantal += 1;
+      } else {
+        winkelmand.push({ ...product, aantal: 1 });
+      }
+      localStorage.setItem("winkelmand", JSON.stringify(winkelmand));
+      alert(`${product.naam} toegevoegd aan winkelmand`);
+    }
 
     if (producten.length === 0) {
       grid.innerHTML = "<p>Er zijn nog geen producten toegevoegd.</p>";
@@ -101,7 +113,7 @@
           <h2>${p.naam}</h2>
           <p>Prijs: €${p.prijs.toFixed(2)}</p>
           <p>Voorraad: ${p.voorraad > 0 ? p.voorraad : "Uitverkocht"}</p>
-          <a href="${p.pagina}" class="${p.voorraad === 0 ? 'disabled' : ''}">Bekijk product</a>
+          <button ${p.voorraad === 0 ? "disabled" : ""} onclick='voegToe(${JSON.stringify(p)})'>Toevoegen aan winkelmand</button>
         `;
         grid.appendChild(kaart);
       });
@@ -109,4 +121,3 @@
   </script>
 </body>
 </html>
-
