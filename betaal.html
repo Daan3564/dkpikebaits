@@ -22,7 +22,10 @@
   <main>
     <form action="https://formspree.io/f/xnngwjrb" method="POST">
       <h2>Jouw gegevens</h2>
-      <input type="text" name="naam" placeholder="Naam" required>
+      <div class="naam-velden">
+        <input type="text" name="voornaam" placeholder="Voornaam" required>
+        <input type="text" name="achternaam" placeholder="Achternaam" required>
+      </div>
       <input type="email" name="email" placeholder="E-mailadres" required>
       <input type="text" name="adres" placeholder="Adres" required>
       <input type="text" name="postcode" placeholder="Postcode" required>
@@ -66,6 +69,5 @@
   </script>
 </body>
 </html>
-
 
 
