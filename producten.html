@@ -2,60 +2,58 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Producten – DK Pike Baits</title>
   <link rel="stylesheet" href="producten.css">
 </head>
 <body>
   <header>
-    <img src="dk-logo.png" alt="DK Pike Baits logo" class="logo">
-    <h1>Producten</h1>
+    <h1>Onze producten</h1>
   </header>
 
-  <nav class="menu">
-    <a href="index.html">Home</a>
-    <a href="producten.html">Producten</a>
-    <a href="winkelmand.html">Winkelmandje</a>
-    <a href="betaal.html">Betalen</a>
-  </nav>
-
   <main>
-    <div id="product-grid" class="grid"></div>
+    <div id="product-container"></div>
   </main>
 
-  <footer>
-    &copy; 2025 DK Pike Baits
-  </footer>
-
   <script>
-    function voegToeAanMand(product) {
-      let mand = JSON.parse(localStorage.getItem("winkelmand")) || [];
-      mand.push(product);
-      localStorage.setItem("winkelmand", JSON.stringify(mand));
-      alert(`${product.naam} toegevoegd aan winkelmand`);
+    const opgeslagen = localStorage.getItem("producten");
+
+    if (opgeslagen) {
+      toonProducten(JSON.parse(opgeslagen));
+    } else {
+      fetch("producten.json")
+        .then(res => res.json())
+        .then(data => toonProducten(data));
     }
 
-    fetch('producten.json')
-      .then(res => res.json())
-      .then(producten => {
-        const grid = document.getElementById("product-grid");
-        producten.forEach(p => {
-          const kaart = document.createElement("div");
-          kaart.className = "product-kaart";
-          kaart.innerHTML = `
-            <img src="${p.afbeelding}" alt="${p.naam}" onerror="this.src='placeholder.png'">
-            <h2>${p.naam}</h2>
-            <p>Prijs: €${p.prijs.toFixed(2)}</p>
-            <p>Voorraad: ${p.voorraad}</p>
-            <button onclick='voegToeAanMand(${JSON.stringify(p)})'>Toevoegen aan winkelmand</button>
-          `;
-          grid.appendChild(kaart);
-        });
+    function toonProducten(producten) {
+      const container = document.getElementById("product-container");
+
+      producten.forEach(p => {
+        const kaart = document.createElement("div");
+        kaart.className = "product";
+        kaart.innerHTML = `
+          <h3>${p.naam}</h3>
+          <img src="${p.afbeelding}" alt="${p.naam}" style="max-width:150px">
+          <p>Prijs: €${p.prijs.toFixed(2)}</p>
+          <p><strong>Voorraad: ${p.voorraad}</strong></p>
+          <button onclick="toevoegenAanMand(${p.id})">Toevoegen</button>
+        `;
+        container.appendChild(kaart);
       });
+    }
+
+    function toevoegenAanMand(id) {
+      const producten = JSON.parse(localStorage.getItem("producten")) || [];
+      const gekozen = producten.find(p => p.id === id);
+      if (!gekozen || gekozen.voorraad <= 0) return alert("Niet op voorraad!");
+
+      const mand = JSON.parse(localStorage.getItem("winkelmand")) || [];
+      mand.push({ naam: gekozen.naam, prijs: gekozen.prijs });
+      localStorage.setItem("winkelmand", JSON.stringify(mand));
+      alert("Toegevoegd aan winkelmand!");
+    }
   </script>
 </body>
 </html>
-
-
 
 
