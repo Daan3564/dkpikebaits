@@ -1,72 +1,46 @@
-<!DOCTYPE html>
-<html lang="nl">
-<head>
-  <meta charset="UTF-8">
-  <title>Productbeheer</title>
-  <link rel="stylesheet" href="beheer.css">
-</head>
-<body>
-  <header>
-    <img src="dk-logo.png" alt="DK logo" class="logo">
-    <h1>Productbeheer</h1>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="producten.html">Producten</a>
-      <a href="winkelmand.html">Winkelmand</a>
-      <a href="betaal.html">Betalen</a>
-      <a href="beheer.html">Beheer</a>
-    </nav>
-  </header>
+<ul id="lijst"></ul>
 
-  <main>
-    <form id="toevoegForm">
-      <h2>Nieuw product toevoegen</h2>
-      <input type="text" id="naam" placeholder="Productnaam" required>
-      <input type="number" id="prijs" placeholder="Prijs (€)" step="0.01" required>
-      <input type="number" id="voorraad" placeholder="Voorraad" required>
-      <input type="text" id="afbeelding" placeholder="Afbeeldingsbestand (bijv. vis.jpg)" required>
-      <button type="submit">➕ Toevoegen</button>
-    </form>
+<script>
+  let producten = JSON.parse(localStorage.getItem("producten")) || [];
 
-    <section id="productLijst">
-      <h2>Bestaande producten</h2>
-      <ul id="lijst"></ul>
-    </section>
-  </main>
+  function toonProducten() {
+    const lijst = document.getElementById("lijst");
+    lijst.innerHTML = "";
 
-  <script>
-    let producten = JSON.parse(localStorage.getItem("producten")) || [];
-
-    function toonProducten() {
-      const lijst = document.getElementById("lijst");
-      lijst.innerHTML = "";
-
-      producten.forEach((p, index) => {
-        const item = document.createElement("li");
-        item.textContent = `${p.naam} – €${p.prijs.toFixed(2)} – voorraad: ${p.voorraad}`;
-        lijst.appendChild(item);
-      });
-    }
-
-    document.getElementById("toevoegForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-
-      const nieuw = {
-        id: Date.now(),
-        naam: document.getElementById("naam").value,
-        prijs: parseFloat(document.getElementById("prijs").value),
-        voorraad: parseInt(document.getElementById("voorraad").value),
-        afbeelding: document.getElementById("afbeelding").value
-      };
-
-      producten.push(nieuw);
-      localStorage.setItem("producten", JSON.stringify(producten));
-      toonProducten();
-      this.reset();
+    producten.forEach((p, index) => {
+      const item = document.createElement("li");
+      item.innerHTML = `
+        ${p.naam} – €${p.prijs.toFixed(2)} – voorraad: ${p.voorraad}
+        <button onclick="verwijderProduct(${index})">🗑️ Verwijder</button>
+      `;
+      lijst.appendChild(item);
     });
+  }
 
+  function verwijderProduct(index) {
+    producten.splice(index, 1);
+    localStorage.setItem("producten", JSON.stringify(producten));
     toonProducten();
-  </script>
-</body>
-</html>
+  }
+
+  document.getElementById("toevoegForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const nieuw = {
+      id: Date.now(),
+      naam: document.getElementById("naam").value,
+      prijs: parseFloat(document.getElementById("prijs").value),
+      voorraad: parseInt(document.getElementById("voorraad").value),
+      afbeelding: document.getElementById("afbeelding").value
+    };
+
+    producten.push(nieuw);
+    localStorage.setItem("producten", JSON.stringify(producten));
+    toonProducten();
+    this.reset();
+  });
+
+  toonProducten();
+</script>
+
 
