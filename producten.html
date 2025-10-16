@@ -2,17 +2,24 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8">
-  <title>Producten</title>
+  <title>Producten – DK Pike Baits</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Onze kunstaas</h1>
+  <header>
+    <img src="images/dk-logo.png" alt="DK Pike Baits logo">
+    <h1>Producten</h1>
+  </header>
+
   <nav>
     <a href="index.html">Home</a>
-    <a href="winkelmand.html">Winkelmand</a>
-    <a href="betaal.html">Betalen</a>
+    <a href="producten.html">Producten</a>
   </nav>
-  <div id="product-grid" class="product-grid"></div>
+
+  <main>
+    <div id="product-grid" style="text-align: center;"></div>
+  </main>
+
   <script>
     fetch('producten.json')
       .then(res => res.json())
@@ -20,29 +27,20 @@
         const grid = document.getElementById("product-grid");
         producten.forEach(p => {
           const kaart = document.createElement("div");
-          kaart.className = "product-card";
+          kaart.style.marginBottom = "30px";
           kaart.innerHTML = `
-            <img src="${p.afbeelding}" alt="${p.naam}" onerror="this.src='https://via.placeholder.com/280x180?text=Geen+Afbeelding'">
+            <img src="${p.afbeelding}" alt="${p.naam}" style="max-width: 200px;">
             <h2>${p.naam}</h2>
             <p>Prijs: €${p.prijs.toFixed(2)}</p>
             <p>Voorraad: ${p.voorraad}</p>
-            <button onclick='toevoegen(${JSON.stringify(p)})'>Toevoegen aan winkelmand</button>
           `;
           grid.appendChild(kaart);
         });
       });
-
-    function toevoegen(product) {
-      const mand = JSON.parse(localStorage.getItem("winkelmand")) || [];
-      const bestaand = mand.find(p => p.naam === product.naam);
-      if (bestaand) {
-        bestaand.aantal += 1;
-      } else {
-        mand.push({ ...product, aantal: 1 });
-      }
-      localStorage.setItem("winkelmand", JSON.stringify(mand));
-      alert(`${product.naam} toegevoegd aan winkelmand`);
-    }
   </script>
+
+  <footer>
+    &copy; 2025 DK Pike Baits – Handmade baits
+  </footer>
 </body>
 </html>
