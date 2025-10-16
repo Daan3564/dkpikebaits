@@ -2,13 +2,13 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8">
-  <title>Betalen</title>
-  <link rel="stylesheet" href="stijl.css">
+  <title>Producten</title>
+  <link rel="stylesheet" href="producten.css">
 </head>
 <body>
   <header>
     <img src="dk-logo.png" alt="DK logo" class="logo">
-    <h1>Bestelling afronden</h1>
+    <h1>Onze producten</h1>
     <nav>
       <a href="index.html">Home</a>
       <a href="producten.html">Producten</a>
@@ -18,47 +18,53 @@
   </header>
 
   <main>
-    <form id="bestelform" action="https://formspree.io/f/xnngwjrb" method="POST">
-      <input type="text" name="voornaam" placeholder="Voornaam" required>
-      <input type="text" name="achternaam" placeholder="Achternaam" required>
-      <input type="email" name="email" placeholder="E-mailadres" required>
-
-      <textarea name="bestelling" id="bestelling" rows="6" readonly></textarea>
-      <h3 id="totaal">Totaal: €0.00</h3>
-
-      <button type="submit">Bestelling plaatsen</button>
-    </form>
+    <div id="product-grid"></div>
   </main>
 
   <script>
-    const bestellingEl = document.getElementById("bestelling");
-    const totaalEl = document.getElementById("totaal");
-    const mand = JSON.parse(localStorage.getItem("winkelmand")) || [];
+    let producten = [];
 
-    let totaal = 0;
-    let tekst = "";
+    const opgeslagen = localStorage.getItem("producten");
+    if (opgeslagen) {
+      producten = JSON.parse(opgeslagen);
+      toonProducten();
+    } else {
+      fetch("producten.json")
+        .then(res => res.json())
+        .then(data => {
+          producten = data;
+          localStorage.setItem("producten", JSON.stringify(producten));
+          toonProducten();
+        });
+    }
 
-    mand.forEach(p => {
-      totaal += p.prijs;
-      tekst += `${p.naam} – €${p.prijs.toFixed(2)}\n`;
-    });
+    function toonProducten() {
+      const grid = document.getElementById("product-grid");
+      grid.innerHTML = "";
 
-    bestellingEl.value = tekst;
-    totaalEl.textContent = `Totaal: €${totaal.toFixed(2)}`;
-
-    document.getElementById("bestelform").addEventListener("submit", function() {
-      const producten = JSON.parse(localStorage.getItem("producten")) || [];
-
-      mand.forEach(item => {
-        const product = producten.find(p => p.id === item.id);
-        if (product && product.voorraad > 0) {
-          product.voorraad -= 1;
-        }
+      producten.forEach(p => {
+        const kaart = document.createElement("div");
+        kaart.className = "product";
+        kaart.innerHTML = `
+          <h3>${p.naam}</h3>
+          <img src="${p.afbeelding}" alt="${p.naam}">
+          <p>Prijs: €${p.prijs.toFixed(2)}</p>
+          <p>Voorraad: ${p.voorraad}</p>
+          <button onclick="toevoegen(${p.id})">Toevoegen</button>
+        `;
+        grid.appendChild(kaart);
       });
+    }
 
-      localStorage.setItem("producten", JSON.stringify(producten));
-      localStorage.removeItem("winkelmand");
-    });
+    function toevoegen(id) {
+      const gekozen = producten.find(p => p.id === id);
+      if (!gekozen || gekozen.voorraad <= 0) return alert("Niet op voorraad!");
+
+      const mand = JSON.parse(localStorage.getItem("winkelmand")) || [];
+      mand.push({ id: gekozen.id, naam: gekozen.naam, prijs: gekozen.prijs });
+      localStorage.setItem("winkelmand", JSON.stringify(mand));
+      alert("Toegevoegd aan winkelmand!");
+    }
   </script>
 </body>
 </html>
