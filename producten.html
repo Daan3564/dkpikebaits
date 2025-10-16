@@ -1,3 +1,4 @@
+<!-- producten.html -->
 <!DOCTYPE html>
 <html lang="nl">
 <head>
@@ -7,7 +8,6 @@
 </head>
 <body>
   <h1>Onze kunstaas</h1>
-
   <nav>
     <a href="index.html">Home</a>
     <a href="producten.html">Producten</a>
@@ -18,29 +18,13 @@
 
   <script>
     const producten = [
-      {
-        naam: "Rode spinner met rozetstaart",
-        prijs: 12.95,
-        voorraad: 4,
-        afbeelding: "kunstaas_rozet.jpg"
-      },
-      {
-        naam: "UV Glider",
-        prijs: 14.50,
-        voorraad: 2,
-        afbeelding: "kunstaas_uv.jpg"
-      },
-      {
-        naam: "Groene jerkbait",
-        prijs: 11.00,
-        voorraad: 3,
-        afbeelding: "kunstaas_groen.jpg"
-      }
+      { naam: "Rode spinner", prijs: 12.95, afbeelding: "kunstaas_rozet.jpg" },
+      { naam: "UV Glider", prijs: 14.50, afbeelding: "kunstaas_uv.jpg" },
+      { naam: "Groene jerkbait", prijs: 11.00, afbeelding: "kunstaas_groen.jpg" }
     ];
 
     function toonProducten() {
       const container = document.getElementById("producten");
-      container.innerHTML = "";
       producten.forEach((product, index) => {
         const div = document.createElement("div");
         div.className = "product";
@@ -48,33 +32,22 @@
           <img src="${product.afbeelding}" alt="${product.naam}" style="max-width:300px;">
           <h2>${product.naam}</h2>
           <p>Prijs: €${product.prijs.toFixed(2)}</p>
-          <p>Voorraad: ${product.voorraad}</p>
-          <button onclick="toevoegenAanMand(${index})">Toevoegen aan winkelmand</button>
+          <button onclick="toevoegen(${index})">Toevoegen aan winkelmand</button>
         `;
         container.appendChild(div);
       });
     }
 
-    function toevoegenAanMand(index) {
-      const product = producten[index];
-      if (product.voorraad > 0) {
-        product.voorraad--;
-        const mand = JSON.parse(localStorage.getItem("winkelmand")) || {};
-        mand[product.naam] = (mand[product.naam] || 0) + 1;
-        localStorage.setItem("winkelmand", JSON.stringify(mand));
-        toonProducten();
-        alert(`${product.naam} toegevoegd aan je winkelmand`);
-      } else {
-        alert("Dit product is uitverkocht!");
-      }
+    function toevoegen(index) {
+      const gekozen = producten[index];
+      const mand = JSON.parse(localStorage.getItem("winkelmand")) || {};
+      mand[gekozen.naam] = (mand[gekozen.naam] || 0) + 1;
+      localStorage.setItem("winkelmand", JSON.stringify(mand));
+      alert(`${gekozen.naam} toegevoegd aan je winkelmand`);
     }
 
     toonProducten();
   </script>
-
-  <footer>
-    <p>&copy; 2025 DK Pike Baits</p>
-  </footer>
 </body>
 </html>
 
