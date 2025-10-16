@@ -2,30 +2,64 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Winkelmand – DK Pike Baits</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
-    <img src="dk-logo.png" alt="DK Pike Baits logo">
-    <h1>Winkelmand</h1>
+    <img src="dk-logo.png" alt="DK logo" class="logo">
+    <h1>Winkelmandje</h1>
   </header>
 
-  <nav>
+  <nav class="menu">
     <a href="index.html">Home</a>
     <a href="producten.html">Producten</a>
-    <a href="winkelmand.html">Winkelmand</a>
+    <a href="winkelmand.html">Winkelmandje</a>
     <a href="betaal.html">Betalen</a>
   </nav>
 
   <main>
-    <div id="mand">
-      <p>Je winkelmand is nog leeg.</p>
-    </div>
+    <div id="mand-container" class="grid"></div>
+    <h2 id="totaal">Totaal: €0.00</h2>
   </main>
 
   <footer>
     &copy; 2025 DK Pike Baits
   </footer>
+
+  <script>
+    function toonMand() {
+      const mand = JSON.parse(localStorage.getItem("winkelmand")) || [];
+      const container = document.getElementById("mand-container");
+      container.innerHTML = "";
+
+      let totaal = 0;
+
+      mand.forEach((p, index) => {
+        totaal += p.prijs;
+        const kaart = document.createElement("div");
+        kaart.className = "product-kaart";
+        kaart.innerHTML = `
+          <img src="${p.afbeelding}" alt="${p.naam}" onerror="this.src='placeholder.png'">
+          <h2>${p.naam}</h2>
+          <p>Prijs: €${p.prijs.toFixed(2)}</p>
+          <button onclick="verwijder(${index})">Verwijder</button>
+        `;
+        container.appendChild(kaart);
+      });
+
+      document.getElementById("totaal").textContent = `Totaal: €${totaal.toFixed(2)}`;
+    }
+
+    function verwijder(index) {
+      let mand = JSON.parse(localStorage.getItem("winkelmand")) || [];
+      mand.splice(index, 1);
+      localStorage.setItem("winkelmand", JSON.stringify(mand));
+      toonMand();
+    }
+
+    toonMand();
+  </script>
 </body>
 </html>
