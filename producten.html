@@ -29,7 +29,7 @@
 
       producten.forEach(p => {
         const kaart = document.createElement("div");
-        kaart.className = "product";
+        kaart.className = "product-kaart";
         kaart.innerHTML = `
           <h3>${p.naam}</h3>
           <img src="${p.afbeelding}" alt="${p.naam}" style="max-width:150px">
@@ -54,6 +54,4 @@
   </script>
 </body>
 </html>
-
-
 
