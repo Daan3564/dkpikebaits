@@ -1,5 +1,3 @@
-<ul id="lijst"></ul>
-
 <script>
   let producten = JSON.parse(localStorage.getItem("producten")) || [];
 
@@ -11,16 +9,20 @@
       const item = document.createElement("li");
       item.innerHTML = `
         ${p.naam} – €${p.prijs.toFixed(2)} – voorraad: ${p.voorraad}
-        <button onclick="verwijderProduct(${index})">🗑️ Verwijder</button>
+        <button class="verwijder" data-index="${index}">🗑️</button>
       `;
       lijst.appendChild(item);
     });
-  }
 
-  function verwijderProduct(index) {
-    producten.splice(index, 1);
-    localStorage.setItem("producten", JSON.stringify(producten));
-    toonProducten();
+    // Verwijderknoppen activeren
+    document.querySelectorAll(".verwijder").forEach(knop => {
+      knop.addEventListener("click", function() {
+        const i = parseInt(this.dataset.index);
+        producten.splice(i, 1);
+        localStorage.setItem("producten", JSON.stringify(producten));
+        toonProducten();
+      });
+    });
   }
 
   document.getElementById("toevoegForm").addEventListener("submit", function(e) {
