@@ -2,161 +2,35 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Betalen – DK Pike Baits</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f5f5f5;
-      padding: 30px;
-      max-width: 800px;
-      margin: auto;
-    }
-
-    h1, h2 {
-      color: #004d66;
-    }
-
-    nav {
-      margin-bottom: 30px;
-    }
-
-    nav a {
-      margin-right: 15px;
-      text-decoration: none;
-      color: #0077cc;
-      font-weight: bold;
-    }
-
-    ul {
-      list-style: none;
-      padding: 0;
-    }
-
-    li {
-      background-color: #fff;
-      margin-bottom: 10px;
-      padding: 10px;
-      border-radius: 6px;
-      box-shadow: 0 0 5px rgba(0,0,0,0.1);
-    }
-
-    form {
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      margin-top: 30px;
-    }
-
-    label {
-      font-weight: bold;
-      display: block;
-      margin-top: 15px;
-    }
-
-    input, select {
-      width: 100%;
-      padding: 8px;
-      margin-top: 5px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-
-    button {
-      margin-top: 20px;
-      background-color: #0077cc;
-      color: white;
-      border: none;
-      padding: 10px 15px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #005999;
-    }
-
-    footer {
-      margin-top: 50px;
-      text-align: center;
-      color: #666;
-    }
+    body { font-family: 'Roboto', sans-serif; background-color: #f5f5f5; padding: 30px; max-width: 600px; margin: auto; text-align: center; }
+    h1 { color: #004d66; }
+    nav a { margin: 0 15px; text-decoration: none; color: #0077cc; font-weight: bold; }
+    button { margin-top: 20px; background-color: #0077cc; color: white; padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer; }
   </style>
 </head>
 <body>
-  <h1>Bestelling afronden</h1>
+  <h1>Betalen</h1>
   <nav>
     <a href="index.html">Home</a>
     <a href="producten.html">Producten</a>
     <a href="winkelmand.html">Winkelmand</a>
-    <a href="betaal.html">Betalen</a>
   </nav>
-
-  <h2>🛒 Je bestelling</h2>
-  <ul id="bestelling"></ul>
-  <p id="totaalbedrag" style="font-weight:bold;"></p>
-
-  <h2>💳 Gegevens invullen</h2>
-  <form id="bestelformulier">
-    <label>Naam:</label>
-    <input type="text" name="naam" required>
-
-    <label>Adres:</label>
-    <input type="text" name="adres" required>
-
-    <label>Email:</label>
-    <input type="email" name="email" required>
-
-    <label>Betaalmethode:</label>
-    <select name="methode" required>
-      <option value="">Kies een methode</option>
-      <option value="ideal">iDEAL</option>
-      <option value="paypal">PayPal</option>
-      <option value="creditcard">Creditcard</option>
-    </select>
-
-    <button type="submit">Bestelling plaatsen</button>
-  </form>
-
+  <p id="totaal"></p>
+  <button onclick="bevestig()">Bestelling plaatsen</button>
   <script>
-    const mand = JSON.parse(localStorage.getItem("winkelmand")) || {};
-    const prijzen = {
-      "Rode spinner met rozetstaart": 20.00,
-      "UV Glider": 20.00,
-      "Groene jerkbait": 20.00
-    };
+    const mand = JSON.parse(localStorage.getItem("winkelmand")) || [];
+    const totaal = mand.reduce((sum, item) => sum + item.prijs * item.aantal, 0);
+    document.getElementById("totaal").innerText = `Totaalbedrag: €${totaal.toFixed(2)}`;
 
-    const lijst = document.getElementById("bestelling");
-    const totaalElement = document.getElementById("totaalbedrag");
-    let totaal = 0;
-
-    if (Object.keys(mand).length === 0) {
-      lijst.innerHTML = "<li>Je winkelmand is leeg.</li>";
-      totaalElement.textContent = "";
-    } else {
-      for (const naam in mand) {
-        const aantal = mand[naam];
-        const prijs = prijzen[naam] * aantal;
-        totaal += prijs;
-
-        const li = document.createElement("li");
-        li.textContent = `${naam} × ${aantal} — €${prijs.toFixed(2)}`;
-        lijst.appendChild(li);
-      }
-      totaalElement.textContent = `Totaal: €${totaal.toFixed(2)}`;
-    }
-
-    document.getElementById("bestelformulier").addEventListener("submit", function(e) {
-      e.preventDefault();
+    function bevestig() {
+      alert("Bestelling geplaatst! 🎣");
       localStorage.removeItem("winkelmand");
-      window.location.href = "bedankt.html";
-    });
+      window.location.href = "index.html";
+    }
   </script>
-
-  <footer>
-    <p>&copy; 2025 DK Pike Baits</p>
-  </footer>
 </body>
 </html>
+
