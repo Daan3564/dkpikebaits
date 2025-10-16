@@ -16,6 +16,11 @@
     "prijs": 11.95,
     "voorraad": 20,
     "afbeelding": "weedless.png"
+  },
+  {
+    "naam": "Deep Diver Pike Crank",
+    "prijs": 16.25,
+    "voorraad": 5,
+    "afbeelding": "deepdiver.png"
   }
 ]
-
