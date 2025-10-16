@@ -1,45 +1,98 @@
-<!-- Alleen het formuliergedeelte hieronder is aangepast -->
-<form id="bestelform" action="https://formspree.io/f/xnngwjrb" method="POST">
-  <div class="blok">
-    <h2>Persoonlijke gegevens</h2>
-    <input type="text" name="voornaam" placeholder="Voornaam" required>
-    <input type="text" name="achternaam" placeholder="Achternaam" required>
-    <input type="email" name="email" placeholder="E-mailadres" required>
-    <input type="tel" name="telefoon" placeholder="Telefoonnummer" required>
-  </div>
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <title>Betalen</title>
+  <link rel="stylesheet" href="betaal.css">
+</head>
+<body>
+  <header>
+    <img src="dk-logo.png" alt="DK logo" class="logo">
+    <h1>Bestelling afronden</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="producten.html">Producten</a>
+      <a href="winkelmand.html">Winkelmand</a>
+      <a href="betaal.html">Betalen</a>
+    </nav>
+  </header>
 
-  <div class="blok">
-    <h2>Adresgegevens</h2>
-    <input type="text" name="straat" placeholder="Straatnaam" required>
-    <input type="text" name="huisnummer" placeholder="Huisnummer" required>
-    <input type="text" name="postcode" placeholder="Postcode" required>
-    <input type="text" name="plaats" placeholder="Plaats" required>
-  </div>
+  <main>
+    <form id="bestelform" action="https://formspree.io/f/xnngwjrb" method="POST">
+      <div class="blok">
+        <h2>Persoonlijke gegevens</h2>
+        <input type="text" name="voornaam" placeholder="Voornaam" required>
+        <input type="text" name="achternaam" placeholder="Achternaam" required>
+        <input type="email" name="email" placeholder="E-mailadres" required>
+        <input type="tel" name="telefoon" placeholder="Telefoonnummer" required>
+      </div>
 
-  <div class="blok">
-    <h2>Betaalmethode</h2>
-    <select name="bank" required>
-      <option value="">Kies je bank</option>
-      <option value="ING">ING</option>
-      <option value="Rabobank">Rabobank</option>
-      <option value="ABN AMRO">ABN AMRO</option>
-      <option value="SNS">SNS</option>
-      <option value="Bunq">Bunq</option>
-    </select>
-  </div>
+      <div class="blok">
+        <h2>Adresgegevens</h2>
+        <input type="text" name="straat" placeholder="Straatnaam" required>
+        <input type="text" name="huisnummer" placeholder="Huisnummer" required>
+        <input type="text" name="postcode" placeholder="Postcode" required>
+        <input type="text" name="plaats" placeholder="Plaats" required>
+      </div>
 
-  <div class="blok">
-    <h2>Bestelling</h2>
-    <textarea name="bestelling" id="bestelling" rows="6" readonly></textarea>
-    <h3 id="totaal">Totaal: €0.00</h3>
-  </div>
+      <div class="blok">
+        <h2>Betaalmethode</h2>
+        <select name="bank" required>
+          <option value="">Kies je bank</option>
+          <option value="ING">ING</option>
+          <option value="Rabobank">Rabobank</option>
+          <option value="ABN AMRO">ABN AMRO</option>
+          <option value="SNS">SNS</option>
+          <option value="Bunq">Bunq</option>
+        </select>
+      </div>
 
-  <div class="blok">
-    <label>
-      <input type="checkbox" required>
-      Ik ga akkoord met de bestelling en voorwaarden
-    </label>
-  </div>
+      <div class="blok">
+        <h2>Bestelling</h2>
+        <textarea name="bestelling" id="bestelling" rows="6" readonly></textarea>
+        <h3 id="totaal">Totaal: €0.00</h3>
+      </div>
 
-  <button type="submit">✅ Bestelling plaatsen</button>
-</form>
+      <div class="blok">
+        <label>
+          <input type="checkbox" required>
+          Ik ga akkoord met de bestelling en voorwaarden
+        </label>
+      </div>
+
+      <button type="submit">✅ Bestelling plaatsen</button>
+    </form>
+  </main>
+
+  <script>
+    const bestellingEl = document.getElementById("bestelling");
+    const totaalEl = document.getElementById("totaal");
+    const mand = JSON.parse(localStorage.getItem("winkelmand")) || [];
+
+    let totaal = 0;
+    let tekst = "";
+
+    mand.forEach(p => {
+      totaal += p.prijs;
+      tekst += `• ${p.naam} – €${p.prijs.toFixed(2)}\n`;
+    });
+
+    bestellingEl.value = tekst;
+    totaalEl.textContent = `Totaal: €${totaal.toFixed(2)}`;
+
+    document.getElementById("bestelform").addEventListener("submit", function() {
+      const producten = JSON.parse(localStorage.getItem("producten")) || [];
+
+      mand.forEach(item => {
+        const product = producten.find(p => p.id === item.id);
+        if (product && product.voorraad > 0) {
+          product.voorraad -= 1;
+        }
+      });
+
+      localStorage.setItem("producten", JSON.stringify(producten));
+      localStorage.removeItem("winkelmand");
+    });
+  </script>
+</body>
+</html>
