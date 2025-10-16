@@ -2,29 +2,22 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8">
-  <title>Betalen – DK Pike Baits</title>
+  <title>Betalen</title>
   <link rel="stylesheet" href="betaal.css">
 </head>
 <body>
-  <header>
-    <img src="dk-logo.png" alt="DK logo" class="logo">
-    <h1>Bestelling afronden</h1>
-  </header>
+  <h1>Bestelling afronden</h1>
 
-  <main>
-    <form onsubmit="verlaagVoorraad()" action="https://formspree.io/f/xnngwjrb" method="POST">
-      <h2>Jouw gegevens</h2>
-      <input type="text" name="voornaam" placeholder="Voornaam" required>
-      <input type="text" name="achternaam" placeholder="Achternaam" required>
-      <input type="email" name="email" placeholder="E-mailadres" required>
+  <form onsubmit="verlaagVoorraad()" action="https://formspree.io/f/xnngwjrb" method="POST">
+    <input type="text" name="voornaam" placeholder="Voornaam" required>
+    <input type="text" name="achternaam" placeholder="Achternaam" required>
+    <input type="email" name="email" placeholder="E-mailadres" required>
 
-      <h2>Bestelling</h2>
-      <textarea name="bestelling" id="bestelling" rows="6" readonly></textarea>
-      <h3 id="totaal">Totaal: €0.00</h3>
+    <textarea name="bestelling" id="bestelling" rows="6" readonly></textarea>
+    <h3 id="totaal">Totaal: €0.00</h3>
 
-      <button type="submit">Bestelling plaatsen</button>
-    </form>
-  </main>
+    <button type="submit">Bestelling plaatsen</button>
+  </form>
 
   <script>
     const bestellingEl = document.getElementById("bestelling");
@@ -44,17 +37,18 @@
 
     function verlaagVoorraad() {
       const producten = JSON.parse(localStorage.getItem("producten")) || [];
+
       mand.forEach(item => {
-        const product = producten.find(p => p.naam === item.naam);
+        const product = producten.find(p => p.id === item.id);
         if (product && product.voorraad > 0) {
           product.voorraad -= 1;
         }
       });
+
       localStorage.setItem("producten", JSON.stringify(producten));
       localStorage.removeItem("winkelmand");
     }
   </script>
 </body>
 </html>
-
 
