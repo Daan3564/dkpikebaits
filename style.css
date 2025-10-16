@@ -41,6 +41,19 @@ main {
   text-align: center;
 }
 
+.welkom {
+  margin-bottom: 60px;
+}
+
+.over-mij {
+  margin-top: 80px;
+}
+
+.over-mij img.snoekfoto {
+  max-width: 400px;
+  margin-top: 20px;
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
