@@ -4,6 +4,32 @@
   <meta charset="UTF-8">
   <title>Rode spinner – DK Pike Baits</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    .product-info {
+      max-width: 600px;
+      margin: auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .product-info img {
+      max-width: 100%;
+      border-radius: 8px;
+    }
+    .product-info button {
+      background-color: #0077cc;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    .product-info button:hover {
+      background-color: #005999;
+    }
+  </style>
 </head>
 <body>
   <h1>Rode spinner met rozetstaart</h1>
@@ -14,19 +40,20 @@
     <a href="betaal.html">Betalen</a>
   </nav>
 
-  <img src="kunstaas_rozet.jpg" alt="Rode spinner" style="max-width:400px; border-radius:10px; margin-top:20px;">
-  <p style="margin-top:20px;">
-    Deze rode spinner is perfect voor troebel water. De rozetstaart zorgt voor extra beweging en trekt de aandacht van grote snoeken. Handgemaakt, getest en klaar voor actie.
-  </p>
-
-  <button onclick="toevoegenAanMand()">Toevoegen aan winkelmand</button>
+  <div class="product-info">
+    <img src="kunstaas_rozejt.jpg" alt="Rode spinner met rozetstaart">
+    <p>Deze spinner is perfect voor troebel water. De rozetstaart zorgt voor extra beweging en trekt de aandacht van grote snoeken. Handgemaakt en getest.</p>
+    <p><strong>Prijs: €20,00</strong></p>
+    <button onclick="toevoegenAanMand()">Toevoegen aan winkelmand</button>
+  </div>
 
   <script>
     function toevoegenAanMand() {
       const mand = JSON.parse(localStorage.getItem("winkelmand")) || {};
-      mand["Rode spinner met rozetstaart"] = (mand["Rode spinner met rozetstaart"] || 0) + 1;
+      const naam = "Rode spinner met rozetstaart";
+      mand[naam] = (mand[naam] || 0) + 1;
       localStorage.setItem("winkelmand", JSON.stringify(mand));
-      alert("Toegevoegd aan je winkelmand!");
+      alert(`${naam} toegevoegd aan je winkelmand!`);
     }
   </script>
 
@@ -35,3 +62,4 @@
   </footer>
 </body>
 </html>
+
