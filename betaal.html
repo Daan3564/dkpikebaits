@@ -2,12 +2,11 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8">
-  <title>Betalen</title>
+  <title>Betalen – DK Pike Baits</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <h1>Bestelling afronden</h1>
-
   <nav>
     <a href="index.html">Home</a>
     <a href="producten.html">Producten</a>
@@ -15,18 +14,22 @@
     <a href="betaal.html">Betalen</a>
   </nav>
 
+  <h2>🛒 Je bestelling</h2>
+  <ul id="bestelling"></ul>
+
+  <h2>💳 Gegevens invullen</h2>
   <form>
     <label>Naam:</label><br>
-    <input type="text" name="naam" required><br><br>
+    <input type="text" required><br><br>
 
     <label>Adres:</label><br>
-    <input type="text" name="adres" required><br><br>
+    <input type="text" required><br><br>
 
     <label>Email:</label><br>
-    <input type="email" name="email" required><br><br>
+    <input type="email" required><br><br>
 
     <label>Betaalmethode:</label><br>
-    <select name="methode">
+    <select required>
       <option>iDEAL</option>
       <option>PayPal</option>
       <option>Creditcard</option>
@@ -35,8 +38,24 @@
     <button type="submit">Bestelling plaatsen</button>
   </form>
 
+  <script>
+    const mand = JSON.parse(localStorage.getItem("winkelmand")) || {};
+    const lijst = document.getElementById("bestelling");
+
+    if (Object.keys(mand).length === 0) {
+      lijst.innerHTML = "<li>Je winkelmand is leeg.</li>";
+    } else {
+      for (const naam in mand) {
+        const li = document.createElement("li");
+        li.textContent = `${naam} × ${mand[naam]}`;
+        lijst.appendChild(li);
+      }
+    }
+  </script>
+
   <footer>
     <p>&copy; 2025 DK Pike Baits</p>
   </footer>
 </body>
 </html>
+
