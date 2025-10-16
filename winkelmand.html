@@ -2,55 +2,30 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8">
-  <title>Winkelmand</title>
+  <title>Winkelmand – DK Pike Baits</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Winkelmand</h1>
+  <header>
+    <img src="dk-logo.png" alt="DK Pike Baits logo">
+    <h1>Winkelmand</h1>
+  </header>
+
   <nav>
     <a href="index.html">Home</a>
     <a href="producten.html">Producten</a>
+    <a href="winkelmand.html">Winkelmand</a>
     <a href="betaal.html">Betalen</a>
   </nav>
-  <div id="mand"></div>
-  <div id="totaal"></div>
-  <script>
-    let mand = JSON.parse(localStorage.getItem("winkelmand")) || [];
-    const container = document.getElementById("mand");
-    const totaalDiv = document.getElementById("totaal");
 
-    function toonMand() {
-      container.innerHTML = "";
-      let totaal = 0;
-      if (mand.length === 0) {
-        container.innerHTML = "<p>Je winkelmand is leeg.</p>";
-        totaalDiv.innerHTML = "";
-        return;
-      }
-      mand.forEach((item, index) => {
-        totaal += item.prijs * item.aantal;
-        const div = document.createElement("div");
-        div.className = "item";
-        div.innerHTML = `
-          <div class="item-info">
-            <p><strong>${item.naam}</strong></p>
-            <p>Prijs: €${item.prijs.toFixed(2)}</p>
-            <p>Aantal: ${item.aantal}</p>
-          </div>
-          <button onclick="verwijder(${index})">Verwijder</button>
-        `;
-        container.appendChild(div);
-      });
-      totaalDiv.innerHTML = `Totaalbedrag: €${totaal.toFixed(2)}`;
-    }
+  <main>
+    <div id="mand">
+      <p>Je winkelmand is nog leeg.</p>
+    </div>
+  </main>
 
-    function verwijder(index) {
-      mand.splice(index, 1);
-      localStorage.setItem("winkelmand", JSON.stringify(mand));
-      toonMand();
-    }
-
-    toonMand();
-  </script>
+  <footer>
+    &copy; 2025 DK Pike Baits
+  </footer>
 </body>
 </html>
