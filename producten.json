@@ -1,27 +1,17 @@
 [
   {
-    "naam": "Firetail Pike Shad",
-    "prijs": 14.99,
+    "id": 1,
+    "naam": "Firetail Kunstaas",
+    "prijs": 9.99,
     "voorraad": 12,
-    "afbeelding": "firetail.png"
+    "afbeelding": "firetail.jpg"
   },
   {
-    "naam": "Ghost Perch Jerkbait",
-    "prijs": 17.50,
-    "voorraad": 8,
-    "afbeelding": "ghostperch.png"
-  },
-  {
-    "naam": "Weedless Pike Spinner",
-    "prijs": 11.95,
-    "voorraad": 20,
-    "afbeelding": "weedless.png"
-  },
-  {
-    "naam": "Deep Diver Pike Crank",
-    "prijs": 16.25,
+    "id": 2,
+    "naam": "Spinner XL",
+    "prijs": 7.49,
     "voorraad": 5,
-    "afbeelding": "deepdiver.png"
+    "afbeelding": "spinner-xl.jpg"
   }
 ]
 
