@@ -4,6 +4,29 @@
   <meta charset="UTF-8">
   <title>Winkelmand – DK Pike Baits</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    .mand-item {
+      background-color: #fff;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .mand-item button {
+      background-color: #cc0000;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .mand-item button:hover {
+      background-color: #990000;
+    }
+  </style>
 </head>
 <body>
   <h1>Je winkelmand</h1>
@@ -14,21 +37,37 @@
     <a href="betaal.html">Betalen</a>
   </nav>
 
-  <ul id="mandje"></ul>
+  <div id="mandje"></div>
 
   <script>
-    const mand = JSON.parse(localStorage.getItem("winkelmand")) || {};
-    const lijst = document.getElementById("mandje");
+    let mand = JSON.parse(localStorage.getItem("winkelmand")) || {};
+    const container = document.getElementById("mandje");
 
-    if (Object.keys(mand).length === 0) {
-      lijst.innerHTML = "<li>Je winkelmand is leeg.</li>";
-    } else {
+    function toonMand() {
+      container.innerHTML = "";
+      if (Object.keys(mand).length === 0) {
+        container.innerHTML = "<p>Je winkelmand is leeg.</p>";
+        return;
+      }
+
       for (const naam in mand) {
-        const li = document.createElement("li");
-        li.textContent = `${naam} × ${mand[naam]}`;
-        lijst.appendChild(li);
+        const div = document.createElement("div");
+        div.className = "mand-item";
+        div.innerHTML = `
+          <span>${naam} × ${mand[naam]}</span>
+          <button onclick="verwijder('${naam}')">Verwijder</button>
+        `;
+        container.appendChild(div);
       }
     }
+
+    function verwijder(naam) {
+      delete mand[naam];
+      localStorage.setItem("winkelmand", JSON.stringify(mand));
+      toonMand();
+    }
+
+    toonMand();
   </script>
 
   <footer>
@@ -36,4 +75,5 @@
   </footer>
 </body>
 </html>
+
 
