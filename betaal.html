@@ -6,23 +6,35 @@
   <link rel="stylesheet" href="betaal.css">
 </head>
 <body>
-  <h1>Bestelling afronden</h1>
+  <header>
+    <img src="dk-logo.png" alt="DK logo" class="logo">
+    <h1>Bestelling afronden</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="producten.html">Producten</a>
+      <a href="winkelmand.html">Winkelmand</a>
+      <a href="betaal.html">Betalen</a>
+    </nav>
+  </header>
 
-  <form id="bestelform" action="https://formspree.io/f/xnngwjrb" method="POST">
-    <input type="text" name="voornaam" placeholder="Voornaam" required>
-    <input type="text" name="achternaam" placeholder="Achternaam" required>
-    <input type="email" name="email" placeholder="E-mailadres" required>
+  <main>
+    <form id="bestelform" action="https://formspree.io/f/xnngwjrb" method="POST">
+      <input type="text" name="voornaam" placeholder="Voornaam" required>
+      <input type="text" name="achternaam" placeholder="Achternaam" required>
+      <input type="email" name="email" placeholder="E-mailadres" required>
 
-    <textarea name="bestelling" id="bestelling" rows="6" readonly></textarea>
-    <h3 id="totaal">Totaal: €0.00</h3>
+      <textarea name="bestelling" id="bestelling" rows="6" readonly></textarea>
+      <h3 id="totaal">Totaal: €0.00</h3>
 
-    <button type="submit">Bestelling plaatsen</button>
-  </form>
+      <button type="submit">Bestelling plaatsen</button>
+    </form>
+  </main>
 
   <script>
     const bestellingEl = document.getElementById("bestelling");
     const totaalEl = document.getElementById("totaal");
     const mand = JSON.parse(localStorage.getItem("winkelmand")) || [];
+
     let totaal = 0;
     let tekst = "";
 
@@ -50,3 +62,4 @@
   </script>
 </body>
 </html>
+
