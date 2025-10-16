@@ -2,79 +2,8 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8">
-  <title>Producten – DK Pike Baits</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      font-family: 'Roboto', sans-serif;
-      background-color: #f5f5f5;
-      margin: 0;
-      padding: 30px;
-    }
-
-    h1 {
-      text-align: center;
-      color: #004d66;
-    }
-
-    nav {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-
-    nav a {
-      margin: 0 15px;
-      text-decoration: none;
-      color: #0077cc;
-      font-weight: bold;
-    }
-
-    .product-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 30px;
-      justify-content: center;
-    }
-
-    .product-card {
-      background-color: #fff;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      width: 280px;
-      text-align: center;
-      padding: 20px;
-    }
-
-    .product-card img {
-      max-width: 100%;
-      border-radius: 8px;
-    }
-
-    .product-card h2 {
-      font-size: 20px;
-      margin: 10px 0;
-    }
-
-    .product-card p {
-      font-size: 16px;
-      margin: 5px 0;
-    }
-
-    .product-card button {
-      margin-top: 10px;
-      background-color: #0077cc;
-      color: white;
-      padding: 10px 15px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    .product-card button:disabled {
-      background-color: #ccc;
-      cursor: not-allowed;
-    }
-  </style>
+  <title>Producten</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <h1>Onze kunstaas</h1>
@@ -83,15 +12,10 @@
     <a href="winkelmand.html">Winkelmand</a>
     <a href="betaal.html">Betalen</a>
   </nav>
-
   <div id="product-grid" class="product-grid"></div>
-
   <script>
     fetch('producten.json')
-      .then(response => {
-        if (!response.ok) throw new Error("Kan producten.json niet laden");
-        return response.json();
-      })
+      .then(res => res.json())
       .then(producten => {
         const grid = document.getElementById("product-grid");
         producten.forEach(p => {
@@ -101,15 +25,11 @@
             <img src="${p.afbeelding}" alt="${p.naam}" onerror="this.src='https://via.placeholder.com/280x180?text=Geen+Afbeelding'">
             <h2>${p.naam}</h2>
             <p>Prijs: €${p.prijs.toFixed(2)}</p>
-            <p>Voorraad: ${p.voorraad > 0 ? p.voorraad : "Uitverkocht"}</p>
-            <button ${p.voorraad === 0 ? "disabled" : ""} onclick='toevoegen(${JSON.stringify(p)})'>Toevoegen aan winkelmand</button>
+            <p>Voorraad: ${p.voorraad}</p>
+            <button onclick='toevoegen(${JSON.stringify(p)})'>Toevoegen aan winkelmand</button>
           `;
           grid.appendChild(kaart);
         });
-      })
-      .catch(error => {
-        document.getElementById("product-grid").innerHTML = "<p>Er ging iets mis bij het laden van de producten.</p>";
-        console.error(error);
       });
 
     function toevoegen(product) {
