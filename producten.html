@@ -92,31 +92,30 @@
     <a href="betaal.html">Betalen</a>
   </nav>
 
-  <div class="product-grid">
-    <div class="product-card">
-      <img src="kunstaas_rozet.jpg" alt="Rode spinner">
-      <h2>Rode spinner met rozetstaart</h2>
-      <p>Prijs: €20,00</p>
-      <p>Voorraad: 3</p>
-      <a href="product-rode-spinner.html">Bekijk product</a>
-    </div>
+  <div id="product-grid" class="product-grid"></div>
 
-    <div class="product-card">
-      <img src="kunstaas_uv.jpg" alt="UV Glider">
-      <h2>UV Glider</h2>
-      <p>Prijs: €20,00</p>
-      <p>Voorraad: Uitverkocht</p>
-      <a href="product-uv-glider.html" class="disabled">Bekijk product</a>
-    </div>
+  <script>
+    const producten = JSON.parse(localStorage.getItem("beheerProducten")) || [];
 
-    <div class="product-card">
-      <img src="kunstaas_groen.jpg" alt="Groene jerkbait">
-      <h2>Groene jerkbait</h2>
-      <p>Prijs: €20,00</p>
-      <p>Voorraad: 5</p>
-      <a href="product-groene-jerkbait.html">Bekijk product</a>
-    </div>
-  </div>
+    const grid = document.getElementById("product-grid");
+
+    if (producten.length === 0) {
+      grid.innerHTML = "<p>Er zijn nog geen producten toegevoegd via beheer.html.</p>";
+    } else {
+      producten.forEach(p => {
+        const kaart = document.createElement("div");
+        kaart.className = "product-card";
+        kaart.innerHTML = `
+          <img src="${p.afbeelding}" alt="${p.naam}">
+          <h2>${p.naam}</h2>
+          <p>Prijs: €${p.prijs.toFixed(2)}</p>
+          <p>Voorraad: ${p.voorraad > 0 ? p.voorraad : "Uitverkocht"}</p>
+          <a href="${p.pagina}" class="${p.voorraad === 0 ? 'disabled' : ''}">Bekijk product</a>
+        `;
+        grid.appendChild(kaart);
+      });
+    }
+  </script>
 
   <footer>
     <p>&copy; 2025 DK Pike Baits</p>
