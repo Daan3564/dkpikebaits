@@ -1,32 +1,24 @@
-<!DOCTYPE html>
-<html lang="nl">
-<head>
-  <meta charset="UTF-8">
-  <title>Rode spinner – DK Pike Baits</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body>
-  <h1>Rode spinner met rozetstaart</h1>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="producten.html">Producten</a>
-    <a href="winkelmand.html">Winkelmand</a>
-    <a href="betaal.html">Betalen</a>
-  </nav>
+<p id="voorraad-info"></p>
+<button id="toevoeg-knop" onclick="toevoegenAanMand()">Toevoegen aan winkelmand</button>
 
-  <img src="kunstaas_rozejt.jpg" alt="Rode spinner" style="max-width:400px;">
-  <p>Perfect voor troebel water. Handgemaakt en getest.</p>
-  <p><strong>Prijs: €20,00</strong></p>
-  <button onclick="toevoegenAanMand()">Toevoegen aan winkelmand</button>
+<script>
+  const voorraad = 3; // ← pas dit per product aan
 
-  <script>
-    function toevoegenAanMand() {
-      const mand = JSON.parse(localStorage.getItem("winkelmand")) || {};
-      const naam = "Rode spinner met rozetstaart";
-      mand[naam] = (mand[naam] || 0) + 1;
-      localStorage.setItem("winkelmand", JSON.stringify(mand));
-      alert(`${naam} toegevoegd aan je winkelmand!`);
-    }
-  </script>
-</body>
-</html>
+  document.getElementById("voorraad-info").textContent = voorraad > 0
+    ? `Nog ${voorraad} op voorraad`
+    : "Uitverkocht";
+
+  if (voorraad === 0) {
+    document.getElementById("toevoeg-knop").disabled = true;
+    document.getElementById("toevoeg-knop").textContent = "Niet beschikbaar";
+  }
+
+  function toevoegenAanMand() {
+    const mand = JSON.parse(localStorage.getItem("winkelmand")) || {};
+    const naam = "Rode spinner met rozetstaart";
+    mand[naam] = (mand[naam] || 0) + 1;
+    localStorage.setItem("winkelmand", JSON.stringify(mand));
+    alert(`${naam} toegevoegd aan je winkelmand!`);
+  }
+</script>
+
