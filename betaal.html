@@ -2,74 +2,8 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8">
-  <title>Betalen – DK Pike Baits</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      font-family: 'Roboto', sans-serif;
-      background-color: #f5f5f5;
-      padding: 30px;
-      max-width: 600px;
-      margin: auto;
-    }
-
-    h1 {
-      color: #004d66;
-      text-align: center;
-    }
-
-    nav {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-
-    nav a {
-      margin: 0 15px;
-      text-decoration: none;
-      color: #0077cc;
-      font-weight: bold;
-    }
-
-    label {
-      display: block;
-      margin-top: 15px;
-      font-weight: bold;
-    }
-
-    input, textarea {
-      width: 100%;
-      padding: 8px;
-      margin-top: 5px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
-
-    button {
-      margin-top: 20px;
-      background-color: #0077cc;
-      color: white;
-      border: none;
-      padding: 10px 15px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    #totaal {
-      font-size: 18px;
-      font-weight: bold;
-      margin-top: 20px;
-      text-align: center;
-    }
-
-    .bevestiging {
-      background-color: #dff0d8;
-      padding: 20px;
-      border-radius: 10px;
-      margin-top: 30px;
-      text-align: center;
-      display: none;
-    }
-  </style>
+  <title>Betalen</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <h1>Betalen</h1>
@@ -78,53 +12,21 @@
     <a href="producten.html">Producten</a>
     <a href="winkelmand.html">Winkelmand</a>
   </nav>
-
   <div id="totaal"></div>
-
   <form id="betaalForm">
     <label>Naam:</label>
     <input type="text" id="naam" required>
-
     <label>E-mailadres:</label>
     <input type="email" id="email" required>
-
     <label>Adres:</label>
     <textarea id="adres" rows="3" required></textarea>
-
+    <label>Verzendoptie:</label>
+    <select id="verzending">
+      <option value="3.95">Brievenbuspakket (€3,95)</option>
+      <option value="6.95">Standaard pakket (€6,95)</option>
+    </select>
     <button type="submit">Bestelling plaatsen</button>
   </form>
-
   <div class="bevestiging" id="bevestiging">
-    <h2>Bedankt voor je bestelling!</h2>
-    <p>We sturen een bevestiging naar je e-mail.</p>
-  </div>
+    <h
 
-  <script>
-    const mand = JSON.parse(localStorage.getItem("winkelmand")) || [];
-    const totaal = mand.reduce((sum, item) => sum + item.prijs * item.aantal, 0);
-    document.getElementById("totaal").innerText = `Totaalbedrag: €${totaal.toFixed(2)}`;
-
-    const form = document.getElementById("betaalForm");
-    const bevestiging = document.getElementById("bevestiging");
-
-    form.addEventListener("submit", function(e) {
-      e.preventDefault();
-
-      const naam = document.getElementById("naam").value.trim();
-      const email = document.getElementById("email").value.trim();
-      const adres = document.getElementById("adres").value.trim();
-
-      if (!naam || !email || !adres) {
-        alert("Vul alle velden in.");
-        return;
-      }
-
-      // Hier zou je normaal de bestelling versturen naar een server
-      bevestiging.style.display = "block";
-      localStorage.removeItem("winkelmand");
-      form.style.display = "none";
-      document.getElementById("totaal").style.display = "none";
-    });
-  </script>
-</body>
-</html>
