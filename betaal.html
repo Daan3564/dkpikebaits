@@ -2,54 +2,28 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Betalen – DK Pike Baits</title>
   <link rel="stylesheet" href="betaal.css">
 </head>
 <body>
   <header>
-    <img src="dk-logo.png" alt="DK logo" class="logo">
     <h1>Bestelling afronden</h1>
   </header>
-
-  <nav class="menu">
-    <a href="index.html">Home</a>
-    <a href="producten.html">Producten</a>
-    <a href="winkelmand.html">Winkelmandje</a>
-    <a href="betaal.html">Betalen</a>
-  </nav>
 
   <main>
     <form action="https://formspree.io/f/xnngwjrb" method="POST">
       <h2>Jouw gegevens</h2>
-      <div class="naam-velden">
-        <input type="text" name="voornaam" placeholder="Voornaam" required>
-        <input type="text" name="achternaam" placeholder="Achternaam" required>
-      </div>
+      <input type="text" name="voornaam" placeholder="Voornaam" required>
+      <input type="text" name="achternaam" placeholder="Achternaam" required>
       <input type="email" name="email" placeholder="E-mailadres" required>
-      <input type="text" name="adres" placeholder="Adres" required>
-      <input type="text" name="postcode" placeholder="Postcode" required>
-      <input type="text" name="woonplaats" placeholder="Woonplaats" required>
 
-      <h2>Betaalmethode</h2>
-      <select name="betaalmethode" required>
-        <option value="">Kies een methode</option>
-        <option value="iDEAL">iDEAL</option>
-        <option value="PayPal">PayPal</option>
-        <option value="Bankoverschrijving">Bankoverschrijving</option>
-      </select>
-
-      <h2>Jouw bestelling</h2>
+      <h2>Bestelling</h2>
       <textarea name="bestelling" id="bestelling" rows="6" readonly></textarea>
       <h3 id="totaal">Totaal: €0.00</h3>
 
-      <button type="submit">Bestelling plaatsen</button>
+      <button type="submit" onclick="verlaagVoorraad()">Bestelling plaatsen</button>
     </form>
   </main>
-
-  <footer>
-    &copy; 2025 DK Pike Baits
-  </footer>
 
   <script>
     const bestellingEl = document.getElementById("bestelling");
@@ -67,21 +41,19 @@
     bestellingEl.value = tekst;
     totaalEl.textContent = `Totaal: €${totaal.toFixed(2)}`;
 
-    // Voorraad verlagen
-    fetch('producten.json')
-      .then(res => res.json())
-      .then(producten => {
-        mand.forEach(item => {
-          const product = producten.find(p => p.naam === item.naam);
-          if (product && product.voorraad > 0) {
-            product.voorraad -= 1;
-          }
-        });
-
-        // Simuleer opslaan van nieuwe voorraad
-        localStorage.setItem("producten", JSON.stringify(producten));
+    function verlaagVoorraad() {
+      const producten = JSON.parse(localStorage.getItem("producten")) || [];
+      mand.forEach(item => {
+        const product = producten.find(p => p.naam === item.naam);
+        if (product && product.voorraad > 0) {
+          product.voorraad -= 1;
+        }
       });
+      localStorage.setItem("producten", JSON.stringify(producten));
+      localStorage.removeItem("winkelmand");
+    }
   </script>
 </body>
 </html>
+
 
