@@ -13,7 +13,7 @@ header {
 }
 
 header img {
-  max-width: 120px;
+  max-width: 150px;
 }
 
 header h1 {
@@ -57,4 +57,5 @@ footer {
   font-size: 0.8em;
   color: #777;
 }
+
 
