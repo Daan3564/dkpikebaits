@@ -5,10 +5,41 @@
   <title>Betalen – DK Pike Baits</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body { font-family: 'Roboto', sans-serif; background-color: #f5f5f5; padding: 30px; max-width: 600px; margin: auto; text-align: center; }
-    h1 { color: #004d66; }
-    nav a { margin: 0 15px; text-decoration: none; color: #0077cc; font-weight: bold; }
-    button { margin-top: 20px; background-color: #0077cc; color: white; padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer; }
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f5f5f5;
+      padding: 30px;
+      max-width: 600px;
+      margin: auto;
+      text-align: center;
+    }
+
+    h1 {
+      color: #004d66;
+    }
+
+    nav a {
+      margin: 0 15px;
+      text-decoration: none;
+      color: #0077cc;
+      font-weight: bold;
+    }
+
+    button {
+      margin-top: 20px;
+      background-color: #0077cc;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #totaal {
+      font-size: 18px;
+      font-weight: bold;
+      margin-top: 20px;
+    }
   </style>
 </head>
 <body>
@@ -18,8 +49,10 @@
     <a href="producten.html">Producten</a>
     <a href="winkelmand.html">Winkelmand</a>
   </nav>
+
   <p id="totaal"></p>
   <button onclick="bevestig()">Bestelling plaatsen</button>
+
   <script>
     const mand = JSON.parse(localStorage.getItem("winkelmand")) || [];
     const totaal = mand.reduce((sum, item) => sum + item.prijs * item.aantal, 0);
@@ -33,4 +66,5 @@
   </script>
 </body>
 </html>
+
 
