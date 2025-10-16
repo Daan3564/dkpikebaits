@@ -19,34 +19,45 @@
 
   <main>
     <form id="bestelform" action="https://formspree.io/f/xnngwjrb" method="POST">
-      <div class="form-wrapper">
-        <div class="form-links">
-          <h2>Jouw gegevens</h2>
-          <input type="text" name="voornaam" placeholder="Voornaam" required>
-          <input type="text" name="achternaam" placeholder="Achternaam" required>
-          <input type="email" name="email" placeholder="E-mailadres" required>
+      <div class="blok">
+        <h2>Persoonlijke gegevens</h2>
+        <input type="text" name="voornaam" placeholder="Voornaam" required>
+        <input type="text" name="achternaam" placeholder="Achternaam" required>
+        <input type="email" name="email" placeholder="E-mailadres" required>
+        <input type="tel" name="telefoon" placeholder="Telefoonnummer" required>
+      </div>
 
-          <h2>Betaalmethode</h2>
-          <select name="bank" required>
-            <option value="">Kies je bank</option>
-            <option value="ING">ING</option>
-            <option value="Rabobank">Rabobank</option>
-            <option value="ABN AMRO">ABN AMRO</option>
-            <option value="SNS">SNS</option>
-            <option value="Bunq">Bunq</option>
-          </select>
+      <div class="blok">
+        <h2>Adresgegevens</h2>
+        <input type="text" name="straat" placeholder="Straatnaam" required>
+        <input type="text" name="huisnummer" placeholder="Huisnummer" required>
+        <input type="text" name="postcode" placeholder="Postcode" required>
+        <input type="text" name="plaats" placeholder="Plaats" required>
+      </div>
 
-          <label class="checkbox">
-            <input type="checkbox" required>
-            Ik ga akkoord met de bestelling en voorwaarden
-          </label>
-        </div>
+      <div class="blok">
+        <h2>Betaalmethode</h2>
+        <select name="bank" required>
+          <option value="">Kies je bank</option>
+          <option value="ING">ING</option>
+          <option value="Rabobank">Rabobank</option>
+          <option value="ABN AMRO">ABN AMRO</option>
+          <option value="SNS">SNS</option>
+          <option value="Bunq">Bunq</option>
+        </select>
+      </div>
 
-        <div class="form-rechts">
-          <h2>Jouw bestelling</h2>
-          <textarea name="bestelling" id="bestelling" rows="8" readonly></textarea>
-          <h3 id="totaal">Totaal: €0.00</h3>
-        </div>
+      <div class="blok">
+        <h2>Bestelling</h2>
+        <textarea name="bestelling" id="bestelling" rows="6" readonly></textarea>
+        <h3 id="totaal">Totaal: €0.00</h3>
+      </div>
+
+      <div class="blok">
+        <label>
+          <input type="checkbox" required>
+          Ik ga akkoord met de bestelling en voorwaarden
+        </label>
       </div>
 
       <button type="submit">✅ Bestelling plaatsen</button>
@@ -63,7 +74,7 @@
 
     mand.forEach(p => {
       totaal += p.prijs;
-      tekst += `${p.naam} – €${p.prijs.toFixed(2)}\n`;
+      tekst += `• ${p.naam} – €${p.prijs.toFixed(2)}\n`;
     });
 
     bestellingEl.value = tekst;
@@ -85,4 +96,5 @@
   </script>
 </body>
 </html>
+
 
