@@ -36,7 +36,7 @@
           const kaart = document.createElement("div");
           kaart.className = "product-kaart";
           kaart.innerHTML = `
-            <img src="${p.afbeelding}" alt="${p.naam}">
+            <img src="${p.afbeelding}" alt="${p.naam}" onerror="this.src='placeholder.png'">
             <h2>${p.naam}</h2>
             <p>Prijs: €${p.prijs.toFixed(2)}</p>
             <p>Voorraad: ${p.voorraad}</p>
@@ -48,3 +48,4 @@
   </script>
 </body>
 </html>
+
