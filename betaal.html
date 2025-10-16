@@ -20,33 +20,28 @@
   </nav>
 
   <main>
-    <form id="betaal-form">
+    <form action="https://formspree.io/f/xnngwjrb" method="POST">
       <h2>Jouw gegevens</h2>
-      <input type="text" id="naam" placeholder="Naam" required>
-      <input type="email" id="email" placeholder="E-mailadres" required>
-      <input type="text" id="adres" placeholder="Adres" required>
-      <input type="text" id="postcode" placeholder="Postcode" required>
-      <input type="text" id="woonplaats" placeholder="Woonplaats" required>
+      <input type="text" name="naam" placeholder="Naam" required>
+      <input type="email" name="email" placeholder="E-mailadres" required>
+      <input type="text" name="adres" placeholder="Adres" required>
+      <input type="text" name="postcode" placeholder="Postcode" required>
+      <input type="text" name="woonplaats" placeholder="Woonplaats" required>
 
       <h2>Betaalmethode</h2>
-      <select id="methode" required>
+      <select name="betaalmethode" required>
         <option value="">Kies een methode</option>
-        <option value="ideal">iDEAL</option>
-        <option value="paypal">PayPal</option>
-        <option value="overschrijving">Bankoverschrijving</option>
+        <option value="iDEAL">iDEAL</option>
+        <option value="PayPal">PayPal</option>
+        <option value="Bankoverschrijving">Bankoverschrijving</option>
       </select>
 
       <h2>Jouw bestelling</h2>
-      <div id="bestelling"></div>
+      <textarea name="bestelling" id="bestelling" rows="6" readonly></textarea>
       <h3 id="totaal">Totaal: €0.00</h3>
 
       <button type="submit">Bestelling plaatsen</button>
     </form>
-
-    <div id="bevestiging" style="display:none;">
-      <h2>Bedankt voor je bestelling!</h2>
-      <p>Je ontvangt binnenkort een bevestiging per e-mail.</p>
-    </div>
   </main>
 
   <footer>
@@ -54,35 +49,23 @@
   </footer>
 
   <script>
-    const bestellingDiv = document.getElementById("bestelling");
+    const bestellingEl = document.getElementById("bestelling");
     const totaalEl = document.getElementById("totaal");
     const mand = JSON.parse(localStorage.getItem("winkelmand")) || [];
 
     let totaal = 0;
+    let tekst = "";
+
     mand.forEach(p => {
       totaal += p.prijs;
-      const item = document.createElement("p");
-      item.textContent = `${p.naam} – €${p.prijs.toFixed(2)}`;
-      bestellingDiv.appendChild(item);
+      tekst += `${p.naam} – €${p.prijs.toFixed(2)}\n`;
     });
+
+    bestellingEl.value = tekst;
     totaalEl.textContent = `Totaal: €${totaal.toFixed(2)}`;
-
-    document.getElementById("betaal-form").addEventListener("submit", function(e) {
-      e.preventDefault();
-
-      // Simulatie van e-mail en bevestiging
-      const naam = document.getElementById("naam").value;
-      const email = document.getElementById("email").value;
-      const methode = document.getElementById("methode").value;
-
-      console.log(`Bestelling geplaatst door ${naam} via ${methode}. Bevestiging naar ${email}`);
-
-      localStorage.removeItem("winkelmand");
-      document.getElementById("betaal-form").style.display = "none";
-      document.getElementById("bevestiging").style.display = "block";
-    });
   </script>
 </body>
 </html>
+
 
 
