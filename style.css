@@ -18,13 +18,14 @@ header {
 }
 
 nav.menu {
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
   margin-bottom: 30px;
+  flex-wrap: wrap;
 }
 
 nav.menu a {
-  display: inline-block;
-  margin: 0 20px;
   font-size: 1.2em;
   color: #000;
   text-decoration: none;
@@ -37,6 +38,10 @@ main {
 
 .welkom {
   margin-bottom: 60px;
+}
+
+.over-mij {
+  margin-top: 80px;
 }
 
 .over-mij img.snoekfoto {
