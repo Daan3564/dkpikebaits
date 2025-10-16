@@ -4,6 +4,88 @@
   <meta charset="UTF-8">
   <title>Producten – DK Pike Baits</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 20px;
+    }
+
+    nav {
+      margin-bottom: 30px;
+    }
+
+    nav a {
+      margin-right: 20px;
+      text-decoration: none;
+      color: #0077cc;
+      font-weight: bold;
+    }
+
+    h1 {
+      color: #004d66;
+    }
+
+    .product-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      justify-content: center;
+    }
+
+    .product-card {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 280px;
+      text-align: center;
+      padding: 20px;
+      transition: transform 0.2s;
+    }
+
+    .product-card:hover {
+      transform: scale(1.03);
+    }
+
+    .product-card img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
+
+    .product-card h2 {
+      font-size: 20px;
+      margin: 10px 0;
+      color: #004d66;
+    }
+
+    .product-card p {
+      font-size: 16px;
+      margin: 5px 0;
+      color: #333;
+    }
+
+    .product-card a {
+      display: inline-block;
+      margin-top: 10px;
+      background-color: #0077cc;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+
+    .product-card a:hover {
+      background-color: #005999;
+    }
+
+    footer {
+      margin-top: 50px;
+      text-align: center;
+      color: #666;
+    }
+  </style>
 </head>
 <body>
   <h1>Onze kunstaas</h1>
@@ -14,28 +96,27 @@
     <a href="betaal.html">Betalen</a>
   </nav>
 
-  <div class="product">
-    <a href="product-rode-spinner.html">
-      <img src="kunstaas_rozet.jpg" alt="Rode spinner" style="max-width:300px;">
+  <div class="product-grid">
+    <div class="product-card">
+      <img src="kunstaas_rozejt.jpg" alt="Rode spinner met rozetstaart">
       <h2>Rode spinner met rozetstaart</h2>
-      <p>Prijs: €12,95</p>
-    </a>
-  </div>
+      <p>Prijs: €20,00</p>
+      <a href="product-rode-spinner.html">Bekijk product</a>
+    </div>
 
-  <div class="product">
-    <a href="product-uv-glider.html">
-      <img src="kunstaas_uv.jpg" alt="UV Glider" style="max-width:300px;">
+    <div class="product-card">
+      <img src="kunstaas_uv.jpg" alt="UV Glider">
       <h2>UV Glider</h2>
-      <p>Prijs: €14,50</p>
-    </a>
-  </div>
+      <p>Prijs: €20,00</p>
+      <a href="product-uv-glider.html">Bekijk product</a>
+    </div>
 
-  <div class="product">
-    <a href="product-groene-jerkbait.html">
-      <img src="kunstaas_groen.jpg" alt="Groene jerkbait" style="max-width:300px;">
+    <div class="product-card">
+      <img src="kunstaas_groen.jpg" alt="Groene jerkbait">
       <h2>Groene jerkbait</h2>
-      <p>Prijs: €11,00</p>
-    </a>
+      <p>Prijs: €20,00</p>
+      <a href="product-groene-jerkbait.html">Bekijk product</a>
+    </div>
   </div>
 
   <footer>
@@ -43,4 +124,3 @@
   </footer>
 </body>
 </html>
-
