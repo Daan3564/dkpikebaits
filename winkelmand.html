@@ -1,79 +1,47 @@
-<!DOCTYPE html>
-<html lang="nl">
-<head>
-  <meta charset="UTF-8">
-  <title>Winkelmand – DK Pike Baits</title>
-  <link rel="stylesheet" href="style.css">
-  <style>
-    .mand-item {
-      background-color: #fff;
-      padding: 15px;
-      border-radius: 10px;
-      box-shadow: 0 0 8px rgba(0,0,0,0.1);
-      margin-top: 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .mand-item button {
-      background-color: #cc0000;
-      color: white;
-      border: none;
-      padding: 8px 12px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    .mand-item button:hover {
-      background-color: #990000;
-    }
-  </style>
-</head>
-<body>
-  <h1>Je winkelmand</h1>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="producten.html">Producten</a>
-    <a href="winkelmand.html">Winkelmand</a>
-    <a href="betaal.html">Betalen</a>
-  </nav>
+<script>
+  const mand = JSON.parse(localStorage.getItem("winkelmand")) || {};
+  const prijzen = {
+    "Rode spinner met rozetstaart": 20.00,
+    "UV Glider": 20.00,
+    "Groene jerkbait": 20.00
+  };
 
-  <div id="mandje"></div>
+  const container = document.getElementById("mandje");
+  let totaal = 0;
 
-  <script>
-    let mand = JSON.parse(localStorage.getItem("winkelmand")) || {};
-    const container = document.getElementById("mandje");
-
-    function toonMand() {
-      container.innerHTML = "";
-      if (Object.keys(mand).length === 0) {
-        container.innerHTML = "<p>Je winkelmand is leeg.</p>";
-        return;
-      }
-
-      for (const naam in mand) {
-        const div = document.createElement("div");
-        div.className = "mand-item";
-        div.innerHTML = `
-          <span>${naam} × ${mand[naam]}</span>
-          <button onclick="verwijder('${naam}')">Verwijder</button>
-        `;
-        container.appendChild(div);
-      }
+  function toonMand() {
+    container.innerHTML = "";
+    if (Object.keys(mand).length === 0) {
+      container.innerHTML = "<p>Je winkelmand is leeg.</p>";
+      return;
     }
 
-    function verwijder(naam) {
-      delete mand[naam];
-      localStorage.setItem("winkelmand", JSON.stringify(mand));
-      toonMand();
+    for (const naam in mand) {
+      const aantal = mand[naam];
+      const prijs = prijzen[naam] * aantal;
+      totaal += prijs;
+
+      const div = document.createElement("div");
+      div.className = "mand-item";
+      div.innerHTML = `
+        <span>${naam} × ${aantal} — €${prijs.toFixed(2)}</span>
+        <button onclick="verwijder('${naam}')">Verwijder</button>
+      `;
+      container.appendChild(div);
     }
 
+    const totaalDiv = document.createElement("div");
+    totaalDiv.style.marginTop = "20px";
+    totaalDiv.innerHTML = `<strong>Totaal: €${totaal.toFixed(2)}</strong>`;
+    container.appendChild(totaalDiv);
+  }
+
+  function verwijder(naam) {
+    delete mand[naam];
+    localStorage.setItem("winkelmand", JSON.stringify(mand));
+    totaal = 0;
     toonMand();
-  </script>
+  }
 
-  <footer>
-    <p>&copy; 2025 DK Pike Baits</p>
-  </footer>
-</body>
-</html>
-
-
+  toonMand();
+</script>
