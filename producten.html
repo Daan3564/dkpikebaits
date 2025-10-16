@@ -22,11 +22,15 @@
     } else {
       fetch("producten.json")
         .then(res => res.json())
-        .then(data => toonProducten(data));
+        .then(data => {
+          localStorage.setItem("producten", JSON.stringify(data));
+          toonProducten(data);
+        });
     }
 
     function toonProducten(producten) {
       const container = document.getElementById("product-container");
+      container.innerHTML = "";
 
       producten.forEach(p => {
         const kaart = document.createElement("div");
