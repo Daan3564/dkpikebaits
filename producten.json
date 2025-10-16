@@ -1,15 +1,10 @@
 [
   {
-    "naam": "Rode Spinner",
-    "prijs": 20.00,
-    "voorraad": 3,
-    "afbeelding": "https://daan3564.github.io/dkpikebaits/images/rode-spinner.jpg"
-  },
-  {
-    "naam": "Groene Jerkbait",
-    "prijs": 25.00,
+    "naam": "DK Kunstaas Logo",
+    "prijs": 19.95,
     "voorraad": 5,
-    "afbeelding": "https://daan3564.github.io/dkpikebaits/images/groene-jerkbait.jpg"
+    "afbeelding": "images/dk-logo.png"
   }
 ]
+
 
