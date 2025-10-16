@@ -1,6 +1,6 @@
 body {
   font-family: Arial, sans-serif;
-  background-color: #f2f2f2;
+  background-color: #f7f7f7;
   margin: 0;
   padding: 0;
 }
@@ -36,20 +36,27 @@ nav a:hover {
 }
 
 main {
-  padding: 20px;
-  max-width: 600px;
+  padding: 30px;
+  max-width: 1000px;
   margin: auto;
 }
 
 form {
   background-color: white;
-  padding: 25px;
+  padding: 30px;
   border-radius: 12px;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
-.blok {
-  margin-bottom: 25px;
+.form-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+.form-links, .form-rechts {
+  flex: 1;
+  min-width: 280px;
 }
 
 h2 {
@@ -60,14 +67,22 @@ h2 {
 
 input, textarea, select {
   width: 100%;
-  padding: 10px;
-  margin-top: 8px;
+  padding: 12px;
+  margin-bottom: 15px;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 6px;
+  font-size: 1em;
 }
 
 textarea {
   resize: vertical;
+}
+
+.checkbox {
+  display: block;
+  margin-top: 10px;
+  font-size: 0.95em;
+  color: #333;
 }
 
 h3#totaal {
@@ -76,23 +91,18 @@ h3#totaal {
   color: #333;
 }
 
-label {
-  font-size: 0.95em;
-  color: #333;
-}
-
 button {
   background-color: #28a745;
   color: white;
-  padding: 12px 20px;
+  padding: 14px 24px;
   border: none;
   border-radius: 6px;
-  font-size: 1em;
+  font-size: 1.1em;
   cursor: pointer;
+  margin-top: 30px;
   width: 100%;
 }
 
 button:hover {
   background-color: #218838;
 }
-
