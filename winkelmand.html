@@ -1,3 +1,4 @@
+<!-- winkelmand.html -->
 <!DOCTYPE html>
 <html lang="nl">
 <head>
@@ -7,18 +8,17 @@
 </head>
 <body>
   <h1>Je winkelmand</h1>
-
   <nav>
     <a href="index.html">Home</a>
     <a href="producten.html">Producten</a>
     <a href="winkelmand.html">Winkelmand</a>
   </nav>
 
-  <ul id="mand-items"></ul>
+  <ul id="mandje"></ul>
 
   <script>
     const mand = JSON.parse(localStorage.getItem("winkelmand")) || {};
-    const lijst = document.getElementById("mand-items");
+    const lijst = document.getElementById("mandje");
 
     if (Object.keys(mand).length === 0) {
       lijst.innerHTML = "<li>Je winkelmand is leeg.</li>";
@@ -30,10 +30,6 @@
       }
     }
   </script>
-
-  <footer>
-    <p>&copy; 2025 DK Pike Baits</p>
-  </footer>
 </body>
 </html>
 
