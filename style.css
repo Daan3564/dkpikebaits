@@ -12,19 +12,22 @@ header {
   margin-bottom: 30px;
 }
 
-header img {
+.logo {
   max-width: 150px;
+  margin-top: 20px;
 }
 
-nav {
+nav .menu {
   text-align: center;
   margin-bottom: 30px;
 }
 
-nav a {
-  margin: 0 15px;
+nav .menu a {
+  display: inline-block;
+  margin: 0 20px;
+  font-size: 1.2em;
+  color: #000;
   text-decoration: none;
-  color: #0077cc;
   font-weight: bold;
 }
 
@@ -32,17 +35,13 @@ main {
   text-align: center;
 }
 
-.product-kaart {
-  border: 1px solid #ccc;
-  padding: 15px;
-  margin: 15px;
-  display: inline-block;
-  width: 250px;
-  background-color: #fff;
+.welkom {
+  margin-bottom: 60px;
 }
 
-.product-kaart img {
-  max-width: 100%;
+.over-mij img.snoekfoto {
+  max-width: 400px;
+  margin-top: 20px;
 }
 
 footer {
