@@ -1,0 +1,14 @@
+[
+  {
+    "naam": "Rode Spinner",
+    "prijs": 20.00,
+    "voorraad": 3,
+    "afbeelding": "https://jouwsite.github.io/images/rode-spinner.jpg"
+  },
+  {
+    "naam": "Groene Jerkbait",
+    "prijs": 25.00,
+    "voorraad": 5,
+    "afbeelding": "https://jouwsite.github.io/images/groene-jerkbait.jpg"
+  }
+]
