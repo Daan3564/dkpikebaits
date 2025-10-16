@@ -2,8 +2,8 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8">
-  <title>Onze producten</title>
-  <link rel="stylesheet" href="stijl.css">
+  <title>Producten</title>
+  <link rel="stylesheet" href="producten.css">
 </head>
 <body>
   <header>
@@ -18,7 +18,7 @@
   </header>
 
   <main>
-    <div id="product-container" class="grid"></div>
+    <div id="product-grid"></div>
   </main>
 
   <script>
@@ -39,8 +39,8 @@
     }
 
     function toonProducten() {
-      const container = document.getElementById("product-container");
-      container.innerHTML = "";
+      const grid = document.getElementById("product-grid");
+      grid.innerHTML = "";
 
       producten.forEach(p => {
         const kaart = document.createElement("div");
@@ -50,13 +50,13 @@
           <img src="${p.afbeelding}" alt="${p.naam}">
           <p>Prijs: €${p.prijs.toFixed(2)}</p>
           <p>Voorraad: ${p.voorraad}</p>
-          <button onclick="toevoegenAanMand(${p.id})">Toevoegen</button>
+          <button onclick="toevoegen(${p.id})">Toevoegen</button>
         `;
-        container.appendChild(kaart);
+        grid.appendChild(kaart);
       });
     }
 
-    function toevoegenAanMand(id) {
+    function toevoegen(id) {
       const gekozen = producten.find(p => p.id === id);
       if (!gekozen || gekozen.voorraad <= 0) return alert("Niet op voorraad!");
 
