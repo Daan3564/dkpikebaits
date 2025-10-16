@@ -6,16 +6,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Roboto', sans-serif;
       background-color: #f5f5f5;
+      margin: 0;
       padding: 30px;
-      max-width: 1000px;
-      margin: auto;
     }
 
     h1 {
-      color: #004d66;
       text-align: center;
+      color: #004d66;
     }
 
     nav {
@@ -75,17 +74,39 @@
       background-color: #ccc;
       pointer-events: none;
     }
-
-    footer {
-      margin-top: 50px;
-      text-align: center;
-      color: #666;
-    }
   </style>
 </head>
 <body>
   <h1>Onze kunstaas</h1>
   <nav>
     <a href="index.html">Home</a>
-    <a href="producten.html">Producten</a>
-    <a href="beheer.html
+    <a href="winkelmand.html">Winkelmand</a>
+    <a href="betaal.html">Betalen</a>
+  </nav>
+
+  <div id="product-grid" class="product-grid"></div>
+
+  <script>
+    const producten = JSON.parse(localStorage.getItem("beheerProducten")) || [];
+    const grid = document.getElementById("product-grid");
+
+    if (producten.length === 0) {
+      grid.innerHTML = "<p>Er zijn nog geen producten toegevoegd.</p>";
+    } else {
+      producten.forEach(p => {
+        const kaart = document.createElement("div");
+        kaart.className = "product-card";
+        kaart.innerHTML = `
+          <img src="${p.afbeelding}" alt="${p.naam}">
+          <h2>${p.naam}</h2>
+          <p>Prijs: €${p.prijs.toFixed(2)}</p>
+          <p>Voorraad: ${p.voorraad > 0 ? p.voorraad : "Uitverkocht"}</p>
+          <a href="${p.pagina}" class="${p.voorraad === 0 ? 'disabled' : ''}">Bekijk product</a>
+        `;
+        grid.appendChild(kaart);
+      });
+    }
+  </script>
+</body>
+</html>
+
