@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <title>Rode spinner – DK Pike Baits</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Rode spinner met rozetstaart</h1>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="producten.html">Producten</a>
+    <a href="winkelmand.html">Winkelmand</a>
+    <a href="betaal.html">Betalen</a>
+  </nav>
+
+  <img src="kunstaas_rozet.jpg" alt="Rode spinner" style="max-width:400px; border-radius:10px; margin-top:20px;">
+  <p style="margin-top:20px;">
+    Deze rode spinner is perfect voor troebel water. De rozetstaart zorgt voor extra beweging en trekt de aandacht van grote snoeken. Handgemaakt, getest en klaar voor actie.
+  </p>
+
+  <button onclick="toevoegenAanMand()">Toevoegen aan winkelmand</button>
+
+  <script>
+    function toevoegenAanMand() {
+      const mand = JSON.parse(localStorage.getItem("winkelmand")) || {};
+      mand["Rode spinner met rozetstaart"] = (mand["Rode spinner met rozetstaart"] || 0) + 1;
+      localStorage.setItem("winkelmand", JSON.stringify(mand));
+      alert("Toegevoegd aan je winkelmand!");
+    }
+  </script>
+
+  <footer>
+    <p>&copy; 2025 DK Pike Baits</p>
+  </footer>
+</body>
+</html>
