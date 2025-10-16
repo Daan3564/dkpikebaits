@@ -66,6 +66,21 @@
 
     bestellingEl.value = tekst;
     totaalEl.textContent = `Totaal: €${totaal.toFixed(2)}`;
+
+    // Voorraad verlagen
+    fetch('producten.json')
+      .then(res => res.json())
+      .then(producten => {
+        mand.forEach(item => {
+          const product = producten.find(p => p.naam === item.naam);
+          if (product && product.voorraad > 0) {
+            product.voorraad -= 1;
+          }
+        });
+
+        // Simuleer opslaan van nieuwe voorraad
+        localStorage.setItem("producten", JSON.stringify(producten));
+      });
   </script>
 </body>
 </html>
