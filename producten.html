@@ -6,13 +6,25 @@
   <link rel="stylesheet" href="producten.css">
 </head>
 <body>
-  <h1>Onze producten</h1>
-  <div id="product-container"></div>
+  <header>
+    <img src="dk-logo.png" alt="DK logo" class="logo">
+    <h1>Onze producten</h1>
+  </header>
+
+  <nav class="sidebar">
+    <a href="index.html">Home</a>
+    <a href="producten.html">Producten</a>
+    <a href="winkelmand.html">Winkelmand</a>
+    <a href="betaal.html">Betalen</a>
+  </nav>
+
+  <main>
+    <div id="product-container" class="grid"></div>
+  </main>
 
   <script>
     let producten = [];
 
-    // Laad producten uit localStorage of JSON
     const opgeslagen = localStorage.getItem("producten");
     if (opgeslagen) {
       producten = JSON.parse(opgeslagen);
@@ -33,12 +45,12 @@
 
       producten.forEach(p => {
         const kaart = document.createElement("div");
-        kaart.className = "product-kaart";
+        kaart.className = "product";
         kaart.innerHTML = `
           <h3>${p.naam}</h3>
-          <img src="${p.afbeelding}" alt="${p.naam}" style="max-width:150px">
+          <img src="${p.afbeelding}" alt="${p.naam}">
           <p>Prijs: €${p.prijs.toFixed(2)}</p>
-          <p><strong>Voorraad: ${p.voorraad}</strong></p>
+          <p>Voorraad: ${p.voorraad}</p>
           <button onclick="toevoegenAanMand(${p.id})">Toevoegen</button>
         `;
         container.appendChild(kaart);
@@ -57,3 +69,4 @@
   </script>
 </body>
 </html>
+
