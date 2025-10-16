@@ -5,14 +5,65 @@
   <title>Winkelmand – DK Pike Baits</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body { font-family: 'Roboto', sans-serif; background-color: #f5f5f5; padding: 30px; max-width: 800px; margin: auto; }
-    h1 { color: #004d66; text-align: center; }
-    nav { text-align: center; margin-bottom: 30px; }
-    nav a { margin: 0 15px; text-decoration: none; color: #0077cc; font-weight: bold; }
-    ul { list-style: none; padding: 0; }
-    li { background-color: #fff; padding: 15px; margin-bottom: 10px; border-radius: 8px; box-shadow: 0 0 5px rgba(0,0,0,0.1); }
-    button { background-color: #cc0000; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; float: right; }
-    #totaal { font-weight: bold; margin-top: 20px; text-align: center; }
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f5f5f5;
+      padding: 30px;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    h1 {
+      color: #004d66;
+      text-align: center;
+    }
+
+    nav {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    nav a {
+      margin: 0 15px;
+      text-decoration: none;
+      color: #0077cc;
+      font-weight: bold;
+    }
+
+    .item {
+      background-color: #fff;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 10px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .item-info {
+      flex-grow: 1;
+    }
+
+    .item-info p {
+      margin: 5px 0;
+    }
+
+    .item button {
+      background-color: #cc0000;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #totaal {
+      font-weight: bold;
+      font-size: 18px;
+      text-align: center;
+      margin-top: 30px;
+    }
   </style>
 </head>
 <body>
@@ -22,29 +73,44 @@
     <a href="producten.html">Producten</a>
     <a href="betaal.html">Betalen</a>
   </nav>
-  <ul id="mand"></ul>
+
+  <div id="mand"></div>
   <div id="totaal"></div>
+
   <script>
-    let mand = JSON.parse(localStorage.getItem("winkelmand")) || [];
-    const lijst = document.getElementById("mand");
+    const mand = JSON.parse(localStorage.getItem("winkelmand")) || [];
+    const container = document.getElementById("mand");
     const totaalDiv = document.getElementById("totaal");
 
     function toonMand() {
-      lijst.innerHTML = "";
+      container.innerHTML = "";
       let totaal = 0;
+
       if (mand.length === 0) {
-        lijst.innerHTML = "<li>Je winkelmand is leeg.</li>";
+        container.innerHTML = "<p>Je winkelmand is leeg.</p>";
         totaalDiv.innerHTML = "";
         return;
       }
+
       mand.forEach((item, index) => {
         totaal += item.prijs * item.aantal;
-        const li = document.createElement("li");
-        li.innerHTML = `${item.naam} – €${item.prijs.toFixed(2)} (${item.aantal}x)
-          <button onclick="verwijder(${index})">Verwijder</button>`;
-        lijst.appendChild(li);
+
+        const div = document.createElement("div");
+        div.className = "item";
+
+        div.innerHTML = `
+          <div class="item-info">
+            <p><strong>${item.naam}</strong></p>
+            <p>Prijs: €${item.prijs.toFixed(2)}</p>
+            <p>Aantal: ${item.aantal}</p>
+          </div>
+          <button onclick="verwijder(${index})">Verwijder</button>
+        `;
+
+        container.appendChild(div);
       });
-      totaalDiv.innerHTML = `Totaal: €${totaal.toFixed(2)}`;
+
+      totaalDiv.innerHTML = `Totaalbedrag: €${totaal.toFixed(2)}`;
     }
 
     function verwijder(index) {
@@ -57,3 +123,4 @@
   </script>
 </body>
 </html>
+
