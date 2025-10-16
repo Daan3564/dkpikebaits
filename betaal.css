@@ -81,6 +81,8 @@ h3#totaal {
 label {
   font-size: 0.95em;
   color: #333;
+  display: block;
+  margin-top: 10px;
 }
 
 button {
@@ -100,6 +102,10 @@ button:hover {
 
 /* Mobielvriendelijk */
 @media screen and (max-width: 600px) {
+  body {
+    padding: 0;
+  }
+
   main {
     padding: 20px;
   }
@@ -124,5 +130,9 @@ button:hover {
   nav {
     flex-direction: column;
     gap: 10px;
+  }
+
+  header h1 {
+    font-size: 1.4em;
   }
 }
