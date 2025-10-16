@@ -7,17 +7,19 @@
 </head>
 <body>
   <header>
-    <img src="dk-logo.png" alt="DK Pike Baits logo" style="max-width: 150px;">
+    <img src="dk-logo.png" alt="DK Pike Baits logo">
     <h1>Producten</h1>
   </header>
 
   <nav>
     <a href="index.html">Home</a>
     <a href="producten.html">Producten</a>
+    <a href="winkelmand.html">Winkelmand</a>
+    <a href="betaal.html">Betalen</a>
   </nav>
 
   <main>
-    <div id="product-grid" style="text-align: center;"></div>
+    <div id="product-grid"></div>
   </main>
 
   <script>
@@ -27,12 +29,13 @@
         const grid = document.getElementById("product-grid");
         producten.forEach(p => {
           const kaart = document.createElement("div");
-          kaart.style.marginBottom = "30px";
+          kaart.className = "product-kaart";
           kaart.innerHTML = `
-            <img src="${p.afbeelding}" alt="${p.naam}" style="max-width: 200px;">
+            <img src="${p.afbeelding}" alt="${p.naam}">
             <h2>${p.naam}</h2>
             <p>Prijs: €${p.prijs.toFixed(2)}</p>
             <p>Voorraad: ${p.voorraad}</p>
+            <button onclick="alert('Toegevoegd aan winkelmand')">Toevoegen</button>
           `;
           grid.appendChild(kaart);
         });
@@ -40,8 +43,9 @@
   </script>
 
   <footer>
-    &copy; 2025 DK Pike Baits – Handmade baits
+    &copy; 2025 DK Pike Baits
   </footer>
 </body>
 </html>
+
 
