@@ -9,6 +9,7 @@ header {
   text-align: center;
   padding: 20px;
   background-color: white;
+  border-bottom: 1px solid #ccc;
 }
 
 .logo {
@@ -21,6 +22,7 @@ nav {
   display: flex;
   justify-content: center;
   gap: 30px;
+  flex-wrap: wrap;
 }
 
 nav a {
@@ -35,6 +37,8 @@ nav a:hover {
 
 main {
   padding: 20px;
+  max-width: 1000px;
+  margin: auto;
 }
 
 #product-grid {
@@ -54,6 +58,7 @@ main {
 .product img {
   max-width: 100%;
   height: auto;
+  margin-bottom: 10px;
 }
 
 button {
