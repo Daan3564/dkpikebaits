@@ -16,18 +16,6 @@ header img {
   max-width: 150px;
 }
 
-header h1 {
-  font-size: 2em;
-  color: #2c3e50;
-  margin-bottom: 10px;
-}
-
-header p {
-  font-size: 1.2em;
-  color: #7f8c8d;
-  font-style: italic;
-}
-
 nav {
   text-align: center;
   margin-bottom: 30px;
@@ -40,15 +28,21 @@ nav a {
   font-weight: bold;
 }
 
-main h2 {
-  color: #004d66;
+main {
   text-align: center;
 }
 
-main p {
-  text-align: center;
-  font-size: 1.2em;
-  color: #333;
+.product-kaart {
+  border: 1px solid #ccc;
+  padding: 15px;
+  margin: 15px;
+  display: inline-block;
+  width: 250px;
+  background-color: #fff;
+}
+
+.product-kaart img {
+  max-width: 100%;
 }
 
 footer {
@@ -57,5 +51,4 @@ footer {
   font-size: 0.8em;
   color: #777;
 }
-
 
