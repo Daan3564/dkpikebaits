@@ -18,21 +18,22 @@
   <ul id="bestelling"></ul>
 
   <h2>💳 Gegevens invullen</h2>
-  <form>
+  <form id="bestelformulier">
     <label>Naam:</label><br>
-    <input type="text" required><br><br>
+    <input type="text" name="naam" required><br><br>
 
     <label>Adres:</label><br>
-    <input type="text" required><br><br>
+    <input type="text" name="adres" required><br><br>
 
     <label>Email:</label><br>
-    <input type="email" required><br><br>
+    <input type="email" name="email" required><br><br>
 
     <label>Betaalmethode:</label><br>
-    <select required>
-      <option>iDEAL</option>
-      <option>PayPal</option>
-      <option>Creditcard</option>
+    <select name="methode" required>
+      <option value="">Kies een methode</option>
+      <option value="ideal">iDEAL</option>
+      <option value="paypal">PayPal</option>
+      <option value="creditcard">Creditcard</option>
     </select><br><br>
 
     <button type="submit">Bestelling plaatsen</button>
@@ -51,6 +52,13 @@
         lijst.appendChild(li);
       }
     }
+
+    document.getElementById("bestelformulier").addEventListener("submit", function(e) {
+      e.preventDefault();
+      alert("Bedankt voor je bestelling! Je ontvangt binnenkort een bevestiging per mail.");
+      localStorage.removeItem("winkelmand");
+      window.location.href = "index.html";
+    });
   </script>
 
   <footer>
