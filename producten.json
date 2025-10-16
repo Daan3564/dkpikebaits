@@ -19,6 +19,13 @@
     "prijs": 11.95,
     "voorraad": 20,
     "afbeelding": "spinner.jpg"
+  },
+  {
+    "id": 4,
+    "naam": "Pike Popper XL",
+    "prijs": 13.25,
+    "voorraad": 6,
+    "afbeelding": "popper.jpg"
   }
 ]
 
