@@ -7,11 +7,12 @@
 </head>
 <body>
   <header>
+    <img src="dk-logo.png" alt="DK logo" class="logo">
     <h1>Bestelling afronden</h1>
   </header>
 
   <main>
-    <form action="https://formspree.io/f/xnngwjrb" method="POST">
+    <form onsubmit="verlaagVoorraad()" action="https://formspree.io/f/xnngwjrb" method="POST">
       <h2>Jouw gegevens</h2>
       <input type="text" name="voornaam" placeholder="Voornaam" required>
       <input type="text" name="achternaam" placeholder="Achternaam" required>
@@ -21,7 +22,7 @@
       <textarea name="bestelling" id="bestelling" rows="6" readonly></textarea>
       <h3 id="totaal">Totaal: €0.00</h3>
 
-      <button type="submit" onclick="verlaagVoorraad()">Bestelling plaatsen</button>
+      <button type="submit">Bestelling plaatsen</button>
     </form>
   </main>
 
