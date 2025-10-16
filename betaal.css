@@ -97,3 +97,32 @@ button {
 button:hover {
   background-color: #218838;
 }
+
+/* Mobielvriendelijk */
+@media screen and (max-width: 600px) {
+  main {
+    padding: 20px;
+  }
+
+  form {
+    padding: 20px;
+  }
+
+  h2 {
+    font-size: 1.1em;
+  }
+
+  input, textarea, select {
+    font-size: 1em;
+  }
+
+  button {
+    font-size: 1em;
+    padding: 12px;
+  }
+
+  nav {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
