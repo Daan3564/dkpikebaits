@@ -24,7 +24,17 @@
       <h2>Jouw gegevens</h2>
       <input type="text" id="naam" placeholder="Naam" required>
       <input type="email" id="email" placeholder="E-mailadres" required>
-      <textarea id="adres" placeholder="Adres" required></textarea>
+      <input type="text" id="adres" placeholder="Adres" required>
+      <input type="text" id="postcode" placeholder="Postcode" required>
+      <input type="text" id="woonplaats" placeholder="Woonplaats" required>
+
+      <h2>Betaalmethode</h2>
+      <select id="methode" required>
+        <option value="">Kies een methode</option>
+        <option value="ideal">iDEAL</option>
+        <option value="paypal">PayPal</option>
+        <option value="overschrijving">Bankoverschrijving</option>
+      </select>
 
       <h2>Jouw bestelling</h2>
       <div id="bestelling"></div>
@@ -35,7 +45,7 @@
 
     <div id="bevestiging" style="display:none;">
       <h2>Bedankt voor je bestelling!</h2>
-      <p>We nemen snel contact met je op.</p>
+      <p>Je ontvangt binnenkort een bevestiging per e-mail.</p>
     </div>
   </main>
 
@@ -59,6 +69,14 @@
 
     document.getElementById("betaal-form").addEventListener("submit", function(e) {
       e.preventDefault();
+
+      // Simulatie van e-mail en bevestiging
+      const naam = document.getElementById("naam").value;
+      const email = document.getElementById("email").value;
+      const methode = document.getElementById("methode").value;
+
+      console.log(`Bestelling geplaatst door ${naam} via ${methode}. Bevestiging naar ${email}`);
+
       localStorage.removeItem("winkelmand");
       document.getElementById("betaal-form").style.display = "none";
       document.getElementById("bevestiging").style.display = "block";
@@ -66,4 +84,5 @@
   </script>
 </body>
 </html>
+
 
