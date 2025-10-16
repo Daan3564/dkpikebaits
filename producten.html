@@ -1,45 +1,125 @@
-<script>
-  let producten = JSON.parse(localStorage.getItem("beheerProducten"));
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <title>Producten – DK Pike Baits</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      padding: 30px;
+      max-width: 1000px;
+      margin: auto;
+    }
 
-  if (!producten || producten.length === 0) {
-    // Fallback testproducten
-    producten = [
-      {
-        naam: "Rode spinner met rozetstaart",
-        prijs: 20.00,
-        voorraad: 3,
-        afbeelding: "kunstaas_rozet.jpg",
-        pagina: "product-rode-spinner.html"
-      },
-      {
-        naam: "UV Glider",
-        prijs: 20.00,
-        voorraad: 0,
-        afbeelding: "kunstaas_uv.jpg",
-        pagina: "product-uv-glider.html"
-      },
-      {
-        naam: "Groene jerkbait",
-        prijs: 20.00,
-        voorraad: 5,
-        afbeelding: "kunstaas_groen.jpg",
-        pagina: "product-groene-jerkbait.html"
-      }
-    ];
-  }
+    h1 {
+      color: #004d66;
+      text-align: center;
+    }
 
-  const grid = document.getElementById("product-grid");
+    nav {
+      text-align: center;
+      margin-bottom: 30px;
+    }
 
-  producten.forEach(p => {
-    const kaart = document.createElement("div");
-    kaart.className = "product-card";
-    kaart.innerHTML = `
-      <img src="${p.afbeelding}" alt="${p.naam}">
-      <h2>${p.naam}</h2>
-      <p>Prijs: €${p.prijs.toFixed(2)}</p>
-      <p>Voorraad: ${p.voorraad > 0 ? p.voorraad : "Uitverkocht"}</p>
-      <a href="${p.pagina}" class="${p.voorraad === 0 ? 'disabled' : ''}">Bekijk product</a>
-    `;
-    grid.appendChild(kaart);
-  });
-</script>
+    nav a {
+      margin: 0 15px;
+      text-decoration: none;
+      color: #0077cc;
+      font-weight: bold;
+    }
+
+    .product-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      justify-content: center;
+    }
+
+    .product-card {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 280px;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .product-card img {
+      max-width: 100%;
+      border-radius: 8px;
+    }
+
+    .product-card h2 {
+      font-size: 20px;
+      margin: 10px 0;
+    }
+
+    .product-card p {
+      font-size: 16px;
+      margin: 5px 0;
+    }
+
+    .product-card a {
+      display: inline-block;
+      margin-top: 10px;
+      background-color: #0077cc;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+
+    .product-card a.disabled {
+      background-color: #ccc;
+      pointer-events: none;
+    }
+
+    footer {
+      margin-top: 50px;
+      text-align: center;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <h1>Onze kunstaas</h1>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="producten.html">Producten</a>
+    <a href="winkelmand.html">Winkelmand</a>
+    <a href="betaal.html">Betalen</a>
+  </nav>
+
+  <div class="product-grid">
+    <div class="product-card">
+      <img src="kunstaas_rozet.jpg" alt="Rode spinner">
+      <h2>Rode spinner met rozetstaart</h2>
+      <p>Prijs: €20,00</p>
+      <p>Voorraad: 3</p>
+      <a href="product-rode-spinner.html">Bekijk product</a>
+    </div>
+
+    <div class="product-card">
+      <img src="kunstaas_uv.jpg" alt="UV Glider">
+      <h2>UV Glider</h2>
+      <p>Prijs: €20,00</p>
+      <p>Voorraad: Uitverkocht</p>
+      <a href="product-uv-glider.html" class="disabled">Bekijk product</a>
+    </div>
+
+    <div class="product-card">
+      <img src="kunstaas_groen.jpg" alt="Groene jerkbait">
+      <h2>Groene jerkbait</h2>
+      <p>Prijs: €20,00</p>
+      <p>Voorraad: 5</p>
+      <a href="product-groene-jerkbait.html">Bekijk product</a>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 DK Pike Baits</p>
+  </footer>
+</body>
+</html>
