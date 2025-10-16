@@ -2,16 +2,17 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Producten – DK Pike Baits</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
-    <img src="dk-logo.png" alt="DK Pike Baits logo">
+    <img src="dk-logo.png" alt="DK Pike Baits logo" class="logo">
     <h1>Producten</h1>
   </header>
 
-  <nav>
+  <nav class="menu">
     <a href="index.html">Home</a>
     <a href="producten.html">Producten</a>
     <a href="winkelmand.html">Winkelmand</a>
@@ -19,8 +20,12 @@
   </nav>
 
   <main>
-    <div id="product-grid"></div>
+    <div id="product-grid" class="grid"></div>
   </main>
+
+  <footer>
+    &copy; 2025 DK Pike Baits
+  </footer>
 
   <script>
     fetch('producten.json')
@@ -35,17 +40,11 @@
             <h2>${p.naam}</h2>
             <p>Prijs: €${p.prijs.toFixed(2)}</p>
             <p>Voorraad: ${p.voorraad}</p>
-            <button onclick="alert('Toegevoegd aan winkelmand')">Toevoegen</button>
+            <button>Toevoegen aan winkelmand</button>
           `;
           grid.appendChild(kaart);
         });
       });
   </script>
-
-  <footer>
-    &copy; 2025 DK Pike Baits
-  </footer>
 </body>
 </html>
-
-
