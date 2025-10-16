@@ -1,15 +1,22 @@
 .grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 30px;
   padding: 20px;
+  justify-items: center;
+}
+
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .product-kaart {
   background-color: #fff;
   border: 1px solid #ccc;
-  width: 250px;
+  width: 100%;
+  max-width: 280px;
   padding: 15px;
   text-align: center;
   box-shadow: 0 0 5px rgba(0,0,0,0.1);
@@ -32,3 +39,4 @@
 .product-kaart button:hover {
   background-color: #005fa3;
 }
+
