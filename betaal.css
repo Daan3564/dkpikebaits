@@ -10,6 +10,13 @@ body {
   margin: auto;
 }
 
+.logo {
+  max-width: 120px;
+  height: auto;
+  display: block;
+  margin: 20px auto 10px;
+}
+
 form {
   background-color: rgba(255, 255, 255, 0.85);
   padding: 20px;
@@ -26,16 +33,6 @@ input, textarea, select {
   border-radius: 4px;
 }
 
-.naam-velden {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-
-.naam-velden input {
-  flex: 1;
-}
-
 button {
   background-color: #0077cc;
   color: white;
@@ -48,4 +45,3 @@ button {
 button:hover {
   background-color: #005fa3;
 }
-
