@@ -10,20 +10,24 @@
   <div id="product-container"></div>
 
   <script>
-    const opgeslagen = localStorage.getItem("producten");
+    let producten = [];
 
+    // Laad producten uit localStorage of JSON
+    const opgeslagen = localStorage.getItem("producten");
     if (opgeslagen) {
-      toonProducten(JSON.parse(opgeslagen));
+      producten = JSON.parse(opgeslagen);
+      toonProducten();
     } else {
       fetch("producten.json")
         .then(res => res.json())
         .then(data => {
-          localStorage.setItem("producten", JSON.stringify(data));
-          toonProducten(data);
+          producten = data;
+          localStorage.setItem("producten", JSON.stringify(producten));
+          toonProducten();
         });
     }
 
-    function toonProducten(producten) {
+    function toonProducten() {
       const container = document.getElementById("product-container");
       container.innerHTML = "";
 
@@ -42,7 +46,6 @@
     }
 
     function toevoegenAanMand(id) {
-      const producten = JSON.parse(localStorage.getItem("producten")) || [];
       const gekozen = producten.find(p => p.id === id);
       if (!gekozen || gekozen.voorraad <= 0) return alert("Niet op voorraad!");
 
@@ -54,4 +57,3 @@
   </script>
 </body>
 </html>
-
