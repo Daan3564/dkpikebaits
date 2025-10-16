@@ -5,6 +5,25 @@
   <title>Producten – DK Pike Baits</title>
   <link rel="stylesheet" href="style.css">
   <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 900px;
+      margin: auto;
+      padding: 20px;
+      background-color: #f9f9f9;
+    }
+    h1, h2 {
+      color: #004d66;
+    }
+    nav a {
+      margin-right: 20px;
+      text-decoration: none;
+      color: #0077cc;
+      font-weight: bold;
+    }
+    nav a:hover {
+      color: #005999;
+    }
     .product {
       background-color: #fff;
       padding: 20px;
@@ -16,13 +35,6 @@
       max-width: 100%;
       border-radius: 8px;
       margin-bottom: 10px;
-    }
-    .product h2 {
-      margin-top: 0;
-      color: #004d66;
-    }
-    .product p {
-      font-size: 16px;
     }
     .product button {
       background-color: #0077cc;
@@ -40,6 +52,9 @@
       background-color: #eef;
       padding: 20px;
       border-radius: 10px;
+    }
+    #mand ul {
+      padding-left: 20px;
     }
   </style>
 </head>
@@ -81,7 +96,7 @@
       }
     ];
 
-    const winkelmand = [];
+    const winkelmand = {};
 
     function toonProducten() {
       const container = document.getElementById("producten");
@@ -104,7 +119,7 @@
       const product = producten[index];
       if (product.voorraad > 0) {
         product.voorraad--;
-        winkelmand.push(product.naam);
+        winkelmand[product.naam] = (winkelmand[product.naam] || 0) + 1;
         updateMand();
         toonProducten();
       } else {
@@ -115,13 +130,9 @@
     function updateMand() {
       const lijst = document.getElementById("mand-items");
       lijst.innerHTML = "";
-      const teller = {};
-      winkelmand.forEach(item => {
-        teller[item] = (teller[item] || 0) + 1;
-      });
-      for (const naam in teller) {
+      for (const naam in winkelmand) {
         const li = document.createElement("li");
-        li.textContent = `${naam} × ${teller[naam]}`;
+        li.textContent = `${naam} × ${winkelmand[naam]}`;
         lijst.appendChild(li);
       }
     }
@@ -134,4 +145,5 @@
   </footer>
 </body>
 </html>
+
 
