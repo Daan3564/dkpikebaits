@@ -11,31 +11,26 @@
       margin: 0;
       padding: 30px;
     }
-
     h1 {
       text-align: center;
       color: #004d66;
     }
-
     nav {
       text-align: center;
       margin-bottom: 30px;
     }
-
     nav a {
       margin: 0 15px;
       text-decoration: none;
       color: #0077cc;
       font-weight: bold;
     }
-
     .product-grid {
       display: flex;
       flex-wrap: wrap;
       gap: 30px;
       justify-content: center;
     }
-
     .product-card {
       background-color: #fff;
       border-radius: 10px;
@@ -44,22 +39,18 @@
       text-align: center;
       padding: 20px;
     }
-
     .product-card img {
       max-width: 100%;
       border-radius: 8px;
     }
-
     .product-card h2 {
       font-size: 20px;
       margin: 10px 0;
     }
-
     .product-card p {
       font-size: 16px;
       margin: 5px 0;
     }
-
     .product-card button {
       margin-top: 10px;
       background-color: #0077cc;
@@ -69,7 +60,6 @@
       border-radius: 5px;
       cursor: pointer;
     }
-
     .product-card button:disabled {
       background-color: #ccc;
       cursor: not-allowed;
@@ -83,9 +73,7 @@
     <a href="winkelmand.html">Winkelmand</a>
     <a href="betaal.html">Betalen</a>
   </nav>
-
   <div id="product-grid" class="product-grid"></div>
-
   <script>
     const producten = JSON.parse(localStorage.getItem("beheerProducten")) || [];
     const winkelmand = JSON.parse(localStorage.getItem("winkelmand")) || [];
@@ -102,22 +90,18 @@
       alert(`${product.naam} toegevoegd aan winkelmand`);
     }
 
-    if (producten.length === 0) {
-      grid.innerHTML = "<p>Er zijn nog geen producten toegevoegd.</p>";
-    } else {
-      producten.forEach(p => {
-        const kaart = document.createElement("div");
-        kaart.className = "product-card";
-        kaart.innerHTML = `
-          <img src="${p.afbeelding}" alt="${p.naam}">
-          <h2>${p.naam}</h2>
-          <p>Prijs: €${p.prijs.toFixed(2)}</p>
-          <p>Voorraad: ${p.voorraad > 0 ? p.voorraad : "Uitverkocht"}</p>
-          <button ${p.voorraad === 0 ? "disabled" : ""} onclick='voegToe(${JSON.stringify(p)})'>Toevoegen aan winkelmand</button>
-        `;
-        grid.appendChild(kaart);
-      });
-    }
+    producten.forEach(p => {
+      const kaart = document.createElement("div");
+      kaart.className = "product-card";
+      kaart.innerHTML = `
+        <img src="${p.afbeelding}" alt="${p.naam}">
+        <h2>${p.naam}</h2>
+        <p>Prijs: €${p.prijs.toFixed(2)}</p>
+        <p>Voorraad: ${p.voorraad > 0 ? p.voorraad : "Uitverkocht"}</p>
+        <button ${p.voorraad === 0 ? "disabled" : ""} onclick='voegToe(${JSON.stringify(p)})'>Toevoegen aan winkelmand</button>
+      `;
+      grid.appendChild(kaart);
+    });
   </script>
 </body>
 </html>
