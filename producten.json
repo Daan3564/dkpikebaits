@@ -1,10 +1,20 @@
 [
   {
-    "naam": "DK Kunstaas",
-    "prijs": 19.95,
-    "voorraad": 5,
-    "afbeelding": "dk-logo.png"
+    "naam": "Firetail Pike Shad",
+    "prijs": 14.99,
+    "voorraad": 12,
+    "afbeelding": "firetail.png"
+  },
+  {
+    "naam": "Ghost Perch Jerkbait",
+    "prijs": 17.50,
+    "voorraad": 8,
+    "afbeelding": "ghostperch.png"
+  },
+  {
+    "naam": "Weedless Pike Spinner",
+    "prijs": 11.95,
+    "voorraad": 20,
+    "afbeelding": "weedless.png"
   }
 ]
-
-
