@@ -37,7 +37,7 @@ nav a:hover {
 
 main {
   padding: 30px;
-  max-width: 1000px;
+  max-width: 700px;
   margin: auto;
 }
 
@@ -48,15 +48,8 @@ form {
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
-.form-wrapper {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 40px;
-}
-
-.form-links, .form-rechts {
-  flex: 1;
-  min-width: 280px;
+.blok {
+  margin-bottom: 25px;
 }
 
 h2 {
@@ -68,7 +61,7 @@ h2 {
 input, textarea, select {
   width: 100%;
   padding: 12px;
-  margin-bottom: 15px;
+  margin-bottom: 12px;
   border: 1px solid #ccc;
   border-radius: 6px;
   font-size: 1em;
@@ -76,18 +69,17 @@ input, textarea, select {
 
 textarea {
   resize: vertical;
-}
-
-.checkbox {
-  display: block;
-  margin-top: 10px;
-  font-size: 0.95em;
-  color: #333;
+  font-family: Arial, sans-serif;
 }
 
 h3#totaal {
   margin-top: 10px;
   font-size: 1.2em;
+  color: #333;
+}
+
+label {
+  font-size: 0.95em;
   color: #333;
 }
 
@@ -99,7 +91,6 @@ button {
   border-radius: 6px;
   font-size: 1.1em;
   cursor: pointer;
-  margin-top: 30px;
   width: 100%;
 }
 
