@@ -8,7 +8,7 @@
 <body>
   <h1>Bestelling afronden</h1>
 
-  <form onsubmit="verlaagVoorraad()" action="https://formspree.io/f/xnngwjrb" method="POST">
+  <form id="bestelform" action="https://formspree.io/f/xnngwjrb" method="POST">
     <input type="text" name="voornaam" placeholder="Voornaam" required>
     <input type="text" name="achternaam" placeholder="Achternaam" required>
     <input type="email" name="email" placeholder="E-mailadres" required>
@@ -23,7 +23,6 @@
     const bestellingEl = document.getElementById("bestelling");
     const totaalEl = document.getElementById("totaal");
     const mand = JSON.parse(localStorage.getItem("winkelmand")) || [];
-
     let totaal = 0;
     let tekst = "";
 
@@ -35,7 +34,7 @@
     bestellingEl.value = tekst;
     totaalEl.textContent = `Totaal: €${totaal.toFixed(2)}`;
 
-    function verlaagVoorraad() {
+    document.getElementById("bestelform").addEventListener("submit", function() {
       const producten = JSON.parse(localStorage.getItem("producten")) || [];
 
       mand.forEach(item => {
@@ -47,8 +46,7 @@
 
       localStorage.setItem("producten", JSON.stringify(producten));
       localStorage.removeItem("winkelmand");
-    }
+    });
   </script>
 </body>
 </html>
-
