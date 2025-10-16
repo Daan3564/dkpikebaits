@@ -1,4 +1,4 @@
-#lijst button {
+.verwijder {
   background-color: #cc0000;
   color: white;
   border: none;
@@ -8,6 +8,6 @@
   cursor: pointer;
 }
 
-#lijst button:hover {
+.verwijder:hover {
   background-color: #990000;
 }
