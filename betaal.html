@@ -2,31 +2,45 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8">
-  <title>Betalen</title>
+  <title>Betalen – DK Pike Baits</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Betalen</h1>
+  <header>
+    <img src="dk-logo.png" alt="DK Pike Baits logo">
+    <h1>Betalen</h1>
+  </header>
+
   <nav>
     <a href="index.html">Home</a>
     <a href="producten.html">Producten</a>
     <a href="winkelmand.html">Winkelmand</a>
+    <a href="betaal.html">Betalen</a>
   </nav>
-  <div id="totaal"></div>
-  <form id="betaalForm">
-    <label>Naam:</label>
-    <input type="text" id="naam" required>
-    <label>E-mailadres:</label>
-    <input type="email" id="email" required>
-    <label>Adres:</label>
-    <textarea id="adres" rows="3" required></textarea>
-    <label>Verzendoptie:</label>
-    <select id="verzending">
-      <option value="3.95">Brievenbuspakket (€3,95)</option>
-      <option value="6.95">Standaard pakket (€6,95)</option>
-    </select>
-    <button type="submit">Bestelling plaatsen</button>
-  </form>
-  <div class="bevestiging" id="bevestiging">
-    <h
+
+  <main>
+    <form>
+      <label>Naam:</label><br>
+      <input type="text" name="naam"><br><br>
+
+      <label>Adres:</label><br>
+      <input type="text" name="adres"><br><br>
+
+      <label>Betaalmethode:</label><br>
+      <select>
+        <option>iDEAL</option>
+        <option>Creditcard</option>
+        <option>PayPal</option>
+      </select><br><br>
+
+      <button type="submit">Bestelling plaatsen</button>
+    </form>
+  </main>
+
+  <footer>
+    &copy; 2025 DK Pike Baits
+  </footer>
+</body>
+</html>
+
 
