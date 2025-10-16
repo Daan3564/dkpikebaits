@@ -2,33 +2,136 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8">
-  <title>DK Pike Baits</title>
+  <title>Producten – DK Pike Baits</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    .product {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      margin-top: 30px;
+    }
+    .product img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+    .product h2 {
+      margin-top: 0;
+      color: #004d66;
+    }
+    .product p {
+      font-size: 16px;
+    }
+    .product button {
+      background-color: #0077cc;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .product button:hover {
+      background-color: #005999;
+    }
+    #mand {
+      margin-top: 40px;
+      background-color: #eef;
+      padding: 20px;
+      border-radius: 10px;
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <h1>DK Pike Baits</h1>
-    <p>Handgemaakte kunstaas voor snoekvissers. Elk stuk is uniek en getest op resultaat.</p>
-  </header>
+  <h1>Onze kunstaas</h1>
 
   <nav>
     <a href="index.html">Home</a>
     <a href="producten.html">Producten</a>
     <a href="winkelmand.html">Winkelmand</a>
-    <a href="betaal.html">Betalen</a>
   </nav>
 
-  <section>
-    <h2>Waarom DK Pike Baits?</h2>
-    <ul>
-      <li>🎣 Unieke ontwerpen</li>
-      <li>🧪 Getest op resultaat</li>
-      <li>🛠️ Handgemaakt in Nederland</li>
-    </ul>
-  </section>
+  <div id="producten"></div>
+
+  <div id="mand">
+    <h2>🛒 Winkelmand</h2>
+    <ul id="mand-items"></ul>
+  </div>
+
+  <script>
+    const producten = [
+      {
+        naam: "Rode spinner met rozetstaart",
+        prijs: 12.95,
+        voorraad: 4,
+        afbeelding: "kunstaas_rozet.jpg"
+      },
+      {
+        naam: "UV Glider",
+        prijs: 14.50,
+        voorraad: 2,
+        afbeelding: "kunstaas_uv.jpg"
+      },
+      {
+        naam: "Groene jerkbait",
+        prijs: 11.00,
+        voorraad: 3,
+        afbeelding: "kunstaas_groen.jpg"
+      }
+    ];
+
+    const winkelmand = [];
+
+    function toonProducten() {
+      const container = document.getElementById("producten");
+      container.innerHTML = "";
+      producten.forEach((product, index) => {
+        const div = document.createElement("div");
+        div.className = "product";
+        div.innerHTML = `
+          <img src="${product.afbeelding}" alt="${product.naam}">
+          <h2>${product.naam}</h2>
+          <p>Prijs: €${product.prijs.toFixed(2)}</p>
+          <p>Voorraad: ${product.voorraad}</p>
+          <button onclick="toevoegenAanMand(${index})">Toevoegen aan winkelmand</button>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function toevoegenAanMand(index) {
+      const product = producten[index];
+      if (product.voorraad > 0) {
+        product.voorraad--;
+        winkelmand.push(product.naam);
+        updateMand();
+        toonProducten();
+      } else {
+        alert("Dit product is uitverkocht!");
+      }
+    }
+
+    function updateMand() {
+      const lijst = document.getElementById("mand-items");
+      lijst.innerHTML = "";
+      const teller = {};
+      winkelmand.forEach(item => {
+        teller[item] = (teller[item] || 0) + 1;
+      });
+      for (const naam in teller) {
+        const li = document.createElement("li");
+        li.textContent = `${naam} × ${teller[naam]}`;
+        lijst.appendChild(li);
+      }
+    }
+
+    toonProducten();
+  </script>
 
   <footer>
     <p>&copy; 2025 DK Pike Baits</p>
   </footer>
 </body>
 </html>
+
