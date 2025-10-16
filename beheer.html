@@ -42,10 +42,6 @@
       cursor: pointer;
     }
 
-    button:hover {
-      background-color: #005999;
-    }
-
     .preview {
       margin-top: 40px;
     }
@@ -76,10 +72,6 @@
       background-color: #cc0000;
       margin-top: 10px;
     }
-
-    .product-card button:hover {
-      background-color: #990000;
-    }
   </style>
 </head>
 <body>
@@ -95,7 +87,7 @@
     <label>Voorraad:</label>
     <input type="number" id="voorraad" required>
 
-    <label>Afbeelding URL (bijv. https://...):</label>
+    <label>Afbeelding URL:</label>
     <input type="text" id="afbeelding" required>
 
     <button type="submit">Toevoegen</button>
@@ -126,11 +118,9 @@
     }
 
     function verwijderProduct(index) {
-      if (confirm("Weet je zeker dat je dit product wilt verwijderen?")) {
-        producten.splice(index, 1);
-        localStorage.setItem("beheerProducten", JSON.stringify(producten));
-        toonProducten();
-      }
+      producten.splice(index, 1);
+      localStorage.setItem("beheerProducten", JSON.stringify(producten));
+      toonProducten();
     }
 
     form.addEventListener("submit", function(e) {
@@ -151,3 +141,4 @@
   </script>
 </body>
 </html>
+
