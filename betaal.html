@@ -2,45 +2,68 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Betalen – DK Pike Baits</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="betaal.css">
 </head>
 <body>
   <header>
-    <img src="dk-logo.png" alt="DK Pike Baits logo">
-    <h1>Betalen</h1>
+    <img src="dk-logo.png" alt="DK logo" class="logo">
+    <h1>Bestelling afronden</h1>
   </header>
 
-  <nav>
+  <nav class="menu">
     <a href="index.html">Home</a>
     <a href="producten.html">Producten</a>
-    <a href="winkelmand.html">Winkelmand</a>
+    <a href="winkelmand.html">Winkelmandje</a>
     <a href="betaal.html">Betalen</a>
   </nav>
 
   <main>
-    <form>
-      <label>Naam:</label><br>
-      <input type="text" name="naam"><br><br>
+    <form id="betaal-form">
+      <h2>Jouw gegevens</h2>
+      <input type="text" id="naam" placeholder="Naam" required>
+      <input type="email" id="email" placeholder="E-mailadres" required>
+      <textarea id="adres" placeholder="Adres" required></textarea>
 
-      <label>Adres:</label><br>
-      <input type="text" name="adres"><br><br>
-
-      <label>Betaalmethode:</label><br>
-      <select>
-        <option>iDEAL</option>
-        <option>Creditcard</option>
-        <option>PayPal</option>
-      </select><br><br>
+      <h2>Jouw bestelling</h2>
+      <div id="bestelling"></div>
+      <h3 id="totaal">Totaal: €0.00</h3>
 
       <button type="submit">Bestelling plaatsen</button>
     </form>
+
+    <div id="bevestiging" style="display:none;">
+      <h2>Bedankt voor je bestelling!</h2>
+      <p>We nemen snel contact met je op.</p>
+    </div>
   </main>
 
   <footer>
     &copy; 2025 DK Pike Baits
   </footer>
+
+  <script>
+    const bestellingDiv = document.getElementById("bestelling");
+    const totaalEl = document.getElementById("totaal");
+    const mand = JSON.parse(localStorage.getItem("winkelmand")) || [];
+
+    let totaal = 0;
+    mand.forEach(p => {
+      totaal += p.prijs;
+      const item = document.createElement("p");
+      item.textContent = `${p.naam} – €${p.prijs.toFixed(2)}`;
+      bestellingDiv.appendChild(item);
+    });
+    totaalEl.textContent = `Totaal: €${totaal.toFixed(2)}`;
+
+    document.getElementById("betaal-form").addEventListener("submit", function(e) {
+      e.preventDefault();
+      localStorage.removeItem("winkelmand");
+      document.getElementById("betaal-form").style.display = "none";
+      document.getElementById("bevestiging").style.display = "block";
+    });
+  </script>
 </body>
 </html>
-
 
