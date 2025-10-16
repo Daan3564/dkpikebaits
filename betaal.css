@@ -59,6 +59,16 @@ input, textarea, select {
   border-radius: 4px;
 }
 
+.naam-velden {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.naam-velden input {
+  flex: 1;
+}
+
 button {
   background-color: #0077cc;
   color: white;
