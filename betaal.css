@@ -1,6 +1,6 @@
 body {
   font-family: 'Segoe UI', sans-serif;
-  background-image: url('natuur-cartoon.jpg'); /* Zorg dat dit bestand in je map staat */
+  background-image: url('natuur-cartoon.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -92,4 +92,5 @@ footer {
   font-size: 0.8em;
   color: #777;
 }
+
 
