@@ -15,7 +15,7 @@
   <nav class="menu">
     <a href="index.html">Home</a>
     <a href="producten.html">Producten</a>
-    <a href="winkelmand.html">Winkelmand</a>
+    <a href="winkelmand.html">Winkelmandje</a>
     <a href="betaal.html">Betalen</a>
   </nav>
 
@@ -28,6 +28,13 @@
   </footer>
 
   <script>
+    function voegToeAanMand(product) {
+      let mand = JSON.parse(localStorage.getItem("winkelmand")) || [];
+      mand.push(product);
+      localStorage.setItem("winkelmand", JSON.stringify(mand));
+      alert(`${product.naam} toegevoegd aan winkelmand`);
+    }
+
     fetch('producten.json')
       .then(res => res.json())
       .then(producten => {
@@ -40,7 +47,7 @@
             <h2>${p.naam}</h2>
             <p>Prijs: €${p.prijs.toFixed(2)}</p>
             <p>Voorraad: ${p.voorraad}</p>
-            <button>Toevoegen aan winkelmand</button>
+            <button onclick='voegToeAanMand(${JSON.stringify(p)})'>Toevoegen aan winkelmand</button>
           `;
           grid.appendChild(kaart);
         });
@@ -48,5 +55,6 @@
   </script>
 </body>
 </html>
+
 
 
