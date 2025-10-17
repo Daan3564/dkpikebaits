@@ -157,7 +157,7 @@
             <h3>${p.naam}</h3>
             <p>Prijs: €${p.prijs}</p>
             <p>Voorraad: ${p.voorraad}</p>
-            <button ${p.voorraad <= 0 ? "disabled" : ""} onclick="toevoegenAanMand('${id}', '${p.naam}', ${p.prijs}, ${p.voorraad})">
+            <button ${p.voorraad <= 0 ? "disabled" : ""} onclick="toevoegenAanMand('${id}', '${p.naam}', ${p.prijs})">
               Toevoegen aan winkelmand
             </button>
           `;
@@ -166,23 +166,11 @@
       });
     }
 
-    function toevoegenAanMand(id, naam, prijs, voorraad) {
-      if (voorraad <= 0) {
-        alert("Niet op voorraad.");
-        return;
-      }
-
+    function toevoegenAanMand(id, naam, prijs) {
       let mand = JSON.parse(localStorage.getItem("winkelmand")) || [];
       mand.push({ id, naam, prijs });
       localStorage.setItem("winkelmand", JSON.stringify(mand));
-
-      db.collection("producten").doc(id).update({ voorraad: voorraad - 1 })
-        .then(() => {
-          laadProducten();
-        })
-        .catch(error => {
-          alert("Fout bij voorraad bijwerken: " + error.message);
-        });
+      alert(`${naam} toegevoegd aan winkelmand.`);
     }
 
     laadProducten();
