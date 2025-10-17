@@ -92,6 +92,22 @@
       margin: 4px 0;
       font-size: 15px;
     }
+
+    .product button {
+      margin-top: 10px;
+      padding: 10px 16px;
+      background: #27ae60;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    .product button:disabled {
+      background: #aaa;
+      cursor: not-allowed;
+    }
   </style>
 </head>
 <body>
@@ -129,27 +145,43 @@
       const container = document.getElementById("producten");
       container.innerHTML = "";
 
-      db.collection("producten").get()
-        .then(snapshot => {
-          if (snapshot.empty) {
-            container.innerHTML = "<p>Er zijn nog geen producten toegevoegd.</p>";
-            return;
-          }
+      db.collection("producten").get().then(snapshot => {
+        snapshot.forEach(doc => {
+          const p = doc.data();
+          const id = doc.id;
 
-          snapshot.forEach(doc => {
-            const p = doc.data();
-            container.innerHTML += `
-              <div class="product">
-                <img src="${p.afbeelding}" alt="${p.naam}">
-                <h3>${p.naam}</h3>
-                <p>Prijs: €${p.prijs}</p>
-                <p>Voorraad: ${p.voorraad}</p>
-              </div>
-            `;
-          });
+          const div = document.createElement("div");
+          div.className = "product";
+          div.innerHTML = `
+            <img src="${p.afbeelding}" alt="${p.naam}">
+            <h3>${p.naam}</h3>
+            <p>Prijs: €${p.prijs}</p>
+            <p>Voorraad: ${p.voorraad}</p>
+            <button ${p.voorraad <= 0 ? "disabled" : ""} onclick="toevoegenAanMand('${id}', '${p.naam}', ${p.prijs}, ${p.voorraad})">
+              Toevoegen aan winkelmand
+            </button>
+          `;
+          container.appendChild(div);
+        });
+      });
+    }
+
+    function toevoegenAanMand(id, naam, prijs, voorraad) {
+      if (voorraad <= 0) {
+        alert("Niet op voorraad.");
+        return;
+      }
+
+      let mand = JSON.parse(localStorage.getItem("winkelmand")) || [];
+      mand.push({ id, naam, prijs });
+      localStorage.setItem("winkelmand", JSON.stringify(mand));
+
+      db.collection("producten").doc(id).update({ voorraad: voorraad - 1 })
+        .then(() => {
+          laadProducten();
         })
         .catch(error => {
-          container.innerHTML = "<p>Fout bij laden: " + error.message + "</p>";
+          alert("Fout bij voorraad bijwerken: " + error.message);
         });
     }
 
@@ -157,5 +189,3 @@
   </script>
 </body>
 </html>
-
-
