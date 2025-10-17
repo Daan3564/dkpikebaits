@@ -48,41 +48,44 @@
         return;
       }
 
-      db.collection("producten").add({ naam, prijs, voorraad, afbeelding }).then(() => {
-        document.getElementById("naam").value = "";
-        document.getElementById("prijs").value = "";
-        document.getElementById("voorraad").value = "";
-        document.getElementById("afbeelding").value = "";
-        ophalen();
-      }).catch(error => {
-        console.error("Fout bij toevoegen:", error);
-        alert("Er ging iets mis bij het toevoegen.");
-      });
+      db.collection("producten").add({ naam, prijs, voorraad, afbeelding })
+        .then(() => {
+          document.getElementById("naam").value = "";
+          document.getElementById("prijs").value = "";
+          document.getElementById("voorraad").value = "";
+          document.getElementById("afbeelding").value = "";
+          ophalen();
+        })
+        .catch(error => {
+          console.error("Fout bij toevoegen:", error);
+          alert("Er ging iets mis bij het toevoegen.");
+        });
     }
 
     function ophalen() {
       document.getElementById("lijst").innerHTML = "";
-      db.collection("producten").get().then(snapshot => {
-        snapshot.forEach(doc => {
-          const p = doc.data();
-          document.getElementById("lijst").innerHTML += `
-            <div class="product">
-              <h3>${p.naam}</h3>
-              <p>Prijs: €${p.prijs}</p>
-              <p>Voorraad: ${p.voorraad}</p>
-              <img src="${p.afbeelding}" alt="${p.naam}">
-            </div>
-          `;
+      db.collection("producten").get()
+        .then(snapshot => {
+          snapshot.forEach(doc => {
+            const p = doc.data();
+            document.getElementById("lijst").innerHTML += `
+              <div class="product">
+                <h3>${p.naam}</h3>
+                <p>Prijs: €${p.prijs}</p>
+                <p>Voorraad: ${p.voorraad}</p>
+                <img src="${p.afbeelding}" alt="${p.naam}">
+              </div>
+            `;
+          });
+        })
+        .catch(error => {
+          console.error("Fout bij ophalen:", error);
+          document.getElementById("lijst").innerHTML = "<p>Kan producten niet laden.</p>";
         });
-      }).catch(error => {
-        console.error("Fout bij ophalen:", error);
-        document.getElementById("lijst").innerHTML = "<p>Kan producten niet laden.</p>";
-      });
     }
 
     ophalen();
   </script>
 </body>
 </html>
-
 
