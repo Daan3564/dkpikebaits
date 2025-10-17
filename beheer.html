@@ -3,13 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <title>Productbeheer</title>
-  <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore-compat.js"></script>
   <style>
     body { font-family: sans-serif; padding: 20px; max-width: 600px; margin: auto; }
     input, button { margin: 5px 0; width: 100%; padding: 8px; }
-    .product { border: 1px solid #ccc; padding: 10px; margin-top: 10px; }
-    img { max-width: 100%; height: auto; }
+    .product { border: 1px solid #ccc; padding: 10px; margin-top: 10px; position: relative; }
+    .product button { position: absolute; top: 10px; right: 10px; background: #e74c3c; color: white; border: none; padding: 5px 10px; cursor: pointer; }
+    img { max-width: 100%; height: auto; margin-top: 10px; }
   </style>
 </head>
 <body>
@@ -62,14 +63,22 @@
         });
     }
 
+    function verwijderen(id) {
+      if (confirm("Weet je zeker dat je dit product wilt verwijderen?")) {
+        db.collection("producten").doc(id).delete().then(ophalen);
+      }
+    }
+
     function ophalen() {
       document.getElementById("lijst").innerHTML = "";
       db.collection("producten").get()
         .then(snapshot => {
           snapshot.forEach(doc => {
             const p = doc.data();
+            const id = doc.id;
             document.getElementById("lijst").innerHTML += `
               <div class="product">
+                <button onclick="verwijderen('${id}')">Verwijder</button>
                 <h3>${p.naam}</h3>
                 <p>Prijs: €${p.prijs}</p>
                 <p>Voorraad: ${p.voorraad}</p>
@@ -88,4 +97,3 @@
   </script>
 </body>
 </html>
-
