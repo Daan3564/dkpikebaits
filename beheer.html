@@ -38,10 +38,15 @@
     const db = firebase.firestore();
 
     function toevoegen() {
-      const naam = document.getElementById("naam").value;
+      const naam = document.getElementById("naam").value.trim();
       const prijs = parseFloat(document.getElementById("prijs").value);
       const voorraad = parseInt(document.getElementById("voorraad").value);
-      const afbeelding = document.getElementById("afbeelding").value;
+      const afbeelding = document.getElementById("afbeelding").value.trim();
+
+      if (!naam || isNaN(prijs) || isNaN(voorraad) || !afbeelding) {
+        alert("Vul alle velden correct in.");
+        return;
+      }
 
       db.collection("producten").add({ naam, prijs, voorraad, afbeelding }).then(() => {
         document.getElementById("naam").value = "";
@@ -49,6 +54,9 @@
         document.getElementById("voorraad").value = "";
         document.getElementById("afbeelding").value = "";
         ophalen();
+      }).catch(error => {
+        console.error("Fout bij toevoegen:", error);
+        alert("Er ging iets mis bij het toevoegen.");
       });
     }
 
@@ -66,6 +74,9 @@
             </div>
           `;
         });
+      }).catch(error => {
+        console.error("Fout bij ophalen:", error);
+        document.getElementById("lijst").innerHTML = "<p>Kan producten niet laden.</p>";
       });
     }
 
@@ -73,4 +84,5 @@
   </script>
 </body>
 </html>
+
 
