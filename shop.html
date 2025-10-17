@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <title>DK Pike Baits – Shop</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore-compat.js"></script>
+  <style>
+    body { font-family: sans-serif; padding: 20px; max-width: 800px; margin: auto; background: #f9f9f9; }
+    .product { border: 1px solid #ccc; background: white; padding: 12px; margin-top: 12px; border-radius: 6px; }
+    img { max-width: 100%; height: auto; margin-top: 10px; border-radius: 4px; }
+    h1 { text-align: center; }
+  </style>
+</head>
+<body>
+  <h1>Onze Kunstaasproducten</h1>
+  <div id="lijst">Laden...</div>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyBujoNRa_IHaxyLcI6-iZxmTSszn7Edw8Q",
+      authDomain: "dkpikebaits.firebaseapp.com",
+      projectId: "dkpikebaits",
+      storageBucket: "dkpikebaits.appspot.com",
+      messagingSenderId: "229379961327",
+      appId: "1:229379961327:web:214231f859024560da461a",
+      measurementId: "G-9FQYM23902"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    function ophalen() {
+      const lijst = document.getElementById("lijst");
+      lijst.innerHTML = "";
+      db.collection("producten").get()
+        .then(snapshot => {
+          if (snapshot.empty) {
+            lijst.innerHTML = "<p>Er zijn nog geen producten toegevoegd.</p>";
+            return;
+          }
+          snapshot.forEach(doc => {
+            const p = doc.data();
+            lijst.innerHTML += `
+              <div class="product">
+                <h3>${p.naam}</h3>
+                <p>Prijs: €${p.prijs}</p>
+                <p>Voorraad: ${p.voorraad}</p>
+                <img src="${p.afbeelding}" alt="${p.naam}">
+              </div>
+            `;
+          });
+        })
+        .catch(error => {
+          lijst.innerHTML = "<p>Fout bij laden: " + error.message + "</p>";
+        });
+    }
+
+    ophalen();
+  </script>
+</body>
+</html>
