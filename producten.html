@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="nl">
->
 <head>
   <meta charset="UTF-8">
   <title>Producten – DK Pike Baits</title>
@@ -42,7 +41,7 @@
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-template-columns: repeat(2, 1fr);
       gap: 20px;
       padding: 20px;
       max-width: 1000px;
@@ -75,7 +74,11 @@
       margin: 4px 0;
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 700px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
       nav a {
         display: block;
         margin: 10px 0 0;
@@ -142,3 +145,4 @@
   </script>
 </body>
 </html>
+
