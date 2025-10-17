@@ -13,7 +13,6 @@
     .product { border: 1px solid #ccc; background: white; padding: 12px; margin-top: 12px; position: relative; border-radius: 6px; }
     .product button { position: absolute; top: 12px; right: 12px; background: #e74c3c; color: white; border: none; padding: 6px 10px; font-size: 14px; cursor: pointer; }
     img { max-width: 100%; height: auto; margin-top: 10px; border-radius: 4px; }
-    #debug { background: #fff3cd; padding: 10px; margin-top: 20px; border: 1px solid #ffeeba; border-radius: 6px; }
   </style>
 </head>
 <body>
@@ -26,8 +25,6 @@
 
   <h2>Alle producten</h2>
   <div id="lijst"></div>
-
-  <div id="debug"><strong>Debug:</strong> <span id="debugtext">Nog niks geladen…</span></div>
 
   <script>
     const firebaseConfig = {
@@ -43,11 +40,6 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
-    function debug(msg) {
-      document.getElementById("debugtext").innerText = msg;
-      console.log("DEBUG:", msg);
-    }
-
     function toevoegen() {
       const naam = document.getElementById("naam").value.trim();
       const prijs = parseFloat(document.getElementById("prijs").value);
@@ -60,21 +52,21 @@
       }
 
       db.collection("producten").add({ naam, prijs, voorraad, afbeelding })
-        .then((docRef) => {
-          debug("✅ Toegevoegd met ID: " + docRef.id);
+        .then(() => {
+          document.getElementById("naam").value = "";
+          document.getElementById("prijs").value = "";
+          document.getElementById("voorraad").value = "";
+          document.getElementById("afbeelding").value = "";
           ophalen();
         })
         .catch(error => {
-          debug("❌ Fout bij toevoegen: " + error.message);
+          alert("Fout bij toevoegen: " + error.message);
         });
     }
 
     function verwijderen(id) {
       if (confirm("Weet je zeker dat je dit product wilt verwijderen?")) {
-        db.collection("producten").doc(id).delete().then(() => {
-          debug("🗑️ Verwijderd: " + id);
-          ophalen();
-        });
+        db.collection("producten").doc(id).delete().then(ophalen);
       }
     }
 
@@ -82,7 +74,6 @@
       document.getElementById("lijst").innerHTML = "";
       db.collection("producten").get()
         .then(snapshot => {
-          debug("📦 Aantal producten: " + snapshot.size);
           snapshot.forEach(doc => {
             const p = doc.data();
             const id = doc.id;
@@ -98,7 +89,7 @@
           });
         })
         .catch(error => {
-          debug("❌ Fout bij ophalen: " + error.message);
+          document.getElementById("lijst").innerHTML = "<p>Fout bij ophalen: " + error.message + "</p>";
         });
     }
 
@@ -106,3 +97,4 @@
   </script>
 </body>
 </html>
+
