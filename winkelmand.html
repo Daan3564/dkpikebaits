@@ -2,64 +2,175 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8">
+  <title>DK Pike Baits – Winkelmand</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Winkelmand – DK Pike Baits</title>
-  <link rel="stylesheet" href="mand.css">
+  <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore-compat.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background: #f2f2f2;
+      color: #2c3e50;
+    }
+
+    header {
+      padding: 30px 20px 10px;
+      background: #1e272e;
+      color: white;
+      text-align: center;
+    }
+
+    header img {
+      height: 80px;
+      margin-bottom: 10px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 28px;
+      letter-spacing: 1px;
+    }
+
+    header p {
+      margin: 5px 0 20px;
+      font-size: 16px;
+      font-style: italic;
+      color: #ccc;
+    }
+
+    nav {
+      background: #34495e;
+      padding: 10px 0;
+      text-align: center;
+    }
+
+    nav a {
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    h2 {
+      margin-top: 30px;
+      text-align: center;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      max-width: 600px;
+      margin: 20px auto;
+    }
+
+    li {
+      background: white;
+      margin-bottom: 10px;
+      padding: 12px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .verwijder {
+      background: #e74c3c;
+      color: white;
+      border: none;
+      padding: 6px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .totaal {
+      text-align: center;
+      font-weight: bold;
+      font-size: 18px;
+      margin-top: 20px;
+    }
+
+    .afrekenen {
+      display: block;
+      margin: 30px auto;
+      padding: 12px 20px;
+      background: #27ae60;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      width: 200px;
+    }
+
+    @media (max-width: 600px) {
+      nav a {
+        display: block;
+        margin: 10px 0;
+      }
+
+      li {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .verwijder {
+        margin-top: 10px;
+      }
+    }
+  </style>
 </head>
 <body>
   <header>
-    <img src="dk-logo.png" alt="DK logo" class="logo">
-    <h1>Winkelmandje</h1>
+    <img src="dk-logo.png" alt="DK Pike Baits logo">
+    <h1>DK PIKE BAITS</h1>
+    <p>Kwaliteit die bijt</p>
   </header>
 
-  <nav class="menu">
+  <nav>
     <a href="index.html">Home</a>
     <a href="producten.html">Producten</a>
-    <a href="winkelmand.html">Winkelmandje</a>
-    <a href="betaal.html">Betalen</a>
+    <a href="winkelmand.html">Winkelmand</a>
   </nav>
 
-  <main>
-    <div id="mand-container" class="grid"></div>
-    <h2 id="totaal">Totaal: €0.00</h2>
-  </main>
-
-  <footer>
-    &copy; 2025 DK Pike Baits
-  </footer>
+  <h2>Jouw winkelmand</h2>
+  <ul id="mand"></ul>
+  <div class="totaal" id="totaalbedrag">Totaal: €0,00</div>
+  <a href="betalen.html" class="afrekenen">Naar afrekenen</a>
 
   <script>
-    function toonMand() {
-      const mand = JSON.parse(localStorage.getItem("winkelmand")) || [];
-      const container = document.getElementById("mand-container");
-      container.innerHTML = "";
+    const mand = JSON.parse(localStorage.getItem("winkelmand")) || [];
+    const lijst = document.getElementById("mand");
+    const totaalDiv = document.getElementById("totaalbedrag");
 
-      let totaal = 0;
-
-      mand.forEach((p, index) => {
-        totaal += p.prijs;
-        const kaart = document.createElement("div");
-        kaart.className = "product-kaart";
-        kaart.innerHTML = `
-          <img src="${p.afbeelding}" alt="${p.naam}" onerror="this.src='placeholder.png'">
-          <h2>${p.naam}</h2>
-          <p>Prijs: €${p.prijs.toFixed(2)}</p>
-          <button onclick="verwijder(${index})">Verwijder</button>
-        `;
-        container.appendChild(kaart);
-      });
-
-      document.getElementById("totaal").textContent = `Totaal: €${totaal.toFixed(2)}`;
+    if (mand.length === 0) {
+      lijst.innerHTML = "<li>Je winkelmand is leeg.</li>";
+      document.querySelector(".afrekenen").style.display = "none";
+      totaalDiv.style.display = "none";
     }
+
+    let totaal = 0;
+    mand.forEach((item, index) => {
+      const li = document.createElement("li");
+      li.innerHTML = `
+        <span>${item.naam} – €${item.prijs}</span>
+        <button class="verwijder" onclick="verwijder(${index})">Verwijder</button>
+      `;
+      lijst.appendChild(li);
+      totaal += item.prijs;
+    });
+
+    totaalDiv.textContent = `Totaal: €${totaal.toFixed(2)}`;
 
     function verwijder(index) {
-      let mand = JSON.parse(localStorage.getItem("winkelmand")) || [];
       mand.splice(index, 1);
       localStorage.setItem("winkelmand", JSON.stringify(mand));
-      toonMand();
+      location.reload();
     }
-
-    toonMand();
   </script>
 </body>
 </html>
