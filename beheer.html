@@ -1,54 +1,74 @@
-<script>
-  let producten = JSON.parse(localStorage.getItem("producten")) || [];
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <title>Productbeheer</title>
+  <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js"></script>
+  <style>
+    body { font-family: sans-serif; padding: 20px; max-width: 600px; margin: auto; }
+    input, button { margin: 5px 0; width: 100%; padding: 8px; }
+    .product { border: 1px solid #ccc; padding: 10px; margin-top: 10px; }
+    img { max-width: 100%; height: auto; }
+  </style>
+</head>
+<body>
+  <h1>Product toevoegen</h1>
+  <input id="naam" placeholder="Naam product">
+  <input id="prijs" type="number" placeholder="Prijs">
+  <input id="voorraad" type="number" placeholder="Voorraad">
+  <input id="afbeelding" placeholder="Afbeelding URL">
+  <button onclick="toevoegen()">Toevoegen</button>
 
-  function toonProducten() {
-    const lijst = document.getElementById("lijst");
-    lijst.innerHTML = "";
+  <h2>Alle producten</h2>
+  <div id="lijst"></div>
 
-    producten.forEach((p, index) => {
-      const item = document.createElement("li");
-      item.innerHTML = `
-        ${p.naam} – €${p.prijs.toFixed(2)} – voorraad: ${p.voorraad}
-        <button onclick="verwijderProduct(${index})">🗑️ Verwijder</button>
-      `;
-      lijst.appendChild(item);
-    });
-  }
-
-  function verwijderProduct(index) {
-    producten.splice(index, 1);
-    localStorage.setItem("producten", JSON.stringify(producten));
-    toonProducten();
-  }
-
-  document.getElementById("toevoegForm").addEventListener("submit", function(e) {
-    e.preventDefault();
-
-    const naam = document.getElementById("naam").value.trim();
-    const prijs = parseFloat(document.getElementById("prijs").value);
-    const voorraad = parseInt(document.getElementById("voorraad").value);
-    const afbeelding = document.getElementById("afbeelding").value.trim();
-
-    if (!naam || isNaN(prijs) || isNaN(voorraad) || !afbeelding) {
-      alert("Vul alle velden correct in.");
-      return;
-    }
-
-    const nieuw = {
-      id: Date.now(),
-      naam,
-      prijs,
-      voorraad,
-      afbeelding
+  <script>
+    const firebaseConfig = {
+      apiKey: "JOUW_API_KEY",
+      authDomain: "JOUW_PROJECT.firebaseapp.com",
+      projectId: "JOUW_PROJECT",
+      storageBucket: "JOUW_PROJECT.appspot.com",
+      messagingSenderId: "JOUW_SENDER_ID",
+      appId: "JOUW_APP_ID"
     };
 
-    producten.push(nieuw);
-    localStorage.setItem("producten", JSON.stringify(producten));
-    toonProducten();
-    this.reset();
-  });
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
 
-  toonProducten();
-</script>
+    function toevoegen() {
+      const naam = document.getElementById("naam").value;
+      const prijs = parseFloat(document.getElementById("prijs").value);
+      const voorraad = parseInt(document.getElementById("voorraad").value);
+      const afbeelding = document.getElementById("afbeelding").value;
 
+      db.collection("producten").add({ naam, prijs, voorraad, afbeelding }).then(() => {
+        document.getElementById("naam").value = "";
+        document.getElementById("prijs").value = "";
+        document.getElementById("voorraad").value = "";
+        document.getElementById("afbeelding").value = "";
+        ophalen();
+      });
+    }
 
+    function ophalen() {
+      document.getElementById("lijst").innerHTML = "";
+      db.collection("producten").get().then(snapshot => {
+        snapshot.forEach(doc => {
+          const p = doc.data();
+          document.getElementById("lijst").innerHTML += `
+            <div class="product">
+              <h3>${p.naam}</h3>
+              <p>Prijs: €${p.prijs}</p>
+              <p>Voorraad: ${p.voorraad}</p>
+              <img src="${p.afbeelding}" alt="${p.naam}">
+            </div>
+          `;
+        });
+      });
+    }
+
+    ophalen();
+  </script>
+</body>
+</html>
