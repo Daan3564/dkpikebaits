@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="nl">
+>
 <head>
   <meta charset="UTF-8">
   <title>Producten – DK Pike Baits</title>
@@ -9,21 +10,43 @@
   <style>
     body {
       font-family: sans-serif;
-      padding: 20px;
-      max-width: 1000px;
-      margin: auto;
+      margin: 0;
       background: #f9f9f9;
+    }
+
+    header {
+      background: #1e272e;
+      color: white;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    header img {
+      height: 40px;
+    }
+
+    nav a {
+      color: white;
+      margin-left: 20px;
+      text-decoration: none;
+      font-weight: bold;
     }
 
     h1 {
       text-align: center;
-      margin-bottom: 30px;
+      margin: 30px 0 10px;
     }
 
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 20px;
+      padding: 20px;
+      max-width: 1000px;
+      margin: auto;
     }
 
     .product {
@@ -53,13 +76,23 @@
     }
 
     @media (max-width: 600px) {
-      body {
-        padding: 10px;
+      nav a {
+        display: block;
+        margin: 10px 0 0;
       }
     }
   </style>
 </head>
 <body>
+  <header>
+    <img src="logo.png" alt="DK Pike Baits logo">
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="producten.html">Producten</a>
+      <a href="beheer.html">Beheer</a>
+    </nav>
+  </header>
+
   <h1>Onze Kunstaasproducten</h1>
   <div id="producten" class="grid">Laden...</div>
 
@@ -84,7 +117,7 @@
       db.collection("producten").get()
         .then(snapshot => {
           if (snapshot.empty) {
-            container.innerHTML = "<p>Er zijn nog geen producten toegevoegd.</p>";
+            container.innerHTML = "<p style='text-align:center;'>Er zijn nog geen producten toegevoegd.</p>";
             return;
           }
 
