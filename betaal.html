@@ -2,97 +2,144 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8">
-  <title>Betalen</title>
-  <link rel="stylesheet" href="betaal.css">
+  <title>DK Pike Baits – Betalen</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore-compat.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background: #f2f2f2;
+      text-align: center;
+    }
+
+    header {
+      padding: 30px 20px 10px;
+      background: #1e272e;
+      color: white;
+    }
+
+    header img {
+      height: 80px;
+      margin-bottom: 10px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 28px;
+      letter-spacing: 1px;
+    }
+
+    header p {
+      margin: 5px 0 20px;
+      font-size: 16px;
+      font-style: italic;
+      color: #ccc;
+    }
+
+    nav {
+      background: #34495e;
+      padding: 10px 0;
+    }
+
+    nav a {
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    h2 {
+      margin-top: 30px;
+      color: #2c3e50;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      max-width: 600px;
+      margin: 20px auto;
+    }
+
+    li {
+      background: white;
+      margin-bottom: 10px;
+      padding: 12px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 12px 20px;
+      background: #27ae60;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
   <header>
-    <img src="dk-logo.png" alt="DK logo" class="logo">
-    <h1>Bestelling afronden</h1>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="producten.html">Producten</a>
-      <a href="winkelmand.html">Winkelmand</a>
-      <a href="betaal.html">Betalen</a>
-    </nav>
+    <img src="dk-logo.png" alt="DK Pike Baits logo">
+    <h1>DK PIKE BAITS</h1>
+    <p>Kwaliteit die bijt</p>
   </header>
 
-  <main>
-    <form id="bestelform" action="https://formspree.io/f/xnngwjrb" method="POST">
-      <div class="blok">
-        <h2>Persoonlijke gegevens</h2>
-        <input type="text" name="voornaam" placeholder="Voornaam" required>
-        <input type="text" name="achternaam" placeholder="Achternaam" required>
-        <input type="email" name="email" placeholder="E-mailadres" required>
-        <input type="tel" name="telefoon" placeholder="Telefoonnummer" required>
-      </div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="producten.html">Producten</a>
+    <a href="winkelmand.html">Winkelmand</a>
+    <a href="betalen.html">Betalen</a>
+  </nav>
 
-      <div class="blok">
-        <h2>Adresgegevens</h2>
-        <input type="text" name="straat" placeholder="Straatnaam" required>
-        <input type="text" name="huisnummer" placeholder="Huisnummer" required>
-        <input type="text" name="postcode" placeholder="Postcode" required>
-        <input type="text" name="plaats" placeholder="Plaats" required>
-      </div>
-
-      <div class="blok">
-        <h2>Betaalmethode</h2>
-        <select name="bank" required>
-          <option value="">Kies je bank</option>
-          <option value="ING">ING</option>
-          <option value="Rabobank">Rabobank</option>
-          <option value="ABN AMRO">ABN AMRO</option>
-          <option value="SNS">SNS</option>
-          <option value="Bunq">Bunq</option>
-        </select>
-      </div>
-
-      <div class="blok">
-        <h2>Bestelling</h2>
-        <textarea name="bestelling" id="bestelling" rows="6" readonly></textarea>
-        <h3 id="totaal">Totaal: €0.00</h3>
-      </div>
-
-      <div class="blok">
-        <label>
-          <input type="checkbox" required>
-          Ik ga akkoord met de bestelling en voorwaarden
-        </label>
-      </div>
-
-      <button type="submit">✅ Bestelling plaatsen</button>
-    </form>
-  </main>
+  <h2>Bestelling controleren</h2>
+  <ul id="mand"></ul>
+  <button onclick="verlaagVoorraadNaBetaling()">Afrekenen</button>
 
   <script>
-    const bestellingEl = document.getElementById("bestelling");
-    const totaalEl = document.getElementById("totaal");
+    const firebaseConfig = {
+      apiKey: "AIzaSyBujoNRa_IHaxyLcI6-iZxmTSszn7Edw8Q",
+      authDomain: "dkpikebaits.firebaseapp.com",
+      projectId: "dkpikebaits",
+      storageBucket: "dkpikebaits.appspot.com",
+      messagingSenderId: "229379961327",
+      appId: "1:229379961327:web:214231f859024560da461a",
+      measurementId: "G-9FQYM23902"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
     const mand = JSON.parse(localStorage.getItem("winkelmand")) || [];
+    const lijst = document.getElementById("mand");
 
-    let totaal = 0;
-    let tekst = "";
-
-    mand.forEach(p => {
-      totaal += p.prijs;
-      tekst += `• ${p.naam} – €${p.prijs.toFixed(2)}\n`;
+    mand.forEach(item => {
+      const li = document.createElement("li");
+      li.textContent = `${item.naam} – €${item.prijs}`;
+      lijst.appendChild(li);
     });
 
-    bestellingEl.value = tekst;
-    totaalEl.textContent = `Totaal: €${totaal.toFixed(2)}`;
-
-    document.getElementById("bestelform").addEventListener("submit", function() {
-      const producten = JSON.parse(localStorage.getItem("producten")) || [];
-
+    function verlaagVoorraadNaBetaling() {
       mand.forEach(item => {
-        const product = producten.find(p => p.id === item.id);
-        if (product && product.voorraad > 0) {
-          product.voorraad -= 1;
-        }
+        const ref = db.collection("producten").doc(item.id);
+        ref.get().then(doc => {
+          if (doc.exists) {
+            const huidige = doc.data().voorraad || 0;
+            ref.update({ voorraad: Math.max(huidige - 1, 0) });
+          }
+        });
       });
 
-      localStorage.setItem("producten", JSON.stringify(producten));
       localStorage.removeItem("winkelmand");
-    });
+      alert("Bestelling afgerond! Voorraad is aangepast.");
+      window.location.href = "index.html";
+    }
   </script>
 </body>
 </html>
+
