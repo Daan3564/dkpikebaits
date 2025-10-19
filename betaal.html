@@ -65,6 +65,12 @@
       margin: auto;
     }
 
+    .totaal {
+      font-size: 20px;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+
     .betaalknop {
       display: inline-block;
       margin-top: 30px;
@@ -105,13 +111,33 @@
 
   <section>
     <h2>Betalen voor je bestelling</h2>
-    <p>Je kunt hieronder veilig betalen via iDEAL. Zodra je betaling binnen is, verwerken we je bestelling direct.</p>
+    <p>Je betaalt het totaalbedrag inclusief verzendkosten. Zodra je betaling binnen is, verwerken we je bestelling direct.</p>
 
-    <!-- Vervang deze link morgen met je echte Tikkie / PayRequest link -->
-    <a href="https://payrequest.io/pay/dkpikebaits" target="_blank" class="betaalknop">
-      Betaal €12,50 met iDEAL
-    </a>
+    <div class="totaal" id="totaalbedrag">Totaal: €0,00</div>
+    <a id="betaallink" href="#" target="_blank" class="betaalknop">Betaal nu</a>
   </section>
+
+  <script>
+    const mand = JSON.parse(localStorage.getItem("winkelmand")) || [];
+    if (mand.length === 0) {
+      alert("Je winkelmand is leeg. Je kunt niet afrekenen.");
+      window.location.href = "producten.html";
+    }
+
+    let totaal = 0;
+    mand.forEach(item => totaal += item.prijs);
+
+    const verzendkosten = 4.95;
+    const totaalMetVerzending = totaal + verzendkosten;
+    const bedrag = totaalMetVerzending.toFixed(2);
+
+    document.getElementById("totaalbedrag").textContent = `Totaal (incl. verzending): €${bedrag}`;
+
+    // Vervang deze link met jouw echte betaallink-platform
+    const link = `https://payrequest.io/pay/dkpikebaits?amount=${bedrag}`;
+    document.getElementById("betaallink").href = link;
+    document.getElementById("betaallink").textContent = `Betaal €${bedrag} met iDEAL`;
+  </script>
 </body>
 </html>
 
