@@ -4,21 +4,19 @@
   <meta charset="UTF-8">
   <title>DK Pike Baits – Betalen</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore-compat.js"></script>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
       margin: 0;
       background: #f2f2f2;
       color: #2c3e50;
+      text-align: center;
     }
 
     header {
       padding: 30px 20px 10px;
       background: #1e272e;
       color: white;
-      text-align: center;
     }
 
     header img {
@@ -42,7 +40,6 @@
     nav {
       background: #34495e;
       padding: 10px 0;
-      text-align: center;
     }
 
     nav a {
@@ -53,64 +50,32 @@
       font-size: 16px;
     }
 
+    section {
+      padding: 40px 20px;
+    }
+
     h2 {
-      margin-top: 30px;
-      text-align: center;
+      font-size: 24px;
+      margin-bottom: 20px;
     }
 
-    form {
-      max-width: 600px;
-      margin: 20px auto;
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-    }
-
-    label {
-      display: block;
-      margin-bottom: 6px;
-      font-weight: bold;
-    }
-
-    input {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 16px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 15px;
-    }
-
-    ul {
-      list-style: none;
-      padding: 0;
-      margin: 20px 0;
-    }
-
-    li {
-      background: #ecf0f1;
-      margin-bottom: 8px;
-      padding: 10px;
-      border-radius: 6px;
-    }
-
-    .totaal {
-      font-weight: bold;
-      margin-top: 10px;
+    p {
       font-size: 18px;
+      max-width: 600px;
+      margin: auto;
     }
 
-    button {
-      margin-top: 20px;
-      padding: 12px 20px;
+    .betaalknop {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 14px 24px;
       background: #27ae60;
       color: white;
+      font-size: 18px;
       border: none;
-      border-radius: 6px;
-      font-size: 16px;
+      border-radius: 8px;
+      text-decoration: none;
       cursor: pointer;
-      width: 100%;
     }
 
     @media (max-width: 600px) {
@@ -119,8 +84,8 @@
         margin: 10px 0;
       }
 
-      form {
-        margin: 10px;
+      .betaalknop {
+        width: 80%;
       }
     }
   </style>
@@ -136,75 +101,17 @@
     <a href="index.html">Home</a>
     <a href="producten.html">Producten</a>
     <a href="winkelmand.html">Winkelmand</a>
-    <a href="betalen.html">Betalen</a>
   </nav>
 
-  <h2>Bestelling controleren</h2>
-  <form id="betaalForm">
-    <label for="naam">Naam</label>
-    <input type="text" id="naam" name="naam" placeholder="Jouw naam" required>
+  <section>
+    <h2>Betalen voor je bestelling</h2>
+    <p>Je kunt hieronder veilig betalen via iDEAL. Zodra je betaling binnen is, verwerken we je bestelling direct.</p>
 
-    <label for="email">E-mailadres</label>
-    <input type="email" id="email" name="email" placeholder="voorbeeld@mail.nl" required>
-
-    <label for="adres">Adres</label>
-    <input type="text" id="adres" name="adres" placeholder="Straat + huisnummer" required>
-
-    <ul id="mand"></ul>
-    <div class="totaal" id="totaalbedrag">Totaal: €0,00</div>
-
-    <button type="button" onclick="startBetaling()">Betaal met Mollie</button>
-  </form>
-
-  <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyBujoNRa_IHaxyLcI6-iZxmTSszn7Edw8Q",
-      authDomain: "dkpikebaits.firebaseapp.com",
-      projectId: "dkpikebaits",
-      storageBucket: "dkpikebaits.appspot.com",
-      messagingSenderId: "229379961327",
-      appId: "1:229379961327:web:214231f859024560da461a",
-      measurementId: "G-9FQYM23902"
-    };
-
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
-
-    const mand = JSON.parse(localStorage.getItem("winkelmand")) || [];
-    const lijst = document.getElementById("mand");
-    const totaalDiv = document.getElementById("totaalbedrag");
-
-    if (mand.length === 0) {
-      alert("Je winkelmand is leeg. Voeg eerst producten toe.");
-      window.location.href = "producten.html";
-    }
-
-    let totaal = 0;
-    mand.forEach(item => {
-      const li = document.createElement("li");
-      li.textContent = `${item.naam} – €${item.prijs}`;
-      lijst.appendChild(li);
-      totaal += item.prijs;
-    });
-    totaalDiv.textContent = `Totaal: €${totaal.toFixed(2)}`;
-
-    function startBetaling() {
-      alert("Je wordt doorgestuurd naar Mollie om te betalen.");
-      window.location.href = "https://pay.mollie.com/p/dkpikebaits123";
-
-      mand.forEach(item => {
-        const ref = db.collection("producten").doc(item.id);
-        ref.get().then(doc => {
-          if (doc.exists) {
-            const huidige = doc.data().voorraad || 0;
-            ref.update({ voorraad: Math.max(huidige - 1, 0) });
-          }
-        });
-      });
-
-      localStorage.removeItem("winkelmand");
-    }
-  </script>
+    <!-- Vervang deze link morgen met je echte Tikkie / PayRequest link -->
+    <a href="https://payrequest.io/pay/dkpikebaits" target="_blank" class="betaalknop">
+      Betaal €12,50 met iDEAL
+    </a>
+  </section>
 </body>
 </html>
 
