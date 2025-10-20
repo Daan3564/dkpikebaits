@@ -54,15 +54,35 @@
       padding: 40px 20px;
     }
 
-    section h2 {
-      font-size: 24px;
-      margin-bottom: 20px;
+    .intro {
+      max-width: 800px;
+      margin: auto;
+      font-size: 18px;
+      line-height: 1.6;
     }
 
-    section p {
-      font-size: 18px;
-      max-width: 600px;
-      margin: auto;
+    .screenshot {
+      margin-top: 40px;
+    }
+
+    .screenshot img {
+      max-width: 90%;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .screenshot p {
+      margin-top: 10px;
+      font-style: italic;
+      color: #555;
+    }
+
+    footer {
+      margin-top: 60px;
+      padding: 20px;
+      background: #1e272e;
+      color: white;
+      font-size: 14px;
     }
 
     @media (max-width: 600px) {
@@ -84,11 +104,23 @@
     <a href="index.html">Home</a>
     <a href="producten.html">Producten</a>
     <a href="winkelmand.html">Winkelmand</a>
+    <a href="beheer.html">Beheer</a>
   </nav>
 
   <section>
-    <h2>Welkom bij DK Pike Baits</h2>
-    <p>Hier vind je handgemaakt kunstaas van topkwaliteit, speciaal ontworpen voor snoekvissers die het verschil willen maken. Bekijk onze producten en stel je eigen bestelling samen.</p>
+    <div class="intro">
+      <h2>Welkom bij DK Pike Baits</h2>
+      <p>Hier vind je handgemaakte kunstaasproducten die echt werken. Alles is getest, geoptimaliseerd en klaar om snoeken te verleiden. Scroll verder voor een voorbeeld van hoe onze shop eruitziet.</p>
+    </div>
+
+    <div class="screenshot">
+      <img src="Schermafbeelding 2025-10-20 215422.png" alt="Voorbeeld van DK Pike Baits">
+      <p>Voorbeeld van onze productweergave</p>
+    </div>
   </section>
+
+  <footer>
+    &copy; 2025 DK Pike Baits – Alle rechten voorbehouden
+  </footer>
 </body>
 </html>
