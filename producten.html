@@ -7,31 +7,140 @@
   <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore-compat.js"></script>
   <style>
-    body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #f2f2f2; color: #2c3e50; }
-    header, nav { text-align: center; background: #1e272e; color: white; padding: 20px; }
-    nav a { margin: 0 15px; color: white; text-decoration: none; font-weight: bold; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; padding: 20px; }
-    .product { background: white; padding: 15px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); text-align: center; }
-    .product img { max-width: 100%; border-radius: 6px; }
-    .product button { margin-top: 10px; padding: 10px 16px; background: #27ae60; color: white; border: none; border-radius: 6px; cursor: pointer; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background: #f2f2f2;
+      color: #2c3e50;
+    }
+
+    header {
+      padding: 30px 20px 10px;
+      background: #1e272e;
+      color: white;
+      text-align: center;
+    }
+
+    header img {
+      height: 80px;
+      margin-bottom: 10px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 28px;
+      letter-spacing: 1px;
+    }
+
+    header p {
+      margin: 5px 0 20px;
+      font-size: 16px;
+      font-style: italic;
+      color: #ccc;
+    }
+
+    nav {
+      background: #34495e;
+      padding: 10px 0;
+      text-align: center;
+    }
+
+    nav a {
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    h2 {
+      margin-top: 30px;
+      text-align: center;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .product {
+      background: white;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      text-align: center;
+    }
+
+    .product img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 6px;
+      margin-bottom: 10px;
+    }
+
+    .product h3 {
+      margin: 10px 0 5px;
+      font-size: 18px;
+    }
+
+    .product p {
+      margin: 5px 0;
+      font-size: 16px;
+    }
+
+    .product button {
+      margin-top: 10px;
+      padding: 10px 16px;
+      background: #27ae60;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 600px) {
+      nav a {
+        display: block;
+        margin: 10px 0;
+      }
+    }
   </style>
 </head>
 <body>
   <header>
+    <img src="dk-logo.png" alt="DK Pike Baits logo">
     <h1>DK PIKE BAITS</h1>
     <p>Kwaliteit die bijt</p>
   </header>
+
   <nav>
     <a href="index.html">Home</a>
     <a href="producten.html">Producten</a>
     <a href="winkelmand.html">Winkelmand</a>
   </nav>
+
+  <h2>Onze kunstaasproducten</h2>
   <div class="grid" id="productGrid"></div>
 
   <script>
-    const firebaseConfig = { /* jouw config */ };
+    const firebaseConfig = {
+      apiKey: "AIzaSyBujoNRa_IHaxyLcI6-iZxmTSszn7Edw8Q",
+      authDomain: "dkpikebaits.firebaseapp.com",
+      projectId: "dkpikebaits",
+      storageBucket: "dkpikebaits.appspot.com",
+      messagingSenderId: "229379961327",
+      appId: "1:229379961327:web:214231f859024560da461a",
+      measurementId: "G-9FQYM23902"
+    };
+
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
+
     const grid = document.getElementById("productGrid");
 
     db.collection("producten").get().then(snapshot => {
@@ -59,3 +168,4 @@
   </script>
 </body>
 </html>
+
