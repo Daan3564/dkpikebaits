@@ -4,21 +4,19 @@
   <meta charset="UTF-8">
   <title>DK Pike Baits – Winkelmand</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore-compat.js"></script>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
       margin: 0;
       background: #f2f2f2;
       color: #2c3e50;
+      text-align: center;
     }
 
     header {
       padding: 30px 20px 10px;
       background: #1e272e;
       color: white;
-      text-align: center;
     }
 
     header img {
@@ -42,7 +40,6 @@
     nav {
       background: #34495e;
       padding: 10px 0;
-      text-align: center;
     }
 
     nav a {
@@ -53,58 +50,56 @@
       font-size: 16px;
     }
 
-    h2 {
-      margin-top: 30px;
-      text-align: center;
+    section {
+      padding: 40px 20px;
     }
 
-    ul {
-      list-style: none;
-      padding: 0;
-      max-width: 600px;
-      margin: 20px auto;
-    }
-
-    li {
+    .product {
       background: white;
-      margin-bottom: 10px;
-      padding: 12px;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      margin: 10px auto;
+      padding: 15px;
+      border-radius: 10px;
+      max-width: 400px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+
+    .product h3 {
+      margin: 0;
+      font-size: 20px;
+    }
+
+    .product p {
+      margin: 5px 0;
+      font-size: 16px;
     }
 
     .verwijder {
       background: #e74c3c;
       color: white;
       border: none;
-      padding: 6px 10px;
+      padding: 8px 12px;
       border-radius: 6px;
       cursor: pointer;
+      margin-top: 10px;
     }
 
     .totaal {
-      text-align: center;
+      font-size: 20px;
       font-weight: bold;
-      font-size: 18px;
-      margin-top: 20px;
+      margin-top: 30px;
     }
 
     .afrekenen {
-      display: block;
-      margin: 30px auto;
-      padding: 12px 20px;
+      display: inline-block;
+      margin-top: 20px;
+      padding: 14px 24px;
       background: #27ae60;
       color: white;
+      font-size: 18px;
       border: none;
-      border-radius: 6px;
-      font-size: 16px;
-      cursor: pointer;
-      text-align: center;
+      border-radius: 8px;
       text-decoration: none;
-      width: 200px;
+      cursor: pointer;
     }
 
     @media (max-width: 600px) {
@@ -113,13 +108,8 @@
         margin: 10px 0;
       }
 
-      li {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .verwijder {
-        margin-top: 10px;
+      .afrekenen {
+        width: 80%;
       }
     }
   </style>
@@ -137,34 +127,33 @@
     <a href="winkelmand.html">Winkelmand</a>
   </nav>
 
-  <h2>Jouw winkelmand</h2>
-  <ul id="mand"></ul>
-  <div class="totaal" id="totaalbedrag">Totaal: €0,00</div>
-  <a href="betalen.html" class="afrekenen">Naar afrekenen</a>
+  <section>
+    <h2>Jouw winkelmand</h2>
+    <div id="mandContainer"></div>
+    <div class="totaal" id="totaalbedrag">Totaal: €0.00</div>
+    <a href="betaal.html" class="afrekenen">Naar afrekenen</a>
+  </section>
 
   <script>
     const mand = JSON.parse(localStorage.getItem("winkelmand")) || [];
-    const lijst = document.getElementById("mand");
-    const totaalDiv = document.getElementById("totaalbedrag");
-
-    if (mand.length === 0) {
-      lijst.innerHTML = "<li>Je winkelmand is leeg.</li>";
-      document.querySelector(".afrekenen").style.display = "none";
-      totaalDiv.style.display = "none";
-    }
+    const container = document.getElementById("mandContainer");
+    const totaalEl = document.getElementById("totaalbedrag");
 
     let totaal = 0;
+
     mand.forEach((item, index) => {
-      const li = document.createElement("li");
-      li.innerHTML = `
-        <span>${item.naam} – €${item.prijs}</span>
+      totaal += item.prijs;
+      const div = document.createElement("div");
+      div.className = "product";
+      div.innerHTML = `
+        <h3>${item.naam}</h3>
+        <p>€${item.prijs.toFixed(2)}</p>
         <button class="verwijder" onclick="verwijder(${index})">Verwijder</button>
       `;
-      lijst.appendChild(li);
-      totaal += item.prijs;
+      container.appendChild(div);
     });
 
-    totaalDiv.textContent = `Totaal: €${totaal.toFixed(2)}`;
+    totaalEl.textContent = `Totaal: €${totaal.toFixed(2)}`;
 
     function verwijder(index) {
       mand.splice(index, 1);
