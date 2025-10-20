@@ -1,34 +1,165 @@
-<!-- Zelfde header/nav als hierboven -->
-<section>
-  <h2>Jouw winkelmand</h2>
-  <div id="mandContainer"></div>
-  <div class="totaal" id="totaalbedrag">Totaal: €0.00</div>
-  <a href="betaal.html" class="afrekenen">Naar afrekenen</a>
-</section>
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <title>DK Pike Baits – Winkelmand</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background: #f2f2f2;
+      color: #2c3e50;
+      text-align: center;
+    }
 
-<script>
-  const mand = JSON.parse(localStorage.getItem("winkelmand")) || [];
-  const container = document.getElementById("mandContainer");
-  const totaalEl = document.getElementById("totaalbedrag");
-  let totaal = 0;
+    header {
+      padding: 30px 20px 10px;
+      background: #1e272e;
+      color: white;
+    }
 
-  mand.forEach((item, index) => {
-    totaal += item.prijs;
-    const div = document.createElement("div");
-    div.className = "product";
-    div.innerHTML = `
-      <h3>${item.naam}</h3>
-      <p>€${item.prijs.toFixed(2)}</p>
-      <button onclick="verwijder(${index})">Verwijder</button>
-    `;
-    container.appendChild(div);
-  });
+    header img {
+      height: 80px;
+      margin-bottom: 10px;
+    }
 
-  totaalEl.textContent = `Totaal: €${totaal.toFixed(2)}`;
+    header h1 {
+      margin: 0;
+      font-size: 28px;
+      letter-spacing: 1px;
+    }
 
-  function verwijder(index) {
-    mand.splice(index, 1);
-    localStorage.setItem("winkelmand", JSON.stringify(mand));
-    location.reload();
-  }
-</script>
+    header p {
+      margin: 5px 0 20px;
+      font-size: 16px;
+      font-style: italic;
+      color: #ccc;
+    }
+
+    nav {
+      background: #34495e;
+      padding: 10px 0;
+    }
+
+    nav a {
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    section {
+      padding: 40px 20px;
+    }
+
+    .product {
+      background: white;
+      margin: 10px auto;
+      padding: 15px;
+      border-radius: 10px;
+      max-width: 400px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+
+    .product h3 {
+      margin: 0;
+      font-size: 20px;
+    }
+
+    .product p {
+      margin: 5px 0;
+      font-size: 16px;
+    }
+
+    .verwijder {
+      background: #e74c3c;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .totaal {
+      font-size: 20px;
+      font-weight: bold;
+      margin-top: 30px;
+    }
+
+    .afrekenen {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 14px 24px;
+      background: #27ae60;
+      color: white;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    @media (max-width: 600px) {
+      nav a {
+        display: block;
+        margin: 10px 0;
+      }
+
+      .afrekenen {
+        width: 80%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="dk-logo.png" alt="DK Pike Baits logo">
+    <h1>DK PIKE BAITS</h1>
+    <p>Kwaliteit die bijt</p>
+  </header>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="producten.html">Producten</a>
+    <a href="winkelmand.html">Winkelmand</a>
+  </nav>
+
+  <section>
+    <h2>Jouw winkelmand</h2>
+    <div id="mandContainer"></div>
+    <div class="totaal" id="totaalbedrag">Totaal: €0.00</div>
+    <a href="betaal.html" class="afrekenen">Naar afrekenen</a>
+  </section>
+
+  <script>
+    const mand = JSON.parse(localStorage.getItem("winkelmand")) || [];
+    const container = document.getElementById("mandContainer");
+    const totaalEl = document.getElementById("totaalbedrag");
+
+    let totaal = 0;
+
+    mand.forEach((item, index) => {
+      totaal += item.prijs;
+      const div = document.createElement("div");
+      div.className = "product";
+      div.innerHTML = `
+        <h3>${item.naam}</h3>
+        <p>€${item.prijs.toFixed(2)}</p>
+        <button class="verwijder" onclick="verwijder(${index})">Verwijder</button>
+      `;
+      container.appendChild(div);
+    });
+
+    totaalEl.textContent = `Totaal: €${totaal.toFixed(2)}`;
+
+    function verwijder(index) {
+      mand.splice(index, 1);
+      localStorage.setItem("winkelmand", JSON.stringify(mand));
+      location.reload();
+    }
+  </script>
+</body>
+</html>
