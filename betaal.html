@@ -1,140 +1,42 @@
-<!DOCTYPE html>
-<html lang="nl">
-<head>
-  <meta charset="UTF-8">
-  <title>DK Pike Baits – Betalen</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      margin: 0;
-      background: #f2f2f2;
-      color: #2c3e50;
-      text-align: center;
-    }
+<!-- Zelfde header/nav als hierboven -->
+<section>
+  <h2>Betalen voor je bestelling</h2>
+  <p>Je betaalt het totaalbedrag inclusief verzendkosten.</p>
+  <div class="totaal" id="totaalbedrag">Totaal: €0,00</div>
+  <a id="betaallink" href="#" target="_blank" class="betaalknop">Betaal nu</a>
+</section>
 
-    header {
-      padding: 30px 20px 10px;
-      background: #1e272e;
-      color: white;
-    }
+<script>
+  const mand = JSON.parse(localStorage.getItem("winkelmand")) || [];
+  if (mand.length === 0) {
+    alert("Je winkelmand is leeg.");
+    window.location.href = "producten.html";
+  }
 
-    header img {
-      height: 80px;
-      margin-bottom: 10px;
-    }
+  let totaal = 0;
+  mand.forEach(item => totaal += item.prijs);
+  const verzendkosten = 4.95;
+  const totaalMetVerzending = totaal + verzendkosten;
+  const bedrag = totaalMetVerzending.toFixed(2);
 
-    header h1 {
-      margin: 0;
-      font-size: 28px;
-      letter-spacing: 1px;
-    }
+  document.getElementById("totaalbedrag").textContent = `Totaal (incl. verzending): €${bedrag}`;
+  document.getElementById("betaallink").href = `https://payrequest.io/pay/dkpikebaits?amount=${bedrag}`;
+  document.getElementById("betaallink").textContent = `Betaal €${bedrag} met iDEAL`;
 
-    header p {
-      margin: 5px 0 20px;
-      font-size: 16px;
-      font-style: italic;
-      color: #ccc;
-    }
+  // Bestelling opslaan
+  const db = firebase.firestore();
+  db.collection("bestellingen").add({
+    naam: "Onbekend", // later uitbreiden met naamveld
+    producten: mand,
+    totaal: totaalMetVerzending,
+    datum: new Date().toISOString()
+  });
 
-    nav {
-      background: #34495e;
-      padding: 10px 0;
-    }
+  // Voorraad bijwerken
+  mand.forEach(item => {
+    const ref = db.collection("producten").doc(item.id);
+    ref.update({ voorraad: firebase.firestore.FieldValue.increment(-1) });
+  });
 
-    nav a {
-      color: white;
-      margin: 0 15px;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 16px;
-    }
-
-    section {
-      padding: 40px 20px;
-    }
-
-    h2 {
-      font-size: 24px;
-      margin-bottom: 20px;
-    }
-
-    p {
-      font-size: 18px;
-      max-width: 600px;
-      margin: auto;
-    }
-
-    .totaal {
-      font-size: 20px;
-      font-weight: bold;
-      margin-top: 20px;
-    }
-
-    .betaalknop {
-      display: inline-block;
-      margin-top: 30px;
-      padding: 14px 24px;
-      background: #27ae60;
-      color: white;
-      font-size: 18px;
-      border: none;
-      border-radius: 8px;
-      text-decoration: none;
-      cursor: pointer;
-    }
-
-    @media (max-width: 600px) {
-      nav a {
-        display: block;
-        margin: 10px 0;
-      }
-
-      .betaalknop {
-        width: 80%;
-      }
-    }
-  </style>
-</head>
-<body>
-  <header>
-    <img src="dk-logo.png" alt="DK Pike Baits logo">
-    <h1>DK PIKE BAITS</h1>
-    <p>Kwaliteit die bijt</p>
-  </header>
-
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="producten.html">Producten</a>
-    <a href="winkelmand.html">Winkelmand</a>
-  </nav>
-
-  <section>
-    <h2>Betalen voor je bestelling</h2>
-    <p>Je betaalt het totaalbedrag inclusief verzendkosten. Zodra je betaling binnen is, verwerken we je bestelling direct.</p>
-
-    <div class="totaal" id="totaalbedrag">Totaal: €0,00</div>
-    <a id="betaallink" href="#" target="_blank" class="betaalknop">Betaal nu</a>
-  </section>
-
-  <script>
-    const mand = JSON.parse(localStorage.getItem("winkelmand")) || [];
-    if (mand.length === 0) {
-      alert("Je winkelmand is leeg. Je kunt niet afrekenen.");
-      window.location.href = "producten.html";
-    }
-
-    let totaal = 0;
-    mand.forEach(item => totaal += item.prijs);
-
-    const verzendkosten = 4.95;
-    const totaalMetVerzending = totaal + verzendkosten;
-    const bedrag = totaalMetVerzending.toFixed(2);
-
-    document.getElementById("totaalbedrag").textContent = `Totaal (incl. verzending): €${bedrag}`;
-
-    // Vervang deze link met jouw echte betaallink-platform
-    const link = `https://payrequest.io/pay/dkpikebaits?amount=${bedrag}`;
-    document.getElementById("betaallink").href = link;
-
-
+  localStorage.removeItem("winkelmand");
+</script>
