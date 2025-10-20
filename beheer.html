@@ -1,100 +1,30 @@
-<!DOCTYPE html>
-<html lang="nl">
-<head>
-  <meta charset="UTF-8">
-  <title>Productbeheer</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore-compat.js"></script>
-  <style>
-    body { font-family: sans-serif; padding: 20px; max-width: 600px; margin: auto; background: #f9f9f9; }
-    input, button { margin: 8px 0; width: 100%; padding: 12px; font-size: 16px; box-sizing: border-box; }
-    button { background: #2ecc71; color: white; border: none; cursor: pointer; }
-    .product { border: 1px solid #ccc; background: white; padding: 12px; margin-top: 12px; position: relative; border-radius: 6px; }
-    .product button { position: absolute; top: 12px; right: 12px; background: #e74c3c; color: white; border: none; padding: 6px 10px; font-size: 14px; cursor: pointer; }
-    img { max-width: 100%; height: auto; margin-top: 10px; border-radius: 4px; }
-  </style>
-</head>
-<body>
-  <h1>Product toevoegen</h1>
-  <input id="naam" placeholder="Naam product">
-  <input id="prijs" type="number" placeholder="Prijs">
-  <input id="voorraad" type="number" placeholder="Voorraad">
-  <input id="afbeelding" placeholder="Afbeelding URL">
-  <button onclick="toevoegen()">Toevoegen</button>
+<!-- Zelfde header/nav als hierboven -->
+<h2>📦 Binnengekomen bestellingen</h2>
+<div id="bestellingenContainer"></div>
 
-  <h2>Alle producten</h2>
-  <div id="lijst"></div>
+<script>
+  const db = firebase.firestore();
+  const container = document.getElementById("bestellingenContainer");
 
-  <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyBujoNRa_IHaxyLcI6-iZxmTSszn7Edw8Q",
-      authDomain: "dkpikebaits.firebaseapp.com",
-      projectId: "dkpikebaits",
-      storageBucket: "dkpikebaits.appspot.com",
-      messagingSenderId: "229379961327",
-      appId: "1:229379961327:web:214231f859024560da461a",
-      measurementId: "G-9FQYM23902"
-    };
-
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
-
-    function toevoegen() {
-      const naam = document.getElementById("naam").value.trim();
-      const prijs = parseFloat(document.getElementById("prijs").value);
-      const voorraad = parseInt(document.getElementById("voorraad").value);
-      const afbeelding = document.getElementById("afbeelding").value.trim();
-
-      if (!naam || isNaN(prijs) || isNaN(voorraad) || !afbeelding) {
-        alert("Vul alle velden correct in.");
-        return;
-      }
-
-      db.collection("producten").add({ naam, prijs, voorraad, afbeelding })
-        .then(() => {
-          document.getElementById("naam").value = "";
-          document.getElementById("prijs").value = "";
-          document.getElementById("voorraad").value = "";
-          document.getElementById("afbeelding").value = "";
-          ophalen();
-        })
-        .catch(error => {
-          alert("Fout bij toevoegen: " + error.message);
-        });
+  db.collection("bestellingen").orderBy("datum", "desc").get().then(snapshot => {
+    if (snapshot.empty) {
+      container.innerHTML = "<p>Geen bestellingen ontvangen.</p>";
+      return;
     }
 
-    function verwijderen(id) {
-      if (confirm("Weet je zeker dat je dit product wilt verwijderen?")) {
-        db.collection("producten").doc(id).delete().then(ophalen);
-      }
-    }
-
-    function ophalen() {
-      document.getElementById("lijst").innerHTML = "";
-      db.collection("producten").get()
-        .then(snapshot => {
-          snapshot.forEach(doc => {
-            const p = doc.data();
-            const id = doc.id;
-            document.getElementById("lijst").innerHTML += `
-              <div class="product">
-                <button onclick="verwijderen('${id}')">Verwijder</button>
-                <h3>${p.naam}</h3>
-                <p>Prijs: €${p.prijs}</p>
-                <p>Voorraad: ${p.voorraad}</p>
-                <img src="${p.afbeelding}" alt="${p.naam}">
-              </div>
-            `;
-          });
-        })
-        .catch(error => {
-          document.getElementById("lijst").innerHTML = "<p>Fout bij ophalen: " + error.message + "</p>";
-        });
-    }
-
-    ophalen();
-  </script>
-</body>
-</html>
-
+    snapshot.forEach(doc => {
+      const data = doc.data();
+      const datum = new Date(data.datum).toLocaleString("nl-NL");
+      const productenHTML = data.producten.map(p => `<li>${p.naam} – €${p.prijs.toFixed(2)}</li>`).join("");
+      const div = document.createElement("div");
+      div.className = "bestelling";
+      div.innerHTML = `
+        <h3>Bestelling van ${data.naam || 'Onbekend'}</h3>
+        <ul>${productenHTML}</ul>
+        <div>Totaal: €${data.totaal.toFixed(2)}</div>
+        <div>Datum: ${datum}</div>
+      `;
+      container.appendChild(div);
+    });
+  });
+</script>
