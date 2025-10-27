@@ -2,32 +2,148 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8">
-  <title>DK Pike Baits – Home</title>
+  <title>DK Pike Baits – De Jacht Begint</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-    body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #f2f2f2; color: #2c3e50; text-align: center; }
-    header, nav, footer { background: #1e272e; color: white; padding: 20px; }
-    nav a { margin: 0 15px; color: white; text-decoration: none; font-weight: bold; }
-    .hero img { max-width: 90%; border-radius: 10px; margin-top: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
-    .cta { margin: 30px 0; }
-    .cta a { background: #27ae60; color: white; padding: 14px 24px; border-radius: 8px; text-decoration: none; font-size: 18px; }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f2f2f2;
+      color: #2c3e50;
+    }
+
+    header {
+      background: linear-gradient(to right, #1e272e, #34495e);
+      color: white;
+      padding: 40px 20px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 36px;
+      margin-bottom: 10px;
+      letter-spacing: 1px;
+    }
+
+    header p {
+      font-size: 18px;
+      font-style: italic;
+      color: #ccc;
+    }
+
+    nav {
+      background: #2c3e50;
+      padding: 12px 0;
+      text-align: center;
+    }
+
+    nav a {
+      color: white;
+      margin: 0 20px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .hero {
+      background: url('snoekbaars.png') center/cover no-repeat;
+      height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.4);
+    }
+
+    .hero-text {
+      position: relative;
+      color: white;
+      text-align: center;
+      z-index: 1;
+    }
+
+    .hero-text h2 {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+
+    .hero-text p {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    .cta-button {
+      background: #27ae60;
+      color: white;
+      padding: 14px 28px;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+
+    .cta-button:hover {
+      background: #2ecc71;
+    }
+
+    .quote {
+      text-align: center;
+      font-style: italic;
+      margin: 40px 20px;
+      font-size: 16px;
+      color: #555;
+    }
+
+    footer {
+      background: #1e272e;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+    }
+
+    @media (max-width: 600px) {
+      .hero-text h2 { font-size: 24px; }
+      .hero-text p { font-size: 16px; }
+      .cta-button { font-size: 16px; padding: 12px 20px; }
+      nav a { display: block; margin: 10px 0; }
+    }
   </style>
 </head>
 <body>
-  <header><h1>DK PIKE BAITS</h1><p>Kwaliteit die bijt</p></header>
+  <header>
+    <h1>DK PIKE BAITS</h1>
+    <p>De jacht begint hier</p>
+  </header>
+
   <nav>
     <a href="index.html">Home</a>
     <a href="producten.html">Producten</a>
     <a href="winkelmand.html">Winkelmand</a>
   </nav>
+
   <section class="hero">
-    <img src="snoekbaars.png" alt="Daan met snoekbaars">
-    <div class="cta">
-      <a href="producten.html">🎯 Bekijk onze kunstaasproducten</a>
+    <div class="hero-text">
+      <h2>Handgemaakt kunstaas dat echt bijt</h2>
+      <p>Gebouwd door vissers, getest door snoeken</p>
+      <a href="producten.html" class="cta-button">🎯 Bekijk onze producten</a>
     </div>
   </section>
-  <footer>&copy; 2025 DK Pike Baits – Handgemaakt kunstaas</footer>
+
+  <div class="quote">
+    “100+ tevreden roofvissers sinds 2023”
+  </div>
+
+  <footer>
+    &copy; 2025 DK Pike Baits – Alles handgemaakt met passie
+  </footer>
 </body>
 </html>
-
-
