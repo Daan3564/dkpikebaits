@@ -2,24 +2,21 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8">
-  <title>DK Pike Baits – Betalen (Test)</title>
+  <title>Betalen – DK Pike Baits</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore-compat.js"></script>
   <style>
     body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #f2f2f2; color: #2c3e50; text-align: center; }
     header, nav { background: #1e272e; color: white; padding: 20px; }
     nav a { margin: 0 15px; color: white; text-decoration: none; font-weight: bold; }
     section { padding: 40px 20px; }
     .totaal { font-size: 22px; font-weight: bold; margin-top: 20px; }
-    .betaalknop { display: inline-block; margin-top: 30px; padding: 14px 24px; background: #27ae60; color: white; font-size: 18px; border: none; border-radius: 8px; text-decoration: none; cursor: pointer; }
-    .bevestiging { font-size: 18px; color: #27ae60; margin-top: 30px; display: none; }
+    .betaalknop { margin-top: 30px; padding: 14px 24px; background: #27ae60; color: white; font-size: 18px; border: none; border-radius: 8px; cursor: pointer; }
   </style>
 </head>
 <body>
-  <header>
-    <h1>DK PIKE BAITS</h1>
-    <p>Testbetaling</p>
-  </header>
-
+  <header><h1>DK PIKE BAITS</h1><p>Veilig afrekenen</p></header>
   <nav>
     <a href="index.html">Home</a>
     <a href="producten.html">Producten</a>
@@ -27,14 +24,20 @@
   </nav>
 
   <section>
-    <h2>💳 Betalen voor je bestelling</h2>
-    <p>Dit is een testversie. Klik op de knop om te doen alsof je betaalt.</p>
+    <h2>💳 Afrekenen</h2>
     <div class="totaal" id="totaalbedrag">Totaal: €0,00</div>
-    <button class="betaalknop" onclick="fakeBetaling()">Betaal nu</button>
-    <div class="bevestiging" id="bevestiging">✅ Betaling ontvangen! Je bestelling wordt verwerkt.</div>
+    <button class="betaalknop" onclick="betaal()">Betaal nu</button>
   </section>
 
   <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyBujoNRa_IHaxyLcI6-iZxmTSszn7Edw8Q",
+      authDomain: "dkpikebaits.firebaseapp.com",
+      projectId: "dkpikebaits"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
     const mand = JSON.parse(localStorage.getItem("winkelmand")) || [];
     if (mand.length === 0) {
       alert("Je winkelmand is leeg.");
@@ -44,14 +47,25 @@
     let totaal = 0;
     mand.forEach(item => totaal += item.prijs);
     const verzendkosten = 4.95;
-    const totaalMetVerzending = totaal + verzendkosten;
-    const bedrag = totaalMetVerzending.toFixed(2);
+    const bedrag = totaal + verzendkosten;
+    document.getElementById("totaalbedrag").textContent = `Totaal (incl. verzending): €${bedrag.toFixed(2)}`;
 
-    document.getElementById("totaalbedrag").textContent = `Totaal (incl. verzending): €${bedrag}`;
+    function betaal() {
+      mand.forEach(item => {
+        db.collection("producten").doc(item.id).get().then(doc => {
+          const voorraad = doc.data().voorraad || 0;
+          db.collection("producten").doc(item.id).update({ voorraad: voorraad - 1 });
+        });
+      });
 
-    function fakeBetaling() {
-      document.getElementById("bevestiging").style.display = "block";
+      db.collection("bestellingen").add({
+        datum: new Date(),
+        totaal: bedrag,
+        producten: mand
+      });
+
       localStorage.removeItem("winkelmand");
+      window.location.href = "bedankt.html";
     }
   </script>
 </body>
