@@ -1,77 +1,50 @@
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f2f2f2;
-  margin: 0;
-  padding: 0;
-}
-
-header {
-  text-align: center;
-  padding: 20px;
-  background-color: white;
-  border-bottom: 1px solid #ccc;
-}
-
-.logo {
-  max-width: 120px;
-  margin-bottom: 10px;
-}
-
-nav {
-  margin-top: 10px;
-  display: flex;
-  justify-content: center;
-  gap: 30px;
-  flex-wrap: wrap;
-}
-
-nav a {
-  color: #0077cc;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-nav a:hover {
-  text-decoration: underline;
-}
-
-main {
-  padding: 20px;
-  max-width: 1000px;
-  margin: auto;
-}
-
-#product-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-}
-
 .product {
-  background: white;
-  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 2rem auto;
+  max-width: 400px;
+  padding: 1rem;
+  border: 1px solid #ddd;
   border-radius: 8px;
-  box-shadow: 0 0 5px rgba(0,0,0,0.1);
-  text-align: center;
+  background: #f9f9f9;
 }
 
-.product img {
-  max-width: 100%;
+.product-image {
+  width: 100%;
+  max-width: 300px;
   height: auto;
-  margin-bottom: 10px;
+  border-radius: 6px;
 }
 
-button {
+.product-info h2 {
+  font-size: 1.5rem;
+  margin: 0.5rem 0;
+  color: #222;
+}
+
+.product-info p {
+  font-size: 1rem;
+  color: #444;
+  margin: 0.3rem 0;
+}
+
+.prijs {
+  font-weight: bold;
+  color: #000;
+}
+
+.koop-knop {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.6rem 1.2rem;
   background-color: #0077cc;
   color: white;
-  padding: 8px 16px;
-  border: none;
+  text-decoration: none;
   border-radius: 4px;
-  cursor: pointer;
-  margin-top: 10px;
+  transition: background 0.3s;
 }
 
-button:hover {
+.koop-knop:hover {
   background-color: #005fa3;
 }
-
