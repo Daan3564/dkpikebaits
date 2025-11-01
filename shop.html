@@ -1,194 +1,57 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-  <meta charset="UTF-8">
-  <title>DK Pike Baits – Shop</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore-compat.js"></script>
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      margin: 0;
-      background: #f2f2f2;
-      text-align: center;
-    }
-
-    header {
-      padding: 30px 20px 10px;
-      background: #1e272e;
-      color: white;
-    }
-
-    header img {
-      height: 80px;
-      margin-bottom: 10px;
-    }
-
-    header h1 {
-      margin: 0;
-      font-size: 28px;
-      letter-spacing: 1px;
-    }
-
-    header p {
-      margin: 5px 0 20px;
-      font-size: 16px;
-      font-style: italic;
-      color: #ccc;
-    }
-
-    nav {
-      background: #34495e;
-      padding: 10px 0;
-    }
-
-    nav a {
-      color: white;
-      margin: 0 15px;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 16px;
-    }
-
-    h2 {
-      margin-top: 30px;
-      color: #2c3e50;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-      padding: 20px;
-      max-width: 1000px;
-      margin: auto;
-    }
-
-    .product {
-      background: white;
-      border-radius: 10px;
-      padding: 16px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .product img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 8px;
-      margin-bottom: 12px;
-    }
-
-    .product h3 {
-      margin: 0 0 8px;
-      font-size: 18px;
-      color: #2c3e50;
-    }
-
-    .product p {
-      margin: 4px 0;
-      font-size: 15px;
-    }
-
-    .product button {
-      margin-top: 10px;
-      padding: 10px 16px;
-      background: #27ae60;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 15px;
-    }
-
-    .product button:disabled {
-      background: #aaa;
-      cursor: not-allowed;
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shop – DaanLures</title>
+  <link rel="stylesheet" href="style-nav.css" />
+  <link rel="stylesheet" href="style-shop.css" />
+  <link rel="stylesheet" href="style-footer.css" />
 </head>
 <body>
+
   <header>
-    <img src="dk-logo.png" alt="DK Pike Baits logo">
-    <h1>DK PIKE BAITS</h1>
-    <p>Kwaliteit die bijt</p>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="winkelmand.html">Winkelmand</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <h1>Onze Shop</h1>
+    <p>Kies je favoriete kunstaas en bestel direct</p>
   </header>
 
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="producten.html">Producten</a>
-    <a href="winkelmand.html">Winkelmand</a>
-    <a href="betalen.html">Betalen</a>
-  </nav>
+  <main class="product-grid">
+    <div class="product-card">
+      <img src="images/spinnerbait.jpg" alt="Spinnerbait" />
+      <h2>Spinnerbait #3</h2>
+      <p>Perfect voor snoek en baars</p>
+      <span>€12,95</span>
+      <a href="https://bunq.me/daanlures/12.95" class="koop-knop">Bestel</a>
+    </div>
 
-  <h2>Shop onze kunstaasproducten</h2>
-  <div id="producten" class="grid">Laden...</div>
+    <div class="product-card">
+      <img src="images/snoekbaars.png" alt="Snoekbaars Jig" />
+      <h2>Snoekbaars Jig</h2>
+      <p>Voor diepe wateren en roofvis</p>
+      <span>€9,95</span>
+      <a href="https://bunq.me/daanlures/9.95" class="koop-knop">Bestel</a>
+    </div>
 
-  <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyBujoNRa_IHaxyLcI6-iZxmTSszn7Edw8Q",
-      authDomain: "dkpikebaits.firebaseapp.com",
-      projectId: "dkpikebaits",
-      storageBucket: "dkpikebaits.appspot.com",
-      messagingSenderId: "229379961327",
-      appId: "1:229379961327:web:214231f859024560da461a",
-      measurementId: "G-9FQYM23902"
-    };
+    <div class="product-card">
+      <img src="images/jig.jpg" alt="Jig Spinner" />
+      <h2>Jig Spinner</h2>
+      <p>Compact en effectief</p>
+      <span>€11,50</span>
+      <a href="https://bunq.me/daanlures/11.50" class="koop-knop">Bestel</a>
+    </div>
+  </main>
 
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
+  <footer>
+    <p>&copy; 2025 DaanLures</p>
+  </footer>
 
-    function laadProducten() {
-      const container = document.getElementById("producten");
-      container.innerHTML = "";
-
-      db.collection("producten").get().then(snapshot => {
-        snapshot.forEach(doc => {
-          const p = doc.data();
-          const id = doc.id;
-
-          if (p.voorraad <= 0) return;
-
-          const div = document.createElement("div");
-          div.className = "product";
-          div.innerHTML = `
-            <img src="${p.afbeelding}" alt="${p.naam}">
-            <h3>${p.naam}</h3>
-            <p>Prijs: €${p.prijs}</p>
-            <p>Voorraad: ${p.voorraad}</p>
-            <button onclick="toevoegenAanMand('${id}', '${p.naam}', ${p.prijs}, ${p.voorraad})">Toevoegen aan winkelmand</button>
-          `;
-          container.appendChild(div);
-        });
-      });
-    }
-
-    function toevoegenAanMand(id, naam, prijs, voorraad) {
-      if (voorraad <= 0) {
-        alert("Dit product is niet meer op voorraad.");
-        return;
-      }
-
-      // Voeg toe aan localStorage winkelmand
-      let mand = JSON.parse(localStorage.getItem("winkelmand")) || [];
-      mand.push({ id, naam, prijs });
-      localStorage.setItem("winkelmand", JSON.stringify(mand));
-
-      // Verlaag voorraad in Firestore
-      const productRef = db.collection("producten").doc(id);
-      productRef.update({ voorraad: voorraad - 1 })
-        .then(() => {
-          laadProducten(); // refresh
-        })
-        .catch(error => {
-          alert("Fout bij voorraad bijwerken: " + error.message);
-        });
-    }
-
-    laadProducten();
-  </script>
 </body>
 </html>
