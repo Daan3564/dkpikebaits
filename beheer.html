@@ -1,128 +1,47 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-  <meta charset="UTF-8">
-  <title>DK Pike Baits – Beheer</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore-compat.js"></script>
-  <style>
-    body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #f2f2f2; color: #2c3e50; }
-    header, nav { text-align: center; background: #1e272e; color: white; padding: 20px; }
-    nav a { margin: 0 15px; color: white; text-decoration: none; font-weight: bold; }
-    h2 { text-align: center; margin-top: 30px; }
-    form, .product, .bestelling { background: white; margin: 20px auto; padding: 20px; border-radius: 10px; max-width: 600px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-    input, button { padding: 10px; margin: 5px 0; width: 100%; font-size: 16px; }
-    button { background: #27ae60; color: white; border: none; border-radius: 6px; cursor: pointer; }
-    .verwijder { background: #e74c3c; margin-top: 10px; }
-    ul { list-style: none; padding: 0; margin: 0; }
-    li { margin: 4px 0; }
-    .totaal, .datum { margin-top: 10px; font-weight: bold; }
-    .datum { font-size: 14px; color: #888; }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Beheer – DaanLures</title>
+  <link rel="stylesheet" href="style-nav.css" />
+  <link rel="stylesheet" href="beheer.css" />
+  <link rel="stylesheet" href="style-footer.css" />
 </head>
 <body>
   <header>
-    <h1>DK PIKE BAITS</h1>
-    <p>Beheer producten en bestellingen</p>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="winkelmand.html">Winkelmand</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <h1>Productbeheer</h1>
   </header>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="producten.html">Producten</a>
-    <a href="winkelmand.html">Winkelmand</a>
-    <a href="beheer.html">Beheer</a>
-  </nav>
 
-  <h2>🧰 Productbeheer</h2>
-  <form id="productForm">
-    <input type="text" id="naam" placeholder="Productnaam" required>
-    <input type="number" id="prijs" placeholder="Prijs (€)" required>
-    <input type="number" id="voorraad" placeholder="Voorraad" required>
-    <input type="text" id="afbeelding" placeholder="Afbeeldings-URL (optioneel)">
-    <button type="submit">Toevoegen</button>
-  </form>
-  <div id="productList"></div>
+  <main>
+    <section class="beheer-blok">
+      <h2>Product toevoegen</h2>
+      <form>
+        <input type="text" placeholder="Productnaam" />
+        <input type="text" placeholder="Prijs" />
+        <input type="file" />
+        <textarea placeholder="Beschrijving"></textarea>
+        <button type="submit">Toevoegen</button>
+      </form>
+    </section>
 
-  <h2>📦 Binnengekomen bestellingen</h2>
-  <div id="bestellingenContainer"></div>
+    <section class="beheer-lijst">
+      <h2>Bestaande producten</h2>
+      <ul>
+        <li>Spinnerbait #3 – €12,95 <button>Verwijderen</button></li>
+        <li>Snoekbaars Jig – €9,95 <button>Verwijderen</button></li>
+      </ul>
+    </section>
+  </main>
 
-  <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyBujoNRa_IHaxyLcI6-iZxmTSszn7Edw8Q",
-      authDomain: "dkpikebaits.firebaseapp.com",
-      projectId: "dkpikebaits",
-      storageBucket: "dkpikebaits.appspot.com",
-      messagingSenderId: "229379961327",
-      appId: "1:229379961327:web:214231f859024560da461a",
-      measurementId: "G-9FQYM23902"
-    };
-
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
-
-    // ✅ Product toevoegen
-    document.getElementById("productForm").addEventListener("submit", e => {
-      e.preventDefault();
-      const naam = document.getElementById("naam").value;
-      const prijs = parseFloat(document.getElementById("prijs").value);
-      const voorraad = parseInt(document.getElementById("voorraad").value);
-      const afbeelding = document.getElementById("afbeelding").value;
-
-      db.collection("producten").add({ naam, prijs, voorraad, afbeelding }).then(() => {
-        alert("Product toegevoegd!");
-        location.reload();
-      });
-    });
-
-    // ✅ Producten tonen
-    const productList = document.getElementById("productList");
-    db.collection("producten").get().then(snapshot => {
-      snapshot.forEach(doc => {
-        const data = doc.data();
-        const div = document.createElement("div");
-        div.className = "product";
-        div.innerHTML = `
-          <h3>${data.naam}</h3>
-          <p>Prijs: €${data.prijs}</p>
-          <p>Voorraad: ${data.voorraad}</p>
-          <button class="verwijder" onclick="verwijderProduct('${doc.id}')">Verwijder</button>
-        `;
-        productList.appendChild(div);
-      });
-    });
-
-    function verwijderProduct(id) {
-      if (confirm("Weet je zeker dat je dit product wilt verwijderen?")) {
-        db.collection("producten").doc(id).delete().then(() => {
-          alert("Product verwijderd.");
-          location.reload();
-        });
-      }
-    }
-
-    // ✅ Bestellingen tonen
-    const container = document.getElementById("bestellingenContainer");
-    db.collection("bestellingen").orderBy("datum", "desc").get().then(snapshot => {
-      if (snapshot.empty) {
-        container.innerHTML = "<p style='text-align:center;'>Nog geen bestellingen ontvangen.</p>";
-        return;
-      }
-
-      snapshot.forEach(doc => {
-        const data = doc.data();
-        const datum = new Date(data.datum).toLocaleString("nl-NL");
-        const productenHTML = data.producten.map(p => `<li>${p.naam} – €${p.prijs.toFixed(2)}</li>`).join("");
-        const div = document.createElement("div");
-        div.className = "bestelling";
-        div.innerHTML = `
-          <h3>Bestelling van ${data.naam || 'Onbekend'}</h3>
-          <ul>${productenHTML}</ul>
-          <div class="totaal">Totaal: €${data.totaal.toFixed(2)}</div>
-          <div class="datum">Besteld op: ${datum}</div>
-        `;
-        container.appendChild(div);
-      });
-    });
-  </script>
-</body>
-</html>
+  <footer>
+    <p>&copy; 2025 DaanLures</p>
+  </
