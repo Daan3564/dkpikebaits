@@ -1,73 +1,13 @@
-/* Algemene opmaak */
-body {
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #e6f2e6;
-  margin: 0;
-  padding: 0;
-  max-width: 1000px;
-  margin: auto;
+.hero {
+  width: 100%;
+  overflow: hidden;
 }
 
-/* Header met logo en titel */
-header {
-  text-align: center;
-  padding: 20px;
-}
-
-.logo {
-  max-width: 160px;
+.hero-image {
+  width: 100%;
   height: auto;
-  margin-bottom: 10px;
+  display: block;
+  object-fit: cover;
 }
 
-.subtekst {
-  font-size: 1em;
-  color: #444;
-  margin-top: 5px;
-}
-
-/* Navigatiemenu */
-nav.menu {
-  display: flex;
-  justify-content: center;
-  gap: 30px;
-  margin-bottom: 40px;
-  flex-wrap: wrap;
-}
-
-nav.menu a {
-  font-size: 1.1em;
-  color: #0077cc;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-nav.menu a:hover {
-  text-decoration: underline;
-}
-
-/* Main content */
-main {
-  text-align: center;
-  padding: 0 20px;
-}
-
-.welkom, .over-mij {
-  margin-bottom: 50px;
-}
-
-/* Afbeelding van Daan met snoek */
-.snoekfoto {
-  max-width: 400px;
-  margin-top: 20px;
-  border-radius: 8px;
-}
-
-/* Footer */
-footer {
-  text-align: center;
-  margin-top: 40px;
-  font-size: 0.8em;
-  color: #777;
-}
 
