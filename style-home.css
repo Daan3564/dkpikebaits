@@ -1,14 +1,35 @@
-.hero {
-  width: 100%;
-  overflow: hidden;
-}
-
 .hero-image {
   width: 100%;
   height: auto;
   display: block;
-  object-fit: cover;
 }
 
+.daan-foto {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background-color: #f0f0f0;
+}
 
+.daan-foto img {
+  max-width: 300px;
+  border-radius: 8px;
+  margin: 1rem;
+}
 
+.tekstblok {
+  max-width: 400px;
+  margin: 1rem;
+}
+
+.tekstblok h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.tekstblok p {
+  font-size: 1rem;
+  color: #333;
+}
