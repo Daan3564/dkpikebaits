@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>DK Pikebaits</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header>
+    <h1>DK Pikebaits</h1>
+    <nav>
+        <a href="#producten">Producten</a>
+        <a href="#winkelmand">Winkelmand (<span id="cart-count">0</span>)</a>
+    </nav>
+</header>
+
+<section id="producten" class="products">
+    <div class="product">
+        <h2>Pikebait Classic</h2>
+        <p>€12,95</p>
+        <button onclick="addToCart('Pikebait Classic', 12.95, 'STRIPE_LINK_HIER')">
+            Toevoegen aan winkelmand
+        </button>
+    </div>
+
+    <div class="product">
+        <h2>Pikebait Pro</h2>
+        <p>€16,95</p>
+        <button onclick="addToCart('Pikebait Pro', 16.95, 'STRIPE_LINK_HIER')">
+            Toevoegen aan winkelmand
+        </button>
+    </div>
+</section>
+
+<section id="winkelmand">
+    <h2>Winkelmand</h2>
+    <ul id="cart-items"></ul>
+</section>
+
+<script src="js/shop.js"></script>
+</body>
+</html>
