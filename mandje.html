@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Winkelmand | DK pikebaits</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar"></nav>
+
+    <div class="container page-padding">
+        <h1 data-nl="Jouw Winkelmand" data-en="Your Cart">Jouw Winkelmand</h1>
+        <div id="cart-list" class="cart-list"></div>
+        <div class="cart-summary">
+            <h3>Totaal: <span id="total-price">€0.00</span></h3>
+            <button class="btn-main" onclick="goToCheckout()" data-nl="Afrekenen via Stripe" data-en="Checkout via Stripe">Afrekenen via Stripe</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
