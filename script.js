@@ -1,58 +1,73 @@
-let cart = [];
+let cart = JSON.parse(localStorage.getItem('dk_cart')) || [];
 
 function toggleCart() {
     document.getElementById('cart-sidebar').classList.toggle('active');
-    document.getElementById('cart-overlay').classList.toggle('active');
 }
 
 function addToCart(name, price, link) {
     cart.push({ name, price, link });
-    updateCart();
-    // Automatisch mandje openen als je iets toevoegt
-    if(!document.getElementById('cart-sidebar').classList.contains('active')) {
-        toggleCart();
-    }
+    saveCart();
+    renderCart();
+    // Optioneel: Open de winkelwagen automatisch
+    document.getElementById('cart-sidebar').classList.add('active');
 }
 
-function updateCart() {
-    const cartCount = document.getElementById('cart-count');
-    const cartItems = document.getElementById('cart-items');
-    const cartTotal = document.getElementById('cart-total');
+function saveCart() {
+    localStorage.setItem('dk_cart', JSON.stringify(cart));
+}
 
-    cartCount.innerText = cart.length;
-    cartItems.innerHTML = "";
+function renderCart() {
+    const container = document.getElementById('cart-items');
+    const totalEl = document.getElementById('total-price');
+    const countEl = document.getElementById('cart-count');
+    
+    container.innerHTML = '';
     let total = 0;
-
+    
     cart.forEach((item, index) => {
         total += item.price;
-        cartItems.innerHTML += `
-            <div class="cart-item-ui" style="display:flex; justify-content:space-between; margin-bottom:15px; border-bottom:1px solid #eee; padding-bottom:10px;">
+        container.innerHTML += `
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; background:#1a1a1a; padding:10px; border-radius:4px;">
                 <div>
-                    <h4>${item.name}</h4>
-                    <p>€${item.price.toFixed(2)}</p>
+                    <div style="font-weight:bold; font-size:14px;">${item.name}</div>
+                    <div style="color:#d4af37">€${item.price.toFixed(2)}</div>
                 </div>
-                <button onclick="removeFromCart(${index})" style="background:none; border:none; color:red; cursor:pointer;">Verwijder</button>
+                <button onclick="removeItem(${index})" style="color:#ff4444; background:none; border:none; cursor:pointer; font-weight:bold;">Verwijder</button>
             </div>
         `;
     });
-
-    cartTotal.innerText = `€${total.toFixed(2)}`;
+    
+    totalEl.innerText = `€${total.toFixed(2)}`;
+    if(countEl) countEl.innerText = cart.length;
 }
 
-function removeFromCart(index) {
+function removeItem(index) {
     cart.splice(index, 1);
-    updateCart();
+    saveCart();
+    renderCart();
 }
 
-function checkout() {
+function changeLanguage(lang) {
+    const elements = document.querySelectorAll('[data-nl]');
+    elements.forEach(el => {
+        el.innerText = el.getAttribute(`data-${lang}`);
+    });
+    localStorage.setItem('dk_lang', lang);
+}
+
+function goToCheckout() {
     if(cart.length === 0) {
-        alert("Je mandje is leeg!");
+        alert("Winkelmand is leeg!");
         return;
     }
-    // Omdat je Stripe Payment Links per product gebruikt:
-    // We sturen de klant naar de link van het EERSTE product in de lijst.
-    // TIP: Voor een echte "Pro" shop met meerdere items in 1x afrekenen 
-    // heb je Stripe Checkout met een kleine backend nodig.
-    alert("Je wordt nu doorgeleid naar de beveiligde Stripe betaalpagina.");
-    window.location.href = cart[0].link; 
+    // We sturen de klant naar de betaallink van het eerste product.
+    // Voor meerdere producten in één keer is een Stripe Checkout-sessie nodig.
+    window.location.href = cart[0].link;
 }
+
+// Laden van voorkeuren
+window.onload = () => {
+    renderCart();
+    const savedLang = localStorage.getItem('dk_lang') || 'nl';
+    changeLanguage(savedLang);
+};
