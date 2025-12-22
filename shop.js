@@ -1,23 +1,35 @@
 let cart = [];
 
 function addToCart(name, price, stripeLink) {
-    cart.push({ name, price, stripeLink });
-    updateCart();
+    cart.push({name, price, stripeLink});
+    renderCart();
 }
 
-function updateCart() {
-    const cartItems = document.getElementById("cart-items");
-    const cartCount = document.getElementById("cart-count");
+function removeItem(index) {
+    cart.splice(index,1);
+    renderCart();
+}
 
-    cartItems.innerHTML = "";
-    cartCount.innerText = cart.length;
+function renderCart() {
+    const container = document.getElementById("cart-items");
+    const totalEl = document.getElementById("total");
+    const countEl = document.getElementById("count");
 
-    cart.forEach(item => {
-        const li = document.createElement("li");
-        li.innerHTML = `
-            ${item.name} - €${item.price}
-            <a href="${item.stripeLink}" target="_blank">Betalen</a>
-        `;
-        cartItems.appendChild(li);
+    container.innerHTML = "";
+    let total = 0;
+
+    cart.forEach((item,i)=>{
+        total += item.price;
+        container.innerHTML += `
+        <div class="cart-item">
+            <div>${item.name} – €${item.price.toFixed(2)}</div>
+            <div>
+                <a href="${item.link}" target="_blank">Betalen</a>
+                <button onclick="removeItem(${i})">X</button>
+            </div>
+        </div>`;
     });
+
+    totalEl.innerText = total.toFixed(2);
+    countEl.innerText = cart.length;
 }
