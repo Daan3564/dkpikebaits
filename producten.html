@@ -1,41 +1,57 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DaanLures – Producten</title>
-  <link rel="stylesheet" href="style-nav.css" />
-  <link rel="stylesheet" href="style-producten.css" />
-  <link rel="stylesheet" href="style-footer.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Winkel | DK pikebaits</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <nav>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="shop.html">Shop</a></li>
-        <li><a href="winkelmand.html">Winkelmand</a></li>
-        <li><a href="contact.html">Contact</a></li>
-      </ul>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">DK <span>pikebaits</span></a>
+            <div class="nav-right">
+                <ul class="nav-links">
+                    <li><a href="index.html" data-nl="Home" data-en="Home">Home</a></li>
+                    <li><a href="producten.html" data-nl="Winkel" data-en="Shop">Winkel</a></li>
+                    <li><a href="index.html#contact" data-nl="Vragen" data-en="Questions">Vragen</a></li>
+                </ul>
+                <div class="lang-switch">
+                    <button onclick="changeLanguage('nl')">NL</button>
+                    <button onclick="changeLanguage('en')">EN</button>
+                </div>
+                <div class="cart-btn" onclick="toggleCart()">🛒 <span id="cart-count">0</span></div>
+            </div>
+        </div>
     </nav>
-    <h1>Producten</h1>
-  </header>
 
-  <main>
-    <div class="product">
-      <img src="images/spinnerbait.jpg" alt="Spinnerbait" class="product-image" />
-      <div class="product-info">
-        <h2>Spinnerbait #3</h2>
-        <p>Perfect voor snoek en baars</p>
-        <p class="prijs">€12,95</p>
-        <a href="https://bunq.me/daanlures/12.95" class="koop-knop">Bestel nu</a>
-      </div>
+    <section class="products-page">
+        <h1 class="section-title" data-nl="Onze Producten" data-en="Our Products">Onze Producten</h1>
+        <div class="grid">
+            <div class="card">
+                <div class="img-container"><img src="https://via.placeholder.com/300x200" alt="Bait"></div>
+                <h3>The DK Ripper</h3>
+                <p class="price">€24.95</p>
+                <button class="btn-main" onclick="addToCart('The DK Ripper', 24.95, 'https://buy.stripe.com/jouw_link_1')">In Winkelmand</button>
+            </div>
+            
+            <div class="card">
+                <div class="img-container"><img src="https://via.placeholder.com/300x200" alt="Bait"></div>
+                <h3>Pike Hybrid Glide</h3>
+                <p class="price">€19.95</p>
+                <button class="btn-main" onclick="addToCart('Pike Hybrid Glide', 19.95, 'https://buy.stripe.com/jouw_link_2')">In Winkelmand</button>
+            </div>
+        </div>
+    </section>
+
+    <div id="cart-sidebar" class="sidebar">
+        <h2 data-nl="Winkelmand" data-en="Cart">Winkelmand</h2>
+        <div id="cart-items"></div>
+        <div class="cart-total">Totaal: <span id="total-price">€0.00</span></div>
+        <button class="btn-main checkout-btn" onclick="goToCheckout()" data-nl="Afrekenen" data-en="Checkout">Afrekenen</button>
+        <button onclick="toggleCart()" class="btn-close">Sluiten</button>
     </div>
-  </main>
 
-  <footer>
-    <p>&copy; 2025 DaanLures</p>
-  </footer>
+    <script src="script.js"></script>
 </body>
 </html>
-
