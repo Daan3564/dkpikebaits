@@ -3,75 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DK pikebaits | Premium Predator Baits</title>
+    <title>DK pikebaits | Premium Predator Lures</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
-
     <nav class="navbar">
         <div class="nav-container">
-            <a href="#" class="logo">DK <span>pikebaits</span></a>
-            <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#producten">Producten</a></li>
-                <li class="cart-wrapper" onclick="toggleCart()">
-                    <span class="cart-icon">🛒</span>
-                    <span id="cart-count" class="cart-badge">0</span>
-                </li>
-            </ul>
+            <a href="index.html" class="logo">DK <span>pikebaits</span></a>
+            <div class="nav-right">
+                <ul class="nav-links">
+                    <li><a href="index.html" data-nl="Home" data-en="Home">Home</a></li>
+                    <li><a href="producten.html" data-nl="Winkel" data-en="Shop">Winkel</a></li>
+                    <li><a href="#contact" data-nl="Vragen" data-en="Questions">Vragen</a></li>
+                </ul>
+                <div class="lang-switch">
+                    <button onclick="changeLanguage('nl')">NL</button>
+                    <button onclick="changeLanguage('en')">EN</button>
+                </div>
+                <div class="cart-btn" onclick="toggleCart()">🛒 <span id="cart-count">0</span></div>
+            </div>
         </div>
     </nav>
 
-    <header id="home" class="hero">
-        <div class="hero-content">
-            <h1>DOMINEER HET WATER.</h1>
-            <p>Hoogwaardig kunstaas voor de serieuze snoekvisser.</p>
-            <a href="#producten" class="btn-primary">Shop Collectie</a>
+    <header class="hero">
+        <div class="hero-text">
+            <h1 data-nl="HANDGEMAAKT VOOR MONSTERS" data-en="HANDMADE FOR MONSTERS">HANDGEMAAKT VOOR MONSTERS</h1>
+            <p data-nl="DK pikebaits: De nieuwe standaard in kunstaas." data-en="DK pikebaits: The new standard in predator lures.">DK pikebaits: De nieuwe standaard in kunstaas.</p>
+            <a href="producten.html" class="btn-main" data-nl="Shop Collectie" data-en="Shop Collection">Shop Collectie</a>
         </div>
     </header>
 
-    <main id="producten" class="container">
-        <h2 class="section-title">Onze Hardbaits</h2>
-        <div class="product-grid" id="product-list">
-            <div class="product-card">
-                <div class="badge">Bestseller</div>
-                <img src="https://images.unsplash.com/photo-1541625602330-2277a4c4b28d?auto=format&fit=crop&w=400" alt="Kunstaas">
-                <div class="product-info">
-                    <h3>DK Monster Shad</h3>
-                    <p class="price">€24,95</p>
-                    <button class="btn-add" onclick="addToCart('DK Monster Shad', 24.95, 'https://buy.stripe.com/jouw_link_1')">In Winkelmand</button>
-                </div>
-            </div>
+    <section id="contact" class="contact-container">
+        <h2 data-nl="Heb je een vraag?" data-en="Have a question?">Heb je een vraag?</h2>
+        <p data-nl="Stuur ons een bericht en we helpen je snel verder." data-en="Send us a message and we will help you shortly.">Stuur ons een bericht en we helpen je snel verder.</p>
+        
+        <form action="https://formspree.io/f/jouw_id" method="POST" class="pro-form">
+            <input type="text" name="name" placeholder="Naam / Name" required>
+            <input type="email" name="email" placeholder="E-mail" required>
+            <textarea name="message" placeholder="Jouw vraag... / Your question..." rows="5" required></textarea>
+            <button type="submit" class="btn-main" data-nl="Verzenden" data-en="Send">Verzenden</button>
+        </form>
+    </section>
 
-            <div class="product-card">
-                <img src="https://images.unsplash.com/photo-1516035039355-771b285d0b43?auto=format&fit=crop&w=400" alt="Kunstaas">
-                <div class="product-info">
-                    <h3>DK Jerkbait Pro</h3>
-                    <p class="price">€19,95</p>
-                    <button class="btn-add" onclick="addToCart('DK Jerkbait Pro', 19.95, 'https://buy.stripe.com/jouw_link_2')">In Winkelmand</button>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <div id="cart-overlay" class="overlay" onclick="toggleCart()"></div>
-    
-    <div id="cart-sidebar" class="cart-sidebar">
-        <div class="cart-header">
-            <h2>Jouw Mandje</h2>
-            <span class="close-cart" onclick="toggleCart()">&times;</span>
-        </div>
-        <div id="cart-items" class="cart-items-list">
-            </div>
-        <div class="cart-footer">
-            <div class="total-row">
-                <span>Totaal:</span>
-                <span id="cart-total">€0,00</span>
-            </div>
-            <p class="shipping-note">Verzending via PostNL wordt berekend bij Stripe.</p>
-            <button class="btn-checkout" onclick="checkout()">Afrekenen</button>
-        </div>
+    <div id="cart-sidebar" class="sidebar">
+        <h2 data-nl="Winkelmand" data-en="Cart">Winkelmand</h2>
+        <div id="cart-items"></div>
+        <div class="cart-total"><span data-nl="Totaal" data-en="Total">Totaal</span>: <span id="total-price">€0.00</span></div>
+        <button class="btn-main checkout-btn" onclick="goToCheckout()" data-nl="Afrekenen" data-en="Checkout">Afrekenen</button>
+        <button onclick="toggleCart()" class="btn-close" data-nl="Sluiten" data-en="Close">Sluiten</button>
     </div>
 
     <script src="script.js"></script>
