@@ -1,57 +1,79 @@
-=<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <title>DK Pikebaits</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DK pikebaits | Premium Predator Baits</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<header>
-    <h1>DK Pikebaits</h1>
-    <nav>
-        <a href="#home">Home</a>
-        <a href="#products">Producten</a>
-        <a href="#cart">Winkelmand (<span id="count">0</span>)</a>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">DK <span>pikebaits</span></a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#producten">Producten</a></li>
+                <li class="cart-wrapper" onclick="toggleCart()">
+                    <span class="cart-icon">🛒</span>
+                    <span id="cart-count" class="cart-badge">0</span>
+                </li>
+            </ul>
+        </div>
     </nav>
-</header>
 
-<section id="home">
-    <h2>Premium kunstaas voor snoekvissers</h2>
-    <p>Handgemaakte pikebaits – kwaliteit waarop je kunt vertrouwen.</p>
-</section>
+    <header id="home" class="hero">
+        <div class="hero-content">
+            <h1>DOMINEER HET WATER.</h1>
+            <p>Hoogwaardig kunstaas voor de serieuze snoekvisser.</p>
+            <a href="#producten" class="btn-primary">Shop Collectie</a>
+        </div>
+    </header>
 
-<section id="products">
-    <h2>Onze producten</h2>
-    <div class="products">
-        <div class="product">
-            <h3>Pikebait Classic</h3>
-            <p>€12,95</p>
-            <button onclick="addToCart('Pikebait Classic',12.95,'STRIPE_LINK_1')">Toevoegen</button>
+    <main id="producten" class="container">
+        <h2 class="section-title">Onze Hardbaits</h2>
+        <div class="product-grid" id="product-list">
+            <div class="product-card">
+                <div class="badge">Bestseller</div>
+                <img src="https://images.unsplash.com/photo-1541625602330-2277a4c4b28d?auto=format&fit=crop&w=400" alt="Kunstaas">
+                <div class="product-info">
+                    <h3>DK Monster Shad</h3>
+                    <p class="price">€24,95</p>
+                    <button class="btn-add" onclick="addToCart('DK Monster Shad', 24.95, 'https://buy.stripe.com/jouw_link_1')">In Winkelmand</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1516035039355-771b285d0b43?auto=format&fit=crop&w=400" alt="Kunstaas">
+                <div class="product-info">
+                    <h3>DK Jerkbait Pro</h3>
+                    <p class="price">€19,95</p>
+                    <button class="btn-add" onclick="addToCart('DK Jerkbait Pro', 19.95, 'https://buy.stripe.com/jouw_link_2')">In Winkelmand</button>
+                </div>
+            </div>
         </div>
-        <div class="product">
-            <h3>Pikebait Pro</h3>
-            <p>€16,95</p>
-            <button onclick="addToCart('Pikebait Pro',16.95,'STRIPE_LINK_2')">Toevoegen</button>
+    </main>
+
+    <div id="cart-overlay" class="overlay" onclick="toggleCart()"></div>
+    
+    <div id="cart-sidebar" class="cart-sidebar">
+        <div class="cart-header">
+            <h2>Jouw Mandje</h2>
+            <span class="close-cart" onclick="toggleCart()">&times;</span>
         </div>
-        <div class="product">
-            <h3>Pikebait Heavy</h3>
-            <p>€19,95</p>
-            <button onclick="addToCart('Pikebait Heavy',19.95,'STRIPE_LINK_3')">Toevoegen</button>
+        <div id="cart-items" class="cart-items-list">
+            </div>
+        <div class="cart-footer">
+            <div class="total-row">
+                <span>Totaal:</span>
+                <span id="cart-total">€0,00</span>
+            </div>
+            <p class="shipping-note">Verzending via PostNL wordt berekend bij Stripe.</p>
+            <button class="btn-checkout" onclick="checkout()">Afrekenen</button>
         </div>
     </div>
-</section>
 
-<section id="cart">
-    <h2>Winkelmand</h2>
-    <div class="cart" id="cart-items"></div>
-    <div class="total">Totaal: €<span id="total">0.00</span></div>
-</section>
-
-<footer>
-    © DK Pikebaits
-</footer>
-
-<script src="shop.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
