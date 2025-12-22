@@ -3,54 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DK pikebaits | Premium Predator Lures</title>
+    <title>DK pikebaits | Home</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <nav class="navbar">
         <div class="nav-container">
             <a href="index.html" class="logo">DK <span>pikebaits</span></a>
+            <div class="search-wrapper">
+                <input type="text" placeholder="Zoek kunstaas..." id="searchBar">
+                <a href="mandje.html" class="cart-nav">🛒 <span id="cart-count">0</span></a>
+            </div>
             <div class="nav-right">
-                <ul class="nav-links">
-                    <li><a href="index.html" data-nl="Home" data-en="Home">Home</a></li>
-                    <li><a href="producten.html" data-nl="Winkel" data-en="Shop">Winkel</a></li>
-                    <li><a href="#contact" data-nl="Vragen" data-en="Questions">Vragen</a></li>
-                </ul>
-                <div class="lang-switch">
+                <div class="lang-btns">
                     <button onclick="changeLanguage('nl')">NL</button>
                     <button onclick="changeLanguage('en')">EN</button>
                 </div>
-                <div class="cart-btn" onclick="toggleCart()">🛒 <span id="cart-count">0</span></div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="producten.html">Winkel</a></li>
+                </ul>
             </div>
         </div>
     </nav>
 
     <header class="hero">
-        <div class="hero-text">
-            <h1 data-nl="HANDGEMAAKT VOOR MONSTERS" data-en="HANDMADE FOR MONSTERS">HANDGEMAAKT VOOR MONSTERS</h1>
-            <p data-nl="DK pikebaits: De nieuwe standaard in kunstaas." data-en="DK pikebaits: The new standard in predator lures.">DK pikebaits: De nieuwe standaard in kunstaas.</p>
-            <a href="producten.html" class="btn-main" data-nl="Shop Collectie" data-en="Shop Collection">Shop Collectie</a>
-        </div>
+        <h1 data-nl="HANDGEMAAKT VOOR MONSTERS" data-en="HANDMADE FOR MONSTERS">HANDGEMAAKT VOOR MONSTERS</h1>
+        <a href="producten.html" class="btn-main" data-nl="BEKIJK PRODUCTEN" data-en="VIEW PRODUCTS">BEKIJK PRODUCTEN</a>
     </header>
 
-    <section id="contact" class="contact-container">
-        <h2 data-nl="Heb je een vraag?" data-en="Have a question?">Heb je een vraag?</h2>
-        <p data-nl="Stuur ons een bericht en we helpen je snel verder." data-en="Send us a message and we will help you shortly.">Stuur ons een bericht en we helpen je snel verder.</p>
-        
-        <form action="https://formspree.io/f/jouw_id" method="POST" class="pro-form">
-            <input type="text" name="name" placeholder="Naam / Name" required>
-            <input type="email" name="email" placeholder="E-mail" required>
-            <textarea name="message" placeholder="Jouw vraag... / Your question..." rows="5" required></textarea>
-            <button type="submit" class="btn-main" data-nl="Verzenden" data-en="Send">Verzenden</button>
-        </form>
-    </section>
-
-    <div id="cart-sidebar" class="sidebar">
-        <h2 data-nl="Winkelmand" data-en="Cart">Winkelmand</h2>
-        <div id="cart-items"></div>
-        <div class="cart-total"><span data-nl="Totaal" data-en="Total">Totaal</span>: <span id="total-price">€0.00</span></div>
-        <button class="btn-main checkout-btn" onclick="goToCheckout()" data-nl="Afrekenen" data-en="Checkout">Afrekenen</button>
-        <button onclick="toggleCart()" class="btn-close" data-nl="Sluiten" data-en="Close">Sluiten</button>
+    <div class="fab-container">
+        <button class="fab-btn" onclick="toggleContact()">?</button>
+        <div id="contact-slide" class="contact-slide">
+            <h3 data-nl="Stel een vraag" data-en="Ask a question">Stel een vraag</h3>
+            <form action="https://formspree.io/f/jouw_id" method="POST">
+                <input type="email" name="email" placeholder="Je e-mail" required>
+                <textarea name="message" placeholder="Je bericht..." required></textarea>
+                <button type="submit" class="btn-main">Verzenden</button>
+            </form>
+        </div>
     </div>
 
     <script src="script.js"></script>
