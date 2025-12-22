@@ -8,48 +8,18 @@
 </head>
 <body>
     <nav class="navbar">
-        <div class="nav-container">
-            <a href="index.html" class="logo">DK <span>pikebaits</span></a>
-            <div class="nav-right">
-                <ul class="nav-links">
-                    <li><a href="index.html" data-nl="Home" data-en="Home">Home</a></li>
-                    <li><a href="producten.html" data-nl="Winkel" data-en="Shop">Winkel</a></li>
-                    <li><a href="index.html#contact" data-nl="Vragen" data-en="Questions">Vragen</a></li>
-                </ul>
-                <div class="lang-switch">
-                    <button onclick="changeLanguage('nl')">NL</button>
-                    <button onclick="changeLanguage('en')">EN</button>
-                </div>
-                <div class="cart-btn" onclick="toggleCart()">🛒 <span id="cart-count">0</span></div>
-            </div>
-        </div>
-    </nav>
+        </nav>
 
-    <section class="products-page">
-        <h1 class="section-title" data-nl="Onze Producten" data-en="Our Products">Onze Producten</h1>
+    <div class="container page-padding">
+        <h1 data-nl="Onze Collectie" data-en="Our Collection">Onze Collectie</h1>
         <div class="grid">
             <div class="card">
-                <div class="img-container"><img src="https://via.placeholder.com/300x200" alt="Bait"></div>
+                <img src="placeholder.jpg" alt="Bait">
                 <h3>The DK Ripper</h3>
-                <p class="price">€24.95</p>
-                <button class="btn-main" onclick="addToCart('The DK Ripper', 24.95, 'https://buy.stripe.com/jouw_link_1')">In Winkelmand</button>
-            </div>
-            
-            <div class="card">
-                <div class="img-container"><img src="https://via.placeholder.com/300x200" alt="Bait"></div>
-                <h3>Pike Hybrid Glide</h3>
-                <p class="price">€19.95</p>
-                <button class="btn-main" onclick="addToCart('Pike Hybrid Glide', 19.95, 'https://buy.stripe.com/jouw_link_2')">In Winkelmand</button>
+                <p>€24.95</p>
+                <button class="btn-main" onclick="addToCart('The DK Ripper', 24.95, 'STRIPE_LINK')">In Mandje</button>
             </div>
         </div>
-    </section>
-
-    <div id="cart-sidebar" class="sidebar">
-        <h2 data-nl="Winkelmand" data-en="Cart">Winkelmand</h2>
-        <div id="cart-items"></div>
-        <div class="cart-total">Totaal: <span id="total-price">€0.00</span></div>
-        <button class="btn-main checkout-btn" onclick="goToCheckout()" data-nl="Afrekenen" data-en="Checkout">Afrekenen</button>
-        <button onclick="toggleCart()" class="btn-close">Sluiten</button>
     </div>
 
     <script src="script.js"></script>
