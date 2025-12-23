@@ -1,33 +1,20 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>DK PIKEBAITS | Winkelmand</title>
+    <title>Winkelmand</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://js.stripe.com/v3/"></script>
 </head>
-<body style="background:#000; color:white; font-family:sans-serif; text-align:center;">
-    <nav style="padding:20px; border-bottom:1px solid #333;">
-        <a href="index.html" style="color:white; margin:15px; text-decoration:none;">Home</a>
-        <a href="producten.html" style="color:white; margin:15px; text-decoration:none;">Shop</a>
-        <a href="mandje.html" style="color:white; margin:15px; text-decoration:none;">Winkelmand</a>
-    </nav>
+<body style="background:#000; color:#fff; text-align:center; font-family:sans-serif;">
+    <nav style="padding:20px;"><a href="index.html">Home</a> | <a href="producten.html">Shop</a> | <a href="mandje.html">Winkelmand</a></nav>
 
-    <h1 style="color:gold; margin-top:50px;">JOUW WINKELMAND</h1>
-    
-    <div id="mandje-inhoud" style="max-width:500px; margin:0 auto;"></div>
-    
-    <div id="lege-melding" style="display:none; margin-top:30px;">
-        <p>Je mandje is op dit moment leeg.</p>
-        <a href="producten.html" style="color:gold;">Ga terug naar de shop</a>
-    </div>
+    <h1>JOUW MANDJE</h1>
+    <div id="mandje-inhoud" style="max-width:400px; margin:0 auto;"></div>
+    <div id="lege-melding" style="display:none;">Mandje is leeg</div>
 
-    <div id="totaal-sectie" style="display:none; margin-top:40px; border-top:1px solid #333; padding-top:20px;">
-        <p style="font-size:1.2rem;">Verzendkosten (Nederland): <strong>€ 4,50</strong></p>
-        <button class="cta-btn" onclick="naarKassa()" 
-                style="background:gold; color:black; border:none; padding:20px 40px; font-weight:bold; cursor:pointer; font-size:1.2rem; border-radius:5px;">
-            GA NAAR AFREKENEN
-        </button>
+    <div id="totaal-sectie" style="display:none; margin-top:20px;">
+        <p>Verzendkosten: € 4,50</p>
+        <button onclick="naarKassa()" style="background:gold; padding:20px; font-weight:bold;">AFREKENEN</button>
     </div>
 
     <script src="script.js"></script>
