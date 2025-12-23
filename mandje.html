@@ -3,36 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mandje | DK pikebaits</title>
+    <title>Winkelmand | DK PIKEBAITS</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
     <nav class="navbar">
         <div class="nav-container">
-            <a href="index.html" class="logo">DK <span>PIKEBAITS</span></a>
+            <a href="index.html" class="logo"><img src="logo.png" alt="DK PIKEBAITS"></a>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="producten.html">Shop</a></li>
+                <li><a href="mandje.html">Winkelmand</a></li>
+            </ul>
             <div class="nav-right">
-                <ul class="nav-menu">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="producten.html" data-nl="Winkel" data-en="Shop">Winkel</a></li>
-                    <li><a href="mandje.html" class="cart-nav">🛒 <span id="cart-count">0</span></a></li>
-                </ul>
-                <div class="lang-selector">
-                    <button onclick="changeLanguage('nl')">NL</button>
-                    <button onclick="changeLanguage('en')">EN</button>
-                </div>
+                <button class="lang-btn">NL</button>
+                <button class="lang-btn">EN</button>
             </div>
         </div>
     </nav>
 
-    <main class="container">
-        <h1 class="page-title" data-nl="Winkelmand" data-en="Cart">Winkelmand</h1>
-        <div id="cartList"></div>
-        <div class="cart-summary">
-            <h2 data-nl="Totaal:" data-en="Total:">Totaal: <span id="totalPrice">€0.00</span></h2>
-            <br>
-            <button class="cta-btn" onclick="checkout()" data-nl="AFREKENEN" data-en="CHECKOUT">AFREKENEN</button>
+    <div class="container">
+        <h1 class="page-title">Jouw Bestelling</h1>
+        
+        <div id="cartContent">
+            <div id="cartList"></div>
+            
+            <div style="margin-top: 40px; border-top: 2px solid var(--gold); padding-top: 20px; text-align: right;">
+                <h2 style="font-size: 2rem;">Totaal: <span id="totalPrice" style="color: var(--gold);">€0.00</span></h2>
+                <br>
+                <button class="cta-btn" onclick="checkout()" style="width: 300px;">AFREKENEN</button>
+            </div>
         </div>
-    </main>
+        
+        <div id="emptyMessage" style="display:none; text-align: center;">
+            <p style="font-size: 1.5rem; margin-bottom: 30px;">Je winkelmand is nog leeg.</p>
+            <a href="producten.html" class="cta-btn">GA NAAR SHOP</a>
+        </div>
+    </div>
+
+    <div class="help-corner">
+        <div id="helpBox" class="help-box">
+            <h3 style="color:var(--gold); margin-bottom:15px;">HULP NODIG?</h3>
+            <form action="#" method="POST">
+                <input type="email" placeholder="E-mail" style="width:100%; padding:10px; margin-bottom:10px; background:#111; border:1px solid #333; color:white;">
+                <textarea placeholder="Waar kunnen we bij helpen?" rows="4" style="width:100%; padding:10px; margin-bottom:10px; background:#111; border:1px solid #333; color:white;"></textarea>
+                <button type="submit" class="cta-btn" style="width:100%; padding:10px; font-size: 14px;">VERSTUUR</button>
+            </form>
+        </div>
+        <button class="help-trigger" onclick="toggleHelp()">?</button>
+    </div>
+
     <script src="script.js"></script>
+    <script>
+        // Extra script specifiek voor de winkelmand-pagina
+        function renderCart() {
+            const list = document.getElementById('cartList');
+            const totalEl = document.getElementById('totalPrice');
+            const emptyMsg = document.getElementById('emptyMessage');
+            const content = document.getElementById('cartContent');
+            
+            let cart = JSON.parse(localStorage.getItem('dk_cart')) || [];
+            
+            if (cart.length === 0) {
+                content.style.display = 'none';
+                emptyMsg.style.display = 'block';
+                return;
+            }
+
+            list.innerHTML = '';
+            let total = 0;
+
+            cart.forEach((item, index) => {
+                total += item.price;
+                list.innerHTML += `
+                    <div style="display:flex; justify-content:space-between; align-items:center; background:var(--card-bg); padding:20px; border-radius:10px; margin-bottom:15px; border: 1px solid #2a343d;">
+                        <div>
+                            <h3 style="color:white;">${item.name}</h3>
+                            <p style="color:var(--gold); font-weight:bold;">€${item.price.toFixed(2)}</p>
+                        </div>
+                        <button onclick="removeItem(${index})" style="background:red; color:white; border:none; padding:10px 15px; border-radius:5px; cursor:pointer; font-weight:bold;">VERWIJDER</button>
+                    </div>
+                `;
+            });
+
+            totalEl.innerText = `€${total.toFixed(2)}`;
+        }
+
+        function removeItem(index) {
+            let cart = JSON.parse(localStorage.getItem('dk_cart')) || [];
+            cart.splice(index, 1);
+            localStorage.setItem('dk_cart', JSON.stringify(cart));
+            renderCart();
+            if(window.updateUI) updateUI();
+        }
+
+        function checkout() {
+            alert("Je wordt nu doorgestuurd naar de beveiligde betaalpagina...");
+            // Hier kun je later je Stripe link plaatsen
+        }
+
+        window.onload = function() {
+            renderCart();
+            if(window.updateUI) updateUI();
+        };
+    </script>
 </body>
 </html>
