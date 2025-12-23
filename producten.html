@@ -3,44 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shop | DK pikebaits</title>
+    <title>Shop | DK PIKEBAITS</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <nav class="navbar">
         <div class="nav-container">
-            <a href="index.html" class="logo">DK <span>PIKEBAITS</span></a>
-            <div class="nav-right">
-                <ul class="nav-menu">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="producten.html" data-nl="Winkel" data-en="Shop">Winkel</a></li>
-                    <li><a href="mandje.html" class="cart-nav">🛒 <span id="cart-count">0</span></a></li>
-                </ul>
-                <div class="lang-selector">
-                    <button onclick="changeLanguage('nl')">NL</button>
-                    <button onclick="changeLanguage('en')">EN</button>
-                </div>
-            </div>
+            <a href="index.html" class="logo"><img src="logo.png" alt="DK"></a>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="producten.html">Shop</a></li>
+                <li><a href="mandje.html">Winkelmand</a></li>
+            </ul>
+            <div class="nav-right"><button class="lang-btn">NL</button></div>
         </div>
     </nav>
 
-    <main class="container">
-        <h2 class="page-title" data-nl="Onze Producten" data-en="Our Products">Onze Producten</h2>
+    <div class="container">
+        <h1 class="page-title">Onze Baits</h1>
         <div class="grid">
             <div class="card">
-                <img src="bait1.jpg" alt="Bait">
-                <h3>DK Ripper Shad</h3>
-                <p class="price">€24.95</p>
-                <button class="add-btn" onclick="addToCart('DK Ripper Shad', 24.95, 'JOUW_STRIPE_LINK_1')">ADD TO CART</button>
+                <img src="https://images.unsplash.com/photo-1611091207317-0f81d5958083?q=80&w=600" alt="Bait">
+                <h2>The Monster Ripper</h2>
+                <p class="price">€14.95</p>
+                <button class="cta-btn" onclick="addToCart('Monster Ripper', 14.95)">VOEG TOE</button>
             </div>
-            <div class="card">
-                <img src="bait2.jpg" alt="Bait">
-                <h3>Pike Glidebait</h3>
-                <p class="price">€19.95</p>
-                <button class="add-btn" onclick="addToCart('Pike Glidebait', 19.95, 'JOUW_STRIPE_LINK_2')">ADD TO CART</button>
             </div>
+    </div>
+
+    <div class="help-corner">
+        <div id="helpBox" class="help-box">
+            <h3 style="color:var(--gold);">Vragen?</h3>
+            <button class="cta-btn" onclick="toggleHelp()">SLUITEN</button>
         </div>
-    </main>
+        <button class="help-trigger" onclick="toggleHelp()">?</button>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
