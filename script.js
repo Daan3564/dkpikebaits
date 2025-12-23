@@ -1,37 +1,35 @@
 let cart = JSON.parse(localStorage.getItem('dk_cart')) || [];
+const PRICE_PER_BAIT = 16.00;
 
-// 1. HELP MENU OPENEN/SLUITEN
+// 1. HELP MENU
 function toggleHelp() {
     const box = document.getElementById('helpBox');
     if(box) box.classList.toggle('active');
 }
 
-// 2. PRODUCT TOEVOEGEN
-function addToCart(name, price) {
+// 2. PRODUCT TOEVOEGEN (Met prijs 16.00)
+function addToCart(name, price = PRICE_PER_BAIT) {
     cart.push({ name: name, price: price });
     localStorage.setItem('dk_cart', JSON.stringify(cart));
     updateUI();
     
-    // Knop animatie feedback
+    // Visuele knipoog dat het gelukt is
     const btn = event.target;
-    const originalText = btn.innerText;
-    btn.innerText = "IN WINKELMAND!";
-    btn.style.background = "#fff";
-    btn.style.color = "#000";
-    setTimeout(() => { 
-        btn.innerText = originalText; 
-        btn.style.background = "";
-        btn.style.color = "";
-    }, 1500);
+    btn.innerText = "TOEGEVOEGD!";
+    setTimeout(() => { btn.innerText = "VOEG TOE"; }, 1500);
 }
 
-// 3. UI UPDATEN (Teller in het menu)
+// 3. UI UPDATEN (Teller en Kleur)
 function updateUI() {
     const countEl = document.getElementById('cart-count');
-    if (countEl) countEl.innerText = cart.length;
+    if (countEl) {
+        countEl.innerText = cart.length;
+        // Als er iets in zit, maak de teller goud
+        countEl.style.color = cart.length > 0 ? "var(--gold)" : "white";
+    }
 }
 
-// 4. WINKELMAND PAGINA OPBOUWEN
+// 4. MANDJE TONEN
 function renderCart() {
     const list = document.getElementById('cartList');
     const subtotalEl = document.getElementById('subtotalPrice');
@@ -53,18 +51,19 @@ function renderCart() {
     cart.forEach((item, index) => {
         subtotal += item.price;
         list.innerHTML += `
-            <div style="display:flex; justify-content:space-between; align-items:center; background:var(--card-bg); padding:20px; border-radius:15px; margin-bottom:15px; border: 1px solid #2a343d;">
+            <div style="display:flex; justify-content:space-between; align-items:center; background:var(--card-bg); padding:15px; border-radius:10px; margin-bottom:10px; border: 1px solid #2a343d;">
                 <div>
-                    <h3 style="color:white; font-weight:900; text-transform:uppercase;">${item.name}</h3>
+                    <h3 style="color:white;">${item.name}</h3>
                     <p style="color:var(--gold); font-weight:bold;">€${item.price.toFixed(2)}</p>
                 </div>
-                <button onclick="removeItem(${index})" style="background:none; border:1px solid #ff4444; color:#ff4444; padding:8px 15px; border-radius:5px; cursor:pointer; font-weight:bold; font-size:12px;">VERWIJDER</button>
+                <button onclick="removeItem(${index})" style="background:none; border:none; color:#ff4444; cursor:pointer; font-weight:bold;">VERWIJDER</button>
             </div>
         `;
     });
 
-    const shipping = 4.25;
-    const total = subtotal + shipping;
+    // We tonen in de shop alleen NL verzendkosten als indicatie
+    const shippingEstimate = 4.25;
+    const total = subtotal + shippingEstimate;
     
     if(subtotalEl) subtotalEl.innerText = `€${subtotal.toFixed(2)}`;
     if(totalEl) totalEl.innerText = `€${total.toFixed(2)}`;
@@ -77,28 +76,30 @@ function removeItem(index) {
     updateUI();
 }
 
-// 5. DE SLIMME STRIPE CHECKOUT (Schakelt tussen jouw 3 links)
+// 5. DE STRIPE CHECKOUT (Schakelt tussen jouw links)
 function checkout() {
     const count = cart.length;
-    
-    if (count === 0) {
-        alert("Je winkelmandje is nog leeg!");
-        return;
-    }
+    if (count === 0) return;
 
-    let finalLink = "";
+    let stripeUrl = "";
 
+    // Jouw 3 specifieke links
     if (count === 1) {
-        finalLink = "https://buy.stripe.com/3cI6oHdVh8KVaVH77R1B603";
+        stripeUrl = "https://buy.stripe.com/3cI6oHdVh8KVaVH77R1B603";
     } else if (count === 2) {
-        finalLink = "https://buy.stripe.com/cNi9AT6sP3qBfbXdwf1B604";
-    } else if (count >= 3) {
-        // Bij 3 of meer gebruiken we de link voor 3 stuks
-        finalLink = "https://buy.stripe.com/8x2bJ1dVh9OZ8Nzak31B605";
+        stripeUrl = "https://buy.stripe.com/cNi9AT6sP3qBfbXdwf1B604";
+    } else {
+        // Voor 3 of meer stuks
+        stripeUrl = "https://buy.stripe.com/8x2bJ1dVh9OZ8Nzak31B605";
     }
 
-    // Stuur de klant naar de juiste beveiligde Stripe pagina
-    window.location.href = finalLink;
+    window.location.href = stripeUrl;
+}
+
+// 6. TAAL WISSELEN (Basis opzet)
+function changeLanguage(lang) {
+    alert("Taal wordt gewijzigd naar: " + lang.toUpperCase());
+    // Hier kun je later vertalingen toevoegen
 }
 
 window.onload = () => {
