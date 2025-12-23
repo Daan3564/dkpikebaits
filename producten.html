@@ -7,20 +7,27 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <nav class="navbar">
-        </nav>
+    <nav class="navbar"></nav>
 
-    <div class="container page-padding">
-        <h1 data-nl="Onze Collectie" data-en="Our Collection">Onze Collectie</h1>
-        <div class="grid">
-            <div class="card">
-                <img src="placeholder.jpg" alt="Bait">
-                <h3>The DK Ripper</h3>
-                <p>€24.95</p>
-                <button class="btn-main" onclick="addToCart('The DK Ripper', 24.95, 'STRIPE_LINK')">In Mandje</button>
+    <main class="shop-container">
+        <h2 class="title" data-nl="Onze Collectie" data-en="Our Collection">Onze Collectie</h2>
+        
+        <div class="grid" id="productGrid">
+            <div class="card" data-name="ripper shad">
+                <div class="img-box"><img src="https://via.placeholder.com/300x250" alt="Bait"></div>
+                <h3>DK Ripper Shad</h3>
+                <p class="price">€24.95</p>
+                <button class="add-btn" onclick="addToCart('DK Ripper Shad', 24.95, 'STRIPE_LINK_1')">ADD TO CART</button>
+            </div>
+
+            <div class="card" data-name="jerkbait glide">
+                <div class="img-box"><img src="https://via.placeholder.com/300x250" alt="Bait"></div>
+                <h3>Pike Glidebait</h3>
+                <p class="price">€19.95</p>
+                <button class="add-btn" onclick="addToCart('Pike Glidebait', 19.95, 'STRIPE_LINK_2')">ADD TO CART</button>
             </div>
         </div>
-    </div>
+    </main>
 
     <script src="script.js"></script>
 </body>
