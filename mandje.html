@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Winkelmand | DK pikebaits</title>
+    <title>Mandje | DK pikebaits</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
     <nav class="navbar">
@@ -26,13 +25,12 @@
     </nav>
 
     <main class="container">
-        <h1 class="page-title" data-nl="Jouw Bestelling" data-en="Your Order">Jouw Bestelling</h1>
+        <h1 class="page-title" data-nl="Winkelmand" data-en="Cart">Winkelmand</h1>
         <div id="cartList"></div>
         <div class="cart-summary">
             <h2 data-nl="Totaal:" data-en="Total:">Totaal: <span id="totalPrice">€0.00</span></h2>
-            <div style="margin-top: 20px;">
-                <button class="cta-btn" onclick="checkout()" data-nl="AFREKENEN" data-en="CHECKOUT">AFREKENEN</button>
-            </div>
+            <br>
+            <button class="cta-btn" onclick="checkout()" data-nl="AFREKENEN" data-en="CHECKOUT">AFREKENEN</button>
         </div>
     </main>
     <script src="script.js"></script>
