@@ -1,85 +1,85 @@
-Ik ga alles nu voor je samenvoegen. We gaan ervoor zorgen dat wanneer je op "Shop" klikt en een bait toevoegt, de website dit onthoudt en op de mandje.html pagina het totaal uitrekent inclusief de verzendkosten van € 4,50.
-
-Omdat je geen maandelijkse kosten wilt, gebruiken we de browser van de klant om het mandje te onthouden (localStorage).
-
-1. Het nieuwe script.js
-Vervang de volledige inhoud van je script.js door deze code. Hierin staat de logica voor het mandje en de koppeling met Stripe.
-
-JavaScript
-
-// Initialiseer Stripe met jouw sleutel
+// Initialiseer Stripe met jouw Openbare Sleutel
 const stripe = Stripe('pk_test_51ShbijDKBwjX9ElPpXBRbo4BjbScRaXuanQeKeDF50Isnyw00K8a79HvgsU3JVkewfdaai0Z1NpjV5uKXfjF6w700Mp1j02QU');
 
-// Functie om product toe te voegen (werkt op producten.html)
-function voegToe(priceId, naam, prijs) {
-    let mandje = JSON.parse(localStorage.getItem('winkelmand')) || [];
-    mandje.push({ price: priceId, name: naam, amount: prijs });
-    localStorage.setItem('winkelmand', JSON.stringify(mandje));
-    alert(naam + " is toegevoegd aan je mandje!");
+// 1. Product toevoegen aan mandje
+function voegToe(id, naam, prijs) {
+    let mandje = JSON.parse(localStorage.getItem('dk_pikes_cart')) || [];
+    mandje.push({ id: id, naam: naam, prijs: prijs });
+    localStorage.setItem('dk_pikes_cart', JSON.stringify(mandje));
+    alert(naam + " is toegevoegd aan je winkelmandje!");
 }
 
-// Functie om mandje te tonen (werkt op mandje.html)
+// 2. Mandje weergeven op mandje.html
 function toonMandje() {
-    const container = document.getElementById('mandje-inhoud');
-    const leegMelding = document.getElementById('lege-melding');
+    const display = document.getElementById('mandje-inhoud');
     const totaalSectie = document.getElementById('totaal-sectie');
-    let mandje = JSON.parse(localStorage.getItem('winkelmand')) || [];
+    const leegMelding = document.getElementById('lege-melding');
+    
+    if (!display) return; // Stop als we niet op de mandje pagina zijn
+
+    let mandje = JSON.parse(localStorage.getItem('dk_pikes_cart')) || [];
 
     if (mandje.length === 0) {
-        if(leegMelding) leegMelding.style.display = 'block';
-        if(totaalSectie) totaalSectie.style.display = 'none';
+        display.innerHTML = "";
+        totaalSectie.style.display = "none";
+        leegMelding.style.display = "block";
         return;
     }
 
-    if(leegMelding) leegMelding.style.display = 'none';
-    if(totaalSectie) totaalSectie.style.display = 'block';
+    leegMelding.style.display = "none";
+    totaalSectie.style.display = "block";
     
-    container.innerHTML = '';
-    mandje.forEach((item, index) => {
-        container.innerHTML += `
-            <div style="background:#222; margin:10px; padding:15px; border:1px solid #333; display:flex; justify-content:space-between;">
-                <span>${item.name}</span>
-                <span>€ ${item.amount.toFixed(2)}</span>
-                <button onclick="verwijderItem(${index})" style="background:red; color:white; border:none; cursor:pointer;">X</button>
-            </div>`;
-    });
+    display.innerHTML = mandje.map((item, index) => `
+        <div style="background: #111; padding: 15px; margin-bottom: 10px; border: 1px solid #333; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <strong style="color: gold;">${item.naam}</strong><br>
+                <span>€ ${item.prijs.toFixed(2)}</span>
+            </div>
+            <button onclick="verwijderItem(${index})" style="background: red; color: white; border: none; padding: 5px 10px; cursor: pointer; border-radius: 4px;">Verwijder</button>
+        </div>
+    `).join('');
 }
 
+// 3. Item verwijderen
 function verwijderItem(index) {
-    let mandje = JSON.parse(localStorage.getItem('winkelmand'));
+    let mandje = JSON.parse(localStorage.getItem('dk_pikes_cart'));
     mandje.splice(index, 1);
-    localStorage.setItem('winkelmand', JSON.stringify(mandje));
+    localStorage.setItem('dk_pikes_cart', JSON.stringify(mandje));
     toonMandje();
 }
 
-// De functie die alles doorstuurt naar Stripe
+// 4. De betaling starten bij Stripe
 function naarKassa() {
-    let mandje = JSON.parse(localStorage.getItem('winkelmand')) || [];
+    let mandje = JSON.parse(localStorage.getItem('dk_pikes_cart')) || [];
     
-    // Maak de lijst klaar voor Stripe (Stripe wil alleen price en quantity)
-    const lineItems = mandje.map(item => ({
-        price: item.price,
+    // Maak de lijst klaar voor Stripe
+    const items = mandje.map(item => ({
+        price: item.id, // Dit gebruikt je prod_ ID
         quantity: 1
     }));
 
     stripe.redirectToCheckout({
-        lineItems: lineItems,
+        lineItems: items,
         mode: 'payment',
         successUrl: window.location.origin + '/succes.html',
         cancelUrl: window.location.origin + '/mandje.html',
         shippingOptions: [
-            { shipping_rate: 'shr_1ShcPvDKBwjX9ElPl5mAZOQG' } // Jouw €4,50 verzendkosten
+            { shipping_rate: 'shr_1ShcPvDKBwjX9ElPl5mAZOQG' } // Jouw € 4,50 verzendkosten
         ],
+    }).then(function(result) {
+        if (result.error) alert(result.error.message);
     });
 }
 
-// Helpbox toggle
+// Hulpschermpje toggle
 function toggleHelp() {
     const box = document.getElementById('helpBox');
-    box.style.display = box.style.display === 'block' ? 'none' : 'block';
+    if(box) box.style.display = box.style.display === 'block' ? 'none' : 'block';
 }
 
-// Als we op de mandje pagina zijn, toon de inhoud direct
-if (window.location.pathname.includes('mandje.html')) {
-    window.onload = toonMandje;
-}
+// Automatisch mandje laden als de pagina opent
+window.onload = function() {
+    if (document.getElementById('mandje-inhoud')) {
+        toonMandje();
+    }
+};
