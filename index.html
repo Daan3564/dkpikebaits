@@ -1,47 +1,38 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-    <meta charset="UTF-8">
-    <title>Mijn Webshop</title>
-    <script src="https://js.stripe.com/v3/"></script>
+  <meta charset="utf-8">
+  <title>Chriswood Kunst</title>
+  <script src="https://js.stripe.com/v3/"></script>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 600px; margin: 40px auto; text-align: center; background: #f9f9f9; }
+    img { max-width: 100%; border-radius: 10px; margin: 20px 0; }
+    button { padding: 15px 30px; font-size: 18px; background: #635bff; color: white; border: none; border-radius: 8px; cursor: pointer; }
+    button:hover { background: #5434e0; }
+  </style>
 </head>
 <body>
+  <img src="dk-logo.png" alt="Chriswood Logo" width="200">
+  <h1>Chriswood Kunst</h1>
+  
+  <h2>Energie Kunstwerk</h2>
+  <img src="energy.png" alt="Kunstwerk" width="400">
+  <p><strong>€16,00</strong></p>
+  
+  <button id="checkout-button">Betaal 16 euro</button>
 
-    <h1>Jouw Product</h1>
-    <p>Product ID: prod_TewHTrCF34eF03</p>
-    
-    <button id="checkout-button">Nu Kopen</button>
+  <script>
+    const stripe = Stripe('pk_test_51ShbijDKBwjX9ElPpXBRbO4BjbScRaXuaxNQeKeDF50Isnyw00K8a79HvgsU3JVkeWfdaai0Z1NpjV5uKXfjF6w700Mp1j02QU');
 
-    <div id="error-message"></div>
-
-    <script>
-        // Initialiseer Stripe met jouw publieke sleutel
-        var stripe = Stripe('pk_test_51ShbijDKBwjX9ElPpXBRbO4BjbScRaXuaxNQeKeDF50Isnyw00K8a79HvgsU3JVkeWfdaai0Z1NpjV5uKXfjF6w700Mp1j02QU');
-        var checkoutButton = document.getElementById('checkout-button');
-
-        checkoutButton.addEventListener('click', function () {
-            // Hiermee stuur je de klant naar Stripe
-            stripe.redirectToCheckout({
-                lineItems: [{
-                    // Gebruik hier de Price ID (niet de Product ID)
-                    // Let op: In Stripe moet je een 'Price' aanmaken voor je product
-                    price: 'price_HIER_JE_PRICE_ID', 
-                    quantity: 1,
-                }],
-                mode: 'payment',
-                // Waar moet de klant heen na betaling?
-                successUrl: window.location.origin + '/succes.html',
-                cancelUrl: window.location.origin + '/geannuleerd.html',
-                shippingAddressCollection: {
-                    allowedCountries: ['NL', 'BE'],
-                },
-            }).then(function (result) {
-                if (result.error) {
-                    var displayError = document.getElementById('error-message');
-                    displayError.textContent = result.error.message;
-                }
-            });
-        });
-    </script>
+    const button = document.getElementById('checkout-button');
+    button.addEventListener('click', () => {
+      stripe.redirectToCheckout({
+        lineItems: [{ price: 'price_1ShcPDDKBwjX9ElPoBi4lj4W', quantity: 1 }],
+        mode: 'payment',
+        successUrl: window.location.origin + '/succes.html',
+        cancelUrl: window.location.origin + '/cancel.html',
+      });
+    });
+  </script>
 </body>
 </html>
