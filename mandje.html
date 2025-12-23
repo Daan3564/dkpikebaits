@@ -1,41 +1,20 @@
-<!DOCTYPE html>
-<html lang="nl">
-<head>
-  <meta charset="UTF-8">
-  <title>Mandje</title>
-</head>
-<body>
+const stripe = Stripe('pk_test_51ShbijDKBwjX9ElPpXBRbO4BjbScRaXuaxNQeKeDF50Isnyw00K8a79HvgsU3JVkeWfdaai0Z1NpjV5uKXfjF6w700Mp1j02QU');
 
-<h1>Winkelmand</h1>
-<div id="cart"></div>
-<button id="checkout">Afrekenen</button>
+async function checkout() {
+    const savedCart = JSON.parse(localStorage.getItem('cart'));
 
-<script src="https://js.stripe.com/v3/"></script>
-<script>
-const stripe = Stripe("pk_test_51ShbijDKBwjX9ElPpXBRbO4BjbScRaXuaxNQeKeDF50Isnyw00K8a79HvgsU3JVkeWfdaai0Z1NpjV5uKXfjF6w700Mp1j02QU");
+    // We sturen de klant door naar Stripe Checkout
+    const { error } = await stripe.redirectToCheckout({
+        lineItems: savedCart,
+        mode: 'payment',
+        successUrl: 'https://jouwdomein.nl/success.html',
+        cancelUrl: 'https://jouwdomein.nl/cancel.html',
+        shippingAddressCollection: {
+            allowedCountries: ['NL', 'BE'],
+        },
+    });
 
-const cart = JSON.parse(localStorage.getItem("cart")) || [];
-const cartDiv = document.getElementById("cart");
-
-let totaal = 0;
-cart.forEach(item => {
-  totaal += item.price * item.quantity;
-  cartDiv.innerHTML += `<p>${item.name} – €${item.price / 100}</p>`;
-});
-
-cartDiv.innerHTML += `<hr><strong>Totaal: €${totaal / 100}</strong><br>Verzendkosten: €4,50`;
-
-document.getElementById("checkout").onclick = async () => {
-  const res = await fetch("/create-checkout-session", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ items: cart })
-  });
-
-  const data = await res.json();
-  window.location.href = data.url;
-};
-</script>
-
-</body>
-</html>
+    if (error) {
+        console.error("Stripe error:", error.message);
+    }
+}
