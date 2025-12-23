@@ -16,6 +16,7 @@ function addToCart(name, price, link) {
     cart.push({ name, price, link });
     localStorage.setItem('dk_cart', JSON.stringify(cart));
     updateUI();
+    alert(name + " added!");
 }
 
 function updateUI() {
@@ -30,9 +31,9 @@ function updateUI() {
         cart.forEach((item, index) => {
             total += item.price;
             cartList.innerHTML += `
-                <div class="cart-item">
-                    <div><h3>${item.name}</h3><p style="color:#d4af37">€${item.price.toFixed(2)}</p></div>
-                    <button onclick="removeItem(${index})" style="background:#ff4444; color:white; border:none; padding:8px 12px; cursor:pointer; border-radius:4px;">X</button>
+                <div style="display:flex; justify-content:space-between; background:#161e24; padding:20px; margin-bottom:10px; border-radius:10px; border:1px solid #2a343d;">
+                    <div><h3>${item.name}</h3><p style="color:#d4af37; font-weight:bold;">€${item.price.toFixed(2)}</p></div>
+                    <button onclick="removeItem(${index})" style="background:red; color:white; border:none; padding:10px; cursor:pointer; border-radius:5px;">X</button>
                 </div>`;
         });
         totalEl.innerText = `€${total.toFixed(2)}`;
