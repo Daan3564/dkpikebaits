@@ -3,45 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DK pikebaits | Handmade for Monsters</title>
+    <title>DK PIKEBAITS | Home</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
     <nav class="navbar">
         <div class="nav-container">
-            <a href="index.html" class="logo">
-                <img src="logo.png" alt=""> <div class="logo-text">DK <span>PIKEBAITS</span></div>
-            </a>
+            <a href="index.html" class="logo"><img src="logo.png" alt="DK"></a>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="producten.html">Shop</a></li>
+                <li><a href="mandje.html">Winkelmand</a></li>
+            </ul>
             <div class="nav-right">
-                <ul class="nav-menu">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="producten.html">Shop</a></li>
-                    <li><a href="mandje.html" class="cart-nav">🛒 <span id="cart-count">0</span></a></li>
-                </ul>
-                <div class="lang-selector">
-                    <button onclick="changeLanguage('nl')">NL</button>
-                    <button onclick="changeLanguage('en')">EN</button>
-                </div>
+                <button class="lang-btn">NL</button>
+                <button class="lang-btn">EN</button>
             </div>
         </div>
     </nav>
 
     <header class="hero">
         <div class="hero-content">
-            <h1 data-nl="HANDGEMAAKT VOOR MONSTERS" data-en="HANDMADE FOR MONSTERS">HANDGEMAAKT VOOR MONSTERS</h1>
-            <p data-nl="Natuurlijke kleuren. Maximale actie. Extreme vangsten." data-en="Natural colors. Maximum action. Extreme catches.">Natuurlijke kleuren. Maximale actie. Extreme vangsten.</p>
-            <a href="producten.html" class="cta-btn" data-nl="SHOP COLLECTIE" data-en="SHOP COLLECTION">SHOP COLLECTIE</a>
+            <h1>DK PIKEBAITS</h1>
+            <p>Handmade for Monsters</p>
+            <a href="producten.html" class="cta-btn">SHOP PIKE BAITS</a>
         </div>
     </header>
 
     <div class="help-corner">
         <div id="helpBox" class="help-box">
-            <h3 data-nl="Stel een vraag" data-en="Ask a question">Stel een vraag</h3>
-            <form action="https://formspree.io/f/jouw_id" method="POST">
-                <input type="email" name="email" placeholder="E-mail" style="width:100%; margin-bottom:10px; padding:10px; background:#000; color:white; border:1px solid #333;" required>
-                <textarea name="message" placeholder="Bericht..." rows="4" style="width:100%; margin-bottom:10px; padding:10px; background:#000; color:white; border:1px solid #333;" required></textarea>
-                <button type="submit" class="cta-btn" style="padding:10px; width:100%; font-size:14px;">SEND</button>
+            <h3 style="color:var(--gold); margin-bottom:15px;">Vragen?</h3>
+            <form action="#" method="POST">
+                <input type="email" placeholder="E-mail" style="width:100%; padding:10px; margin-bottom:10px; background:#111; border:1px solid #333; color:white;">
+                <textarea placeholder="Je vraag..." rows="4" style="width:100%; padding:10px; margin-bottom:10px; background:#111; border:1px solid #333; color:white;"></textarea>
+                <button type="submit" class="cta-btn" style="width:100%; padding:10px;">VERSTUUR</button>
             </form>
         </div>
         <button class="help-trigger" onclick="toggleHelp()">?</button>
