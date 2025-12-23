@@ -1,37 +1,37 @@
 let cart = JSON.parse(localStorage.getItem('dk_cart')) || [];
-const BAIT_PRICE = 16.00;
-const SHIPPING_COST = 4.25;
 
-// Hulpmenu openen/sluiten
+// 1. HELP MENU OPENEN/SLUITEN
 function toggleHelp() {
     const box = document.getElementById('helpBox');
     if(box) box.classList.toggle('active');
 }
 
-// Product toevoegen
-function addToCart(name, price = BAIT_PRICE) {
+// 2. PRODUCT TOEVOEGEN
+function addToCart(name, price) {
     cart.push({ name: name, price: price });
     localStorage.setItem('dk_cart', JSON.stringify(cart));
     updateUI();
     
-    // Kleine visuele feedback
+    // Knop animatie feedback
     const btn = event.target;
     const originalText = btn.innerText;
-    btn.innerText = "TOEGEVOEGD!";
-    btn.style.background = "white";
-    setTimeout(() => {
-        btn.innerText = originalText;
+    btn.innerText = "IN WINKELMAND!";
+    btn.style.background = "#fff";
+    btn.style.color = "#000";
+    setTimeout(() => { 
+        btn.innerText = originalText; 
         btn.style.background = "";
+        btn.style.color = "";
     }, 1500);
 }
 
-// UI Overal bijwerken (Teller in menu)
+// 3. UI UPDATEN (Teller in het menu)
 function updateUI() {
     const countEl = document.getElementById('cart-count');
     if (countEl) countEl.innerText = cart.length;
 }
 
-// Winkelmand opbouwen (Voor mandje.html)
+// 4. WINKELMAND PAGINA OPBOUWEN
 function renderCart() {
     const list = document.getElementById('cartList');
     const subtotalEl = document.getElementById('subtotalPrice');
@@ -55,15 +55,17 @@ function renderCart() {
         list.innerHTML += `
             <div style="display:flex; justify-content:space-between; align-items:center; background:var(--card-bg); padding:20px; border-radius:15px; margin-bottom:15px; border: 1px solid #2a343d;">
                 <div>
-                    <h3 style="color:white; font-weight:900;">${item.name}</h3>
-                    <p style="color:var(--gold);">€${item.price.toFixed(2)}</p>
+                    <h3 style="color:white; font-weight:900; text-transform:uppercase;">${item.name}</h3>
+                    <p style="color:var(--gold); font-weight:bold;">€${item.price.toFixed(2)}</p>
                 </div>
-                <button onclick="removeItem(${index})" style="background:none; border:1px solid #ff4444; color:#ff4444; padding:8px 15px; border-radius:5px; cursor:pointer; font-weight:bold;">VERWIJDER</button>
+                <button onclick="removeItem(${index})" style="background:none; border:1px solid #ff4444; color:#ff4444; padding:8px 15px; border-radius:5px; cursor:pointer; font-weight:bold; font-size:12px;">VERWIJDER</button>
             </div>
         `;
     });
 
-    const total = subtotal + SHIPPING_COST;
+    const shipping = 4.25;
+    const total = subtotal + shipping;
+    
     if(subtotalEl) subtotalEl.innerText = `€${subtotal.toFixed(2)}`;
     if(totalEl) totalEl.innerText = `€${total.toFixed(2)}`;
 }
@@ -75,26 +77,31 @@ function removeItem(index) {
     updateUI();
 }
 
-// STRIPE CHECKOUT FUNCTIE
+// 5. DE SLIMME STRIPE CHECKOUT (Schakelt tussen jouw 3 links)
 function checkout() {
-    if (cart.length === 0) {
-        alert("Je mandje is nog leeg!");
+    const count = cart.length;
+    
+    if (count === 0) {
+        alert("Je winkelmandje is nog leeg!");
         return;
     }
 
-    // STAP VOOR STRIPE:
-    // 1. Ga naar Stripe Dashboard -> Payment Links.
-    // 2. Maak een link voor "DK Pikebait" van €16,00.
-    // 3. Zet "Allow promotion codes" en "Collect customers address" AAN.
-    // 4. Plak die link hieronder:
-    
-    const STRIPE_LINK = "https://buy.stripe.com/jouw_link_hier"; 
-    
-    // We sturen ze naar de link. Stripe handelt de verzending en betaling af.
-    window.location.href = STRIPE_LINK;
+    let finalLink = "";
+
+    if (count === 1) {
+        finalLink = "https://buy.stripe.com/3cI6oHdVh8KVaVH77R1B603";
+    } else if (count === 2) {
+        finalLink = "https://buy.stripe.com/cNi9AT6sP3qBfbXdwf1B604";
+    } else if (count >= 3) {
+        // Bij 3 of meer gebruiken we de link voor 3 stuks
+        finalLink = "https://buy.stripe.com/8x2bJ1dVh9OZ8Nzak31B605";
+    }
+
+    // Stuur de klant naar de juiste beveiligde Stripe pagina
+    window.location.href = finalLink;
 }
 
 window.onload = () => {
     updateUI();
-    renderCart();
+    if(document.getElementById('cartList')) renderCart();
 };
