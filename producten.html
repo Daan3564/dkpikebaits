@@ -1,31 +1,18 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-  <meta charset="UTF-8">
-  <title>Producten</title>
+    <meta charset="UTF-8">
+    <title>Producten - DK Pike Baits</title>
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="script.js"></script>
 </head>
 <body>
-
-<h2>DK originele</h2>
-<p>€16,00</p>
-<button onclick="addProduct('DK originele', 1600)">Toevoegen</button>
-
-<h2>Extra toevoeging</h2>
-<p>€3,00</p>
-<button onclick="addProduct('Extra toevoeging', 300)">Toevoegen</button>
-
-<br><br>
-<a href="mandje.html">Naar mandje</a>
-
-<script>
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-function addProduct(name, price) {
-  cart.push({ name, price, quantity: 1 });
-  localStorage.setItem("cart", JSON.stringify(cart));
-  alert("Toegevoegd aan mandje");
-}
-</script>
-
+    <h1>Onze Producten</h1>
+    <div class="product">
+        <h3>Handgemaakte Kunst</h3>
+        <button onclick="addToCart('prod_TewHTrCF34eF03')">In winkelmandje</button>
+    </div>
+    <br>
+    <a href="mandje.html">Naar het winkelmandje</a>
 </body>
 </html>
