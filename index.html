@@ -2,37 +2,74 @@
 <html lang="nl">
 <head>
   <meta charset="utf-8">
-  <title>Chriswood Kunst</title>
+  <title>Chriswood Betalen</title>
   <script src="https://js.stripe.com/v3/"></script>
-  <style>
-    body { font-family: Arial, sans-serif; max-width: 600px; margin: 40px auto; text-align: center; background: #f9f9f9; }
-    img { max-width: 100%; border-radius: 10px; margin: 20px 0; }
-    button { padding: 15px 30px; font-size: 18px; background: #635bff; color: white; border: none; border-radius: 8px; cursor: pointer; }
-    button:hover { background: #5434e0; }
-  </style>
 </head>
 <body>
-  <img src="dk-logo.png" alt="Chriswood Logo" width="200">
-  <h1>Chriswood Kunst</h1>
-  
-  <h2>Energie Kunstwerk</h2>
-  <img src="energy.png" alt="Kunstwerk" width="400">
-  <p><strong>€16,00</strong></p>
-  
-  <button id="checkout-button">Betaal 16 euro</button>
+  <h1>Kies je kunstwerk(en)</h1>
+
+  <button onclick="addToCart('price_1ShcPDDKBwjX9ElPoBi4lj4W', 'Energie Kunstwerk', 16)">Voeg toe: Energie Kunstwerk - €16</button><br><br>
+
+  <button onclick="addToCart('price_voorbeeld2', 'Kunstwerk 2', 15)">Voeg toe: Kunstwerk 2 - €15</button><br><br>
+
+  <button onclick="addToCart('price_voorbeeld3', 'Kunstwerk 3', 14)">Voeg toe: Kunstwerk 3 - €14</button><br><br>
+
+  <h2>Winkelmandje</h2>
+  <ul id="cart-items"></ul>
+  <p><strong>Totaal: €<span id="total">0</span></strong></p>
+
+  <button id="checkout-button" onclick="goToCheckout()" disabled style="font-size:20px;padding:15px 30px;">
+    Afrekenen via Stripe
+  </button>
 
   <script>
     const stripe = Stripe('pk_test_51ShbijDKBwjX9ElPpXBRbO4BjbScRaXuaxNQeKeDF50Isnyw00K8a79HvgsU3JVkeWfdaai0Z1NpjV5uKXfjF6w700Mp1j02QU');
 
-    const button = document.getElementById('checkout-button');
-    button.addEventListener('click', () => {
+    let cart = []; // hier zitten de producten in
+
+    function addToCart(priceId, name, amount) {
+      cart.push({ price: priceId, quantity: 1 });
+      updateCart();
+    }
+
+    function updateCart() {
+      const list = document.getElementById('cart-items');
+      const totalEl = document.getElementById('total');
+      const checkoutBtn = document.getElementById('checkout-button');
+
+      list.innerHTML = '';
+      let total = 0;
+
+      cart.forEach((item, index) => {
+        const li = document.createElement('li');
+        li.textContent = `Product ${index + 1} - €${getAmount(item.price)}`;
+        list.appendChild(li);
+        total += getAmount(item.price);
+      });
+
+      totalEl.textContent = total;
+      checkoutBtn.disabled = cart.length === 0;
+    }
+
+    function getAmount(priceId) {
+      const map = {
+        'price_1ShcPDDKBwjX9ElPoBi4lj4W': 16,
+        'price_voorbeeld2': 15,
+        'price_voorbeeld3': 14
+      };
+      return map[priceId] || 0;
+    }
+
+    function goToCheckout() {
+      if (cart.length === 0) return;
+
       stripe.redirectToCheckout({
-        lineItems: [{ price: 'price_1ShcPDDKBwjX9ElPoBi4lj4W', quantity: 1 }],
+        lineItems: cart,
         mode: 'payment',
         successUrl: window.location.origin + '/succes.html',
         cancelUrl: window.location.origin + '/cancel.html',
       });
-    });
+    }
   </script>
 </body>
 </html>
