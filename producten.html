@@ -1,20 +1,31 @@
 <!DOCTYPE html>
-<html>
+<html lang="nl">
 <head>
-    <title>Shop</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://js.stripe.com/v3/"></script>
+  <meta charset="UTF-8">
+  <title>Producten</title>
 </head>
-<body style="background:#000; color:#fff; text-align:center; font-family:sans-serif;">
-    <nav style="padding:20px;"><a href="index.html">Home</a> | <a href="producten.html">Shop</a> | <a href="mandje.html">Winkelmand</a></nav>
+<body>
 
-    <h1>PRODUCTEN</h1>
-    <div style="border:1px solid #333; padding:20px; display:inline-block;">
-        <h2>DK Original</h2>
-        <p>€ 16,00</p>
-        <button onclick="voegToe('price_VUL_HIER_JE_PRICE_ID_IN', 'DK Original', 16.00)" style="background:gold; padding:10px;">IN WINKELMAND</button>
-    </div>
+<h2>DK originele</h2>
+<p>€16,00</p>
+<button onclick="addProduct('DK originele', 1600)">Toevoegen</button>
 
-    <script src="script.js"></script>
+<h2>Extra toevoeging</h2>
+<p>€3,00</p>
+<button onclick="addProduct('Extra toevoeging', 300)">Toevoegen</button>
+
+<br><br>
+<a href="mandje.html">Naar mandje</a>
+
+<script>
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+function addProduct(name, price) {
+  cart.push({ name, price, quantity: 1 });
+  localStorage.setItem("cart", JSON.stringify(cart));
+  alert("Toegevoegd aan mandje");
+}
+</script>
+
 </body>
 </html>
