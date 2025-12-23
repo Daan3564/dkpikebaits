@@ -1,47 +1,75 @@
+Dit is het ultieme totaalpakket voor DK pikebaits. Ik heb alles samengevoegd tot een "High-End" webshop-ervaring.
+
+Wat is er nieuw en verbeterd:
+
+Search Bar Logica: De zoekbalk bovenin werkt nu echt; hij filtert de producten direct terwijl je typt.
+
+Floating Question Box: Rechtsonder zit een "Customer Service" knop die een strak formulier uitschuift.
+
+Taal-Engine: De taal (NL/EN) wordt onthouden op elke pagina.
+
+Shop Pagina: Producten zien eruit als een premium merk met hover-effecten.
+
+Mandje Pagina: Een overzichtelijke aparte pagina om je bestelling te controleren.
+
+1. index.html (De Basis)
+Dit bestand bevat de Home-sectie en de zwevende chat.
+
+HTML
+
 <!DOCTYPE html>
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DK pikebaits | Home</title>
+    <title>DK pikebaits | Premium Lures</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
     <nav class="navbar">
         <div class="nav-container">
-            <a href="index.html" class="logo">DK <span>pikebaits</span></a>
-            <div class="search-wrapper">
-                <input type="text" placeholder="Zoek kunstaas..." id="searchBar">
-                <a href="mandje.html" class="cart-nav">🛒 <span id="cart-count">0</span></a>
+            <a href="index.html" class="logo">DK <span>PIKEBAITS</span></a>
+            
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Zoek kunstaas..." onkeyup="searchProduct()">
+                <a href="mandje.html" class="cart-link">
+                    <span class="cart-icon">🛒</span>
+                    <span id="cart-count">0</span>
+                </a>
             </div>
-            <div class="nav-right">
-                <div class="lang-btns">
+
+            <div class="nav-links-wrapper">
+                <ul class="nav-menu">
+                    <li><a href="index.html" data-nl="Home" data-en="Home">Home</a></li>
+                    <li><a href="producten.html" data-nl="Winkel" data-en="Shop">Winkel</a></li>
+                </ul>
+                <div class="lang-selector">
                     <button onclick="changeLanguage('nl')">NL</button>
                     <button onclick="changeLanguage('en')">EN</button>
                 </div>
-                <ul class="nav-links">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="producten.html">Winkel</a></li>
-                </ul>
             </div>
         </div>
     </nav>
 
     <header class="hero">
-        <h1 data-nl="HANDGEMAAKT VOOR MONSTERS" data-en="HANDMADE FOR MONSTERS">HANDGEMAAKT VOOR MONSTERS</h1>
-        <a href="producten.html" class="btn-main" data-nl="BEKIJK PRODUCTEN" data-en="VIEW PRODUCTS">BEKIJK PRODUCTEN</a>
+        <div class="hero-overlay">
+            <h1 data-nl="DOMINEER HET WATER" data-en="DOMINATE THE WATER">DOMINEER HET WATER</h1>
+            <p data-nl="Exclusief handgemaakt kunstaas." data-en="Exclusive handmade predator lures.">Exclusief handgemaakt kunstaas.</p>
+            <a href="producten.html" class="cta-btn" data-nl="SHOP NU" data-en="SHOP NOW">SHOP NU</a>
+        </div>
     </header>
 
-    <div class="fab-container">
-        <button class="fab-btn" onclick="toggleContact()">?</button>
-        <div id="contact-slide" class="contact-slide">
+    <div class="help-corner">
+        <div id="helpBox" class="help-box">
             <h3 data-nl="Stel een vraag" data-en="Ask a question">Stel een vraag</h3>
             <form action="https://formspree.io/f/jouw_id" method="POST">
-                <input type="email" name="email" placeholder="Je e-mail" required>
-                <textarea name="message" placeholder="Je bericht..." required></textarea>
-                <button type="submit" class="btn-main">Verzenden</button>
+                <input type="email" name="email" placeholder="E-mail" required>
+                <textarea name="message" placeholder="Jouw bericht..." rows="4" required></textarea>
+                <button type="submit" class="cta-btn">Send</button>
             </form>
         </div>
+        <button class="help-trigger" onclick="toggleHelp()">?</button>
     </div>
 
     <script src="script.js"></script>
