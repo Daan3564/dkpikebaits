@@ -9,15 +9,14 @@
 <body>
     <nav class="navbar"></nav>
 
-    <div class="container page-padding">
-        <h1 data-nl="Jouw Winkelmand" data-en="Your Cart">Jouw Winkelmand</h1>
-        <div id="cart-list" class="cart-list"></div>
-        <div class="cart-summary">
-            <h3>Totaal: <span id="total-price">€0.00</span></h3>
-            <button class="btn-main" onclick="goToCheckout()" data-nl="Afrekenen via Stripe" data-en="Checkout via Stripe">Afrekenen via Stripe</button>
+    <div class="cart-page">
+        <h1 data-nl="Jouw Bestelling" data-en="Your Order">Jouw Bestelling</h1>
+        <div id="cartList"></div>
+        <div class="cart-total-box">
+            <h2 data-nl="Totaal:" data-en="Total:">Totaal: <span id="totalPrice">€0.00</span></h2>
+            <button class="cta-btn" onclick="checkout()" data-nl="AFREKENEN (STRIPE)" data-en="CHECKOUT (STRIPE)">AFREKENEN (STRIPE)</button>
         </div>
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>
