@@ -1,28 +1,9 @@
-Dit is het ultieme totaalpakket voor DK pikebaits. Ik heb alles samengevoegd tot een "High-End" webshop-ervaring.
-
-Wat is er nieuw en verbeterd:
-
-Search Bar Logica: De zoekbalk bovenin werkt nu echt; hij filtert de producten direct terwijl je typt.
-
-Floating Question Box: Rechtsonder zit een "Customer Service" knop die een strak formulier uitschuift.
-
-Taal-Engine: De taal (NL/EN) wordt onthouden op elke pagina.
-
-Shop Pagina: Producten zien eruit als een premium merk met hover-effecten.
-
-Mandje Pagina: Een overzichtelijke aparte pagina om je bestelling te controleren.
-
-1. index.html (De Basis)
-Dit bestand bevat de Home-sectie en de zwevende chat.
-
-HTML
-
 <!DOCTYPE html>
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DK pikebaits | Premium Lures</title>
+    <title>DK pikebaits | Home</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
 </head>
@@ -30,19 +11,11 @@ HTML
     <nav class="navbar">
         <div class="nav-container">
             <a href="index.html" class="logo">DK <span>PIKEBAITS</span></a>
-            
-            <div class="search-box">
-                <input type="text" id="searchInput" placeholder="Zoek kunstaas..." onkeyup="searchProduct()">
-                <a href="mandje.html" class="cart-link">
-                    <span class="cart-icon">🛒</span>
-                    <span id="cart-count">0</span>
-                </a>
-            </div>
-
-            <div class="nav-links-wrapper">
+            <div class="nav-right">
                 <ul class="nav-menu">
-                    <li><a href="index.html" data-nl="Home" data-en="Home">Home</a></li>
+                    <li><a href="index.html">Home</a></li>
                     <li><a href="producten.html" data-nl="Winkel" data-en="Shop">Winkel</a></li>
+                    <li><a href="mandje.html" class="cart-nav">🛒 <span id="cart-count">0</span></a></li>
                 </ul>
                 <div class="lang-selector">
                     <button onclick="changeLanguage('nl')">NL</button>
@@ -53,9 +26,10 @@ HTML
     </nav>
 
     <header class="hero">
-        <div class="hero-overlay">
-            <h1 data-nl="DOMINEER HET WATER" data-en="DOMINATE THE WATER">DOMINEER HET WATER</h1>
-            <p data-nl="Exclusief handgemaakt kunstaas." data-en="Exclusive handmade predator lures.">Exclusief handgemaakt kunstaas.</p>
+        <div class="hero-content">
+            <h1 data-nl="HANDGEMAAKT VOOR MONSTERS" data-en="HANDMADE FOR MONSTERS">HANDGEMAAKT VOOR MONSTERS</h1>
+            <p data-nl="De nieuwe standaard in hoogwaardig kunstaas." data-en="The new standard in premium predator lures.">De nieuwe standaard in hoogwaardig kunstaas.</p>
+            <div class="hero-space"></div>
             <a href="producten.html" class="cta-btn" data-nl="SHOP NU" data-en="SHOP NOW">SHOP NU</a>
         </div>
     </header>
@@ -66,7 +40,7 @@ HTML
             <form action="https://formspree.io/f/jouw_id" method="POST">
                 <input type="email" name="email" placeholder="E-mail" required>
                 <textarea name="message" placeholder="Jouw bericht..." rows="4" required></textarea>
-                <button type="submit" class="cta-btn">Send</button>
+                <button type="submit" class="cta-btn-small" data-nl="Verzenden" data-en="Send">Verzenden</button>
             </form>
         </div>
         <button class="help-trigger" onclick="toggleHelp()">?</button>
