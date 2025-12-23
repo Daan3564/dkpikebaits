@@ -2,42 +2,33 @@
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DK PIKEBAITS | Winkelmand</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://js.stripe.com/v3/"></script>
 </head>
-<body style="background: #000; color: white;">
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="index.html" class="logo"><img src="logo.png" alt="DK"></a>
-            <ul class="nav-menu">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="producten.html">Shop</a></li>
-                <li><a href="mandje.html">Winkelmand</a></li>
-            </ul>
-        </div>
+<body style="background:#000; color:white; font-family:sans-serif; text-align:center;">
+    <nav style="padding:20px; border-bottom:1px solid #333;">
+        <a href="index.html" style="color:white; margin:15px; text-decoration:none;">Home</a>
+        <a href="producten.html" style="color:white; margin:15px; text-decoration:none;">Shop</a>
+        <a href="mandje.html" style="color:white; margin:15px; text-decoration:none;">Winkelmand</a>
     </nav>
 
-    <section style="padding: 120px 20px; text-align: center;">
-        <h1 style="color: gold;">JOUW WINKELMAND</h1>
-        
-        <div id="mandje-inhoud" style="max-width: 500px; margin: 0 auto; text-align: left;"></div>
+    <h1 style="color:gold; margin-top:50px;">JOUW WINKELMAND</h1>
+    
+    <div id="mandje-inhoud" style="max-width:500px; margin:0 auto;"></div>
+    
+    <div id="lege-melding" style="display:none; margin-top:30px;">
+        <p>Je mandje is op dit moment leeg.</p>
+        <a href="producten.html" style="color:gold;">Ga terug naar de shop</a>
+    </div>
 
-        <div id="totaal-sectie" style="margin-top: 40px; border-top: 2px solid #333; padding-top: 20px; display: none;">
-            <p style="font-size: 1.1rem;">Verzending (Nederland): <strong>€ 4,50</strong></p>
-            <p style="font-size: 0.9rem; color: #888;">Totaalbedrag wordt berekend bij Stripe</p>
-            <br>
-            <button class="cta-btn" onclick="naarKassa()" style="font-size: 1.3rem; padding: 15px 30px; background: gold; color: black; font-weight: bold;">
-                GA NAAR AFREKENEN
-            </button>
-        </div>
-
-        <div id="lege-melding" style="display: none; margin-top: 30px;">
-            <p>Je mandje is op dit moment leeg.</p>
-            <a href="producten.html" class="cta-btn" style="text-decoration: none;">TERUG NAAR SHOP</a>
-        </div>
-    </section>
+    <div id="totaal-sectie" style="display:none; margin-top:40px; border-top:1px solid #333; padding-top:20px;">
+        <p style="font-size:1.2rem;">Verzendkosten (Nederland): <strong>€ 4,50</strong></p>
+        <button class="cta-btn" onclick="naarKassa()" 
+                style="background:gold; color:black; border:none; padding:20px 40px; font-weight:bold; cursor:pointer; font-size:1.2rem; border-radius:5px;">
+            GA NAAR AFREKENEN
+        </button>
+    </div>
 
     <script src="script.js"></script>
 </body>
