@@ -1,108 +1,85 @@
-let cart = JSON.parse(localStorage.getItem('dk_cart')) || [];
-const PRICE_PER_BAIT = 16.00;
+Ik ga alles nu voor je samenvoegen. We gaan ervoor zorgen dat wanneer je op "Shop" klikt en een bait toevoegt, de website dit onthoudt en op de mandje.html pagina het totaal uitrekent inclusief de verzendkosten van € 4,50.
 
-// 1. HELP MENU
-function toggleHelp() {
-    const box = document.getElementById('helpBox');
-    if(box) box.classList.toggle('active');
+Omdat je geen maandelijkse kosten wilt, gebruiken we de browser van de klant om het mandje te onthouden (localStorage).
+
+1. Het nieuwe script.js
+Vervang de volledige inhoud van je script.js door deze code. Hierin staat de logica voor het mandje en de koppeling met Stripe.
+
+JavaScript
+
+// Initialiseer Stripe met jouw sleutel
+const stripe = Stripe('pk_test_51ShbijDKBwjX9ElPpXBRbo4BjbScRaXuanQeKeDF50Isnyw00K8a79HvgsU3JVkewfdaai0Z1NpjV5uKXfjF6w700Mp1j02QU');
+
+// Functie om product toe te voegen (werkt op producten.html)
+function voegToe(priceId, naam, prijs) {
+    let mandje = JSON.parse(localStorage.getItem('winkelmand')) || [];
+    mandje.push({ price: priceId, name: naam, amount: prijs });
+    localStorage.setItem('winkelmand', JSON.stringify(mandje));
+    alert(naam + " is toegevoegd aan je mandje!");
 }
 
-// 2. PRODUCT TOEVOEGEN (Met prijs 16.00)
-function addToCart(name, price = PRICE_PER_BAIT) {
-    cart.push({ name: name, price: price });
-    localStorage.setItem('dk_cart', JSON.stringify(cart));
-    updateUI();
-    
-    // Visuele knipoog dat het gelukt is
-    const btn = event.target;
-    btn.innerText = "TOEGEVOEGD!";
-    setTimeout(() => { btn.innerText = "VOEG TOE"; }, 1500);
-}
+// Functie om mandje te tonen (werkt op mandje.html)
+function toonMandje() {
+    const container = document.getElementById('mandje-inhoud');
+    const leegMelding = document.getElementById('lege-melding');
+    const totaalSectie = document.getElementById('totaal-sectie');
+    let mandje = JSON.parse(localStorage.getItem('winkelmand')) || [];
 
-// 3. UI UPDATEN (Teller en Kleur)
-function updateUI() {
-    const countEl = document.getElementById('cart-count');
-    if (countEl) {
-        countEl.innerText = cart.length;
-        // Als er iets in zit, maak de teller goud
-        countEl.style.color = cart.length > 0 ? "var(--gold)" : "white";
-    }
-}
-
-// 4. MANDJE TONEN
-function renderCart() {
-    const list = document.getElementById('cartList');
-    const subtotalEl = document.getElementById('subtotalPrice');
-    const totalEl = document.getElementById('totalPrice');
-    const emptyMsg = document.getElementById('emptyMessage');
-    const content = document.getElementById('cartContent');
-
-    if (!list) return;
-
-    if (cart.length === 0) {
-        if(content) content.style.display = 'none';
-        if(emptyMsg) emptyMsg.style.display = 'block';
+    if (mandje.length === 0) {
+        if(leegMelding) leegMelding.style.display = 'block';
+        if(totaalSectie) totaalSectie.style.display = 'none';
         return;
     }
 
-    list.innerHTML = '';
-    let subtotal = 0;
-
-    cart.forEach((item, index) => {
-        subtotal += item.price;
-        list.innerHTML += `
-            <div style="display:flex; justify-content:space-between; align-items:center; background:var(--card-bg); padding:15px; border-radius:10px; margin-bottom:10px; border: 1px solid #2a343d;">
-                <div>
-                    <h3 style="color:white;">${item.name}</h3>
-                    <p style="color:var(--gold); font-weight:bold;">€${item.price.toFixed(2)}</p>
-                </div>
-                <button onclick="removeItem(${index})" style="background:none; border:none; color:#ff4444; cursor:pointer; font-weight:bold;">VERWIJDER</button>
-            </div>
-        `;
-    });
-
-    // We tonen in de shop alleen NL verzendkosten als indicatie
-    const shippingEstimate = 4.25;
-    const total = subtotal + shippingEstimate;
+    if(leegMelding) leegMelding.style.display = 'none';
+    if(totaalSectie) totaalSectie.style.display = 'block';
     
-    if(subtotalEl) subtotalEl.innerText = `€${subtotal.toFixed(2)}`;
-    if(totalEl) totalEl.innerText = `€${total.toFixed(2)}`;
+    container.innerHTML = '';
+    mandje.forEach((item, index) => {
+        container.innerHTML += `
+            <div style="background:#222; margin:10px; padding:15px; border:1px solid #333; display:flex; justify-content:space-between;">
+                <span>${item.name}</span>
+                <span>€ ${item.amount.toFixed(2)}</span>
+                <button onclick="verwijderItem(${index})" style="background:red; color:white; border:none; cursor:pointer;">X</button>
+            </div>`;
+    });
 }
 
-function removeItem(index) {
-    cart.splice(index, 1);
-    localStorage.setItem('dk_cart', JSON.stringify(cart));
-    renderCart();
-    updateUI();
+function verwijderItem(index) {
+    let mandje = JSON.parse(localStorage.getItem('winkelmand'));
+    mandje.splice(index, 1);
+    localStorage.setItem('winkelmand', JSON.stringify(mandje));
+    toonMandje();
 }
 
-// 5. DE STRIPE CHECKOUT (Schakelt tussen jouw links)
-function checkout() {
-    const count = cart.length;
-    if (count === 0) return;
+// De functie die alles doorstuurt naar Stripe
+function naarKassa() {
+    let mandje = JSON.parse(localStorage.getItem('winkelmand')) || [];
+    
+    // Maak de lijst klaar voor Stripe (Stripe wil alleen price en quantity)
+    const lineItems = mandje.map(item => ({
+        price: item.price,
+        quantity: 1
+    }));
 
-    let stripeUrl = "";
-
-    // Jouw 3 specifieke links
-    if (count === 1) {
-        stripeUrl = "https://buy.stripe.com/3cI6oHdVh8KVaVH77R1B603";
-    } else if (count === 2) {
-        stripeUrl = "https://buy.stripe.com/cNi9AT6sP3qBfbXdwf1B604";
-    } else {
-        // Voor 3 of meer stuks
-        stripeUrl = "https://buy.stripe.com/8x2bJ1dVh9OZ8Nzak31B605";
-    }
-
-    window.location.href = stripeUrl;
+    stripe.redirectToCheckout({
+        lineItems: lineItems,
+        mode: 'payment',
+        successUrl: window.location.origin + '/succes.html',
+        cancelUrl: window.location.origin + '/mandje.html',
+        shippingOptions: [
+            { shipping_rate: 'shr_1ShcPvDKBwjX9ElPl5mAZOQG' } // Jouw €4,50 verzendkosten
+        ],
+    });
 }
 
-// 6. TAAL WISSELEN (Basis opzet)
-function changeLanguage(lang) {
-    alert("Taal wordt gewijzigd naar: " + lang.toUpperCase());
-    // Hier kun je later vertalingen toevoegen
+// Helpbox toggle
+function toggleHelp() {
+    const box = document.getElementById('helpBox');
+    box.style.display = box.style.display === 'block' ? 'none' : 'block';
 }
 
-window.onload = () => {
-    updateUI();
-    if(document.getElementById('cartList')) renderCart();
-};
+// Als we op de mandje pagina zijn, toon de inhoud direct
+if (window.location.pathname.includes('mandje.html')) {
+    window.onload = toonMandje;
+}
