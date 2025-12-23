@@ -16,7 +16,6 @@ function addToCart(name, price, link) {
     cart.push({ name, price, link });
     localStorage.setItem('dk_cart', JSON.stringify(cart));
     updateUI();
-    alert(name + " added!");
 }
 
 function updateUI() {
@@ -32,8 +31,8 @@ function updateUI() {
             total += item.price;
             cartList.innerHTML += `
                 <div class="cart-item">
-                    <div><h3>${item.name}</h3><p>€${item.price.toFixed(2)}</p></div>
-                    <button onclick="removeItem(${index})" style="background:none; border:none; color:red; cursor:pointer; font-weight:bold;">REMOVE</button>
+                    <div><h3>${item.name}</h3><p style="color:#d4af37">€${item.price.toFixed(2)}</p></div>
+                    <button onclick="removeItem(${index})" style="background:#ff4444; color:white; border:none; padding:8px 12px; cursor:pointer; border-radius:4px;">X</button>
                 </div>`;
         });
         totalEl.innerText = `€${total.toFixed(2)}`;
@@ -47,8 +46,8 @@ function removeItem(index) {
 }
 
 function checkout() {
-    if (cart.length === 0) return alert("Winkelmand is leeg!");
-    window.location.href = cart[0].link;
+    if (cart.length === 0) return alert("Leeg!");
+    window.location.href = cart[0].link; 
 }
 
 window.onload = () => {
