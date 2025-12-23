@@ -5,18 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Winkelmand | DK pikebaits</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <nav class="navbar"></nav>
-
-    <div class="cart-page">
-        <h1 data-nl="Jouw Bestelling" data-en="Your Order">Jouw Bestelling</h1>
-        <div id="cartList"></div>
-        <div class="cart-total-box">
-            <h2 data-nl="Totaal:" data-en="Total:">Totaal: <span id="totalPrice">€0.00</span></h2>
-            <button class="cta-btn" onclick="checkout()" data-nl="AFREKENEN (STRIPE)" data-en="CHECKOUT (STRIPE)">AFREKENEN (STRIPE)</button>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">DK <span>PIKEBAITS</span></a>
+            <div class="nav-right">
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="producten.html" data-nl="Winkel" data-en="Shop">Winkel</a></li>
+                    <li><a href="mandje.html" class="cart-nav">🛒 <span id="cart-count">0</span></a></li>
+                </ul>
+                <div class="lang-selector">
+                    <button onclick="changeLanguage('nl')">NL</button>
+                    <button onclick="changeLanguage('en')">EN</button>
+                </div>
+            </div>
         </div>
-    </div>
+    </nav>
+
+    <main class="container">
+        <h1 class="page-title" data-nl="Jouw Bestelling" data-en="Your Order">Jouw Bestelling</h1>
+        <div id="cartList"></div>
+        <div class="cart-summary">
+            <h2 data-nl="Totaal:" data-en="Total:">Totaal: <span id="totalPrice">€0.00</span></h2>
+            <div style="margin-top: 20px;">
+                <button class="cta-btn" onclick="checkout()" data-nl="AFREKENEN" data-en="CHECKOUT">AFREKENEN</button>
+            </div>
+        </div>
+    </main>
     <script src="script.js"></script>
 </body>
 </html>
