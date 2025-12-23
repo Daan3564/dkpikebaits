@@ -1,23 +1,35 @@
-// Initialiseer Stripe met jouw Openbare Sleutel
+// Gebruik je openbare sleutel uit de screenshot
 const stripe = Stripe('pk_test_51ShbijDKBwjX9ElPpXBRbo4BjbScRaXuanQeKeDF50Isnyw00K8a79HvgsU3JVkewfdaai0Z1NpjV5uKXfjF6w700Mp1j02QU');
 
-// 1. Product toevoegen aan mandje
-function voegToe(id, naam, prijs) {
-    let mandje = JSON.parse(localStorage.getItem('dk_pikes_cart')) || [];
-    mandje.push({ id: id, naam: naam, prijs: prijs });
-    localStorage.setItem('dk_pikes_cart', JSON.stringify(mandje));
-    alert(naam + " is toegevoegd aan je winkelmandje!");
+// Functie om product toe te voegen
+function voegToe(priceId, naam, prijs) {
+    console.log("Toevoegen gestart voor:", naam);
+    let mandje = JSON.parse(localStorage.getItem('dk_cart')) || [];
+    
+    mandje.push({ 
+        id: priceId, 
+        naam: naam, 
+        prijs: prijs 
+    });
+    
+    localStorage.setItem('dk_cart', JSON.stringify(mandje));
+    alert(naam + " is toegevoegd aan je winkelmand!");
+    
+    // Ververs het mandje als we op de mandje-pagina zijn
+    if (document.getElementById('mandje-inhoud')) {
+        toonMandje();
+    }
 }
 
-// 2. Mandje weergeven op mandje.html
+// Functie om mandje te tonen
 function toonMandje() {
     const display = document.getElementById('mandje-inhoud');
     const totaalSectie = document.getElementById('totaal-sectie');
     const leegMelding = document.getElementById('lege-melding');
     
-    if (!display) return; // Stop als we niet op de mandje pagina zijn
+    if (!display) return;
 
-    let mandje = JSON.parse(localStorage.getItem('dk_pikes_cart')) || [];
+    let mandje = JSON.parse(localStorage.getItem('dk_cart')) || [];
 
     if (mandje.length === 0) {
         display.innerHTML = "";
@@ -30,31 +42,30 @@ function toonMandje() {
     totaalSectie.style.display = "block";
     
     display.innerHTML = mandje.map((item, index) => `
-        <div style="background: #111; padding: 15px; margin-bottom: 10px; border: 1px solid #333; display: flex; justify-content: space-between; align-items: center;">
-            <div>
-                <strong style="color: gold;">${item.naam}</strong><br>
+        <div style="display:flex; justify-content:space-between; align-items:center; background:#111; padding:15px; margin-bottom:10px; border:1px solid #333;">
+            <div style="text-align:left;">
+                <span style="color:gold; font-weight:bold;">${item.naam}</span><br>
                 <span>€ ${item.prijs.toFixed(2)}</span>
             </div>
-            <button onclick="verwijderItem(${index})" style="background: red; color: white; border: none; padding: 5px 10px; cursor: pointer; border-radius: 4px;">Verwijder</button>
+            <button onclick="verwijderItem(${index})" style="background:red; color:white; border:none; padding:5px 10px; cursor:pointer; border-radius:4px;">Verwijder</button>
         </div>
     `).join('');
 }
 
-// 3. Item verwijderen
 function verwijderItem(index) {
-    let mandje = JSON.parse(localStorage.getItem('dk_pikes_cart'));
+    let mandje = JSON.parse(localStorage.getItem('dk_cart'));
     mandje.splice(index, 1);
-    localStorage.setItem('dk_pikes_cart', JSON.stringify(mandje));
+    localStorage.setItem('dk_cart', JSON.stringify(mandje));
     toonMandje();
 }
 
-// 4. De betaling starten bij Stripe
+// Afrekenen bij Stripe met verzendkosten
 function naarKassa() {
-    let mandje = JSON.parse(localStorage.getItem('dk_pikes_cart')) || [];
-    
-    // Maak de lijst klaar voor Stripe
+    let mandje = JSON.parse(localStorage.getItem('dk_cart')) || [];
+    if (mandje.length === 0) return;
+
     const items = mandje.map(item => ({
-        price: item.id, // Dit gebruikt je prod_ ID
+        price: item.id, // Hier moet de price_... ID staan!
         quantity: 1
     }));
 
@@ -64,22 +75,12 @@ function naarKassa() {
         successUrl: window.location.origin + '/succes.html',
         cancelUrl: window.location.origin + '/mandje.html',
         shippingOptions: [
-            { shipping_rate: 'shr_1ShcPvDKBwjX9ElPl5mAZOQG' } // Jouw € 4,50 verzendkosten
+            { shipping_rate: 'shr_1ShcPvDKBwjX9ElPl5mAZOQG' } // Jouw €4,50 verzendkosten
         ],
-    }).then(function(result) {
+    }).then(result => {
         if (result.error) alert(result.error.message);
     });
 }
 
-// Hulpschermpje toggle
-function toggleHelp() {
-    const box = document.getElementById('helpBox');
-    if(box) box.style.display = box.style.display === 'block' ? 'none' : 'block';
-}
-
-// Automatisch mandje laden als de pagina opent
-window.onload = function() {
-    if (document.getElementById('mandje-inhoud')) {
-        toonMandje();
-    }
-};
+// Zorg dat het mandje direct laadt
+window.addEventListener('DOMContentLoaded', toonMandje);
