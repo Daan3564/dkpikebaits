@@ -1,22 +1,41 @@
 <!DOCTYPE html>
-<html>
+<html lang="nl">
 <head>
-    <title>Winkelmand</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://js.stripe.com/v3/"></script>
+  <meta charset="UTF-8">
+  <title>Mandje</title>
 </head>
-<body style="background:#000; color:#fff; text-align:center; font-family:sans-serif;">
-    <nav style="padding:20px;"><a href="index.html">Home</a> | <a href="producten.html">Shop</a> | <a href="mandje.html">Winkelmand</a></nav>
+<body>
 
-    <h1>JOUW MANDJE</h1>
-    <div id="mandje-inhoud" style="max-width:400px; margin:0 auto;"></div>
-    <div id="lege-melding" style="display:none;">Mandje is leeg</div>
+<h1>Winkelmand</h1>
+<div id="cart"></div>
+<button id="checkout">Afrekenen</button>
 
-    <div id="totaal-sectie" style="display:none; margin-top:20px;">
-        <p>Verzendkosten: € 4,50</p>
-        <button onclick="naarKassa()" style="background:gold; padding:20px; font-weight:bold;">AFREKENEN</button>
-    </div>
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+const stripe = Stripe("pk_test_51ShbijDKBwjX9ElPpXBRbO4BjbScRaXuaxNQeKeDF50Isnyw00K8a79HvgsU3JVkeWfdaai0Z1NpjV5uKXfjF6w700Mp1j02QU");
 
-    <script src="script.js"></script>
+const cart = JSON.parse(localStorage.getItem("cart")) || [];
+const cartDiv = document.getElementById("cart");
+
+let totaal = 0;
+cart.forEach(item => {
+  totaal += item.price * item.quantity;
+  cartDiv.innerHTML += `<p>${item.name} – €${item.price / 100}</p>`;
+});
+
+cartDiv.innerHTML += `<hr><strong>Totaal: €${totaal / 100}</strong><br>Verzendkosten: €4,50`;
+
+document.getElementById("checkout").onclick = async () => {
+  const res = await fetch("/create-checkout-session", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ items: cart })
+  });
+
+  const data = await res.json();
+  window.location.href = data.url;
+};
+</script>
+
 </body>
 </html>
