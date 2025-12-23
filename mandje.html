@@ -1,20 +1,39 @@
-<!DOCTYPE html>
-<html lang="nl">
-<head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
     <title>Winkelmandje - DK Pike Baits</title>
     <script src="https://js.stripe.com/v3/"></script>
     <script src="script.js"></script>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        .checkout-btn { 
+            background-color: #6772E5; 
+            color: white; 
+            padding: 12px 24px; 
+            border: none; 
+            border-radius: 4px; 
+            cursor: pointer; 
+            font-size: 16px; 
+        }
+        .checkout-btn:hover { background-color: #5469d4; }
+    </style>
 </head>
 <body>
     <h1>Jouw Winkelmandje</h1>
-    <p>Klik op de knop hieronder om veilig af te rekenen via Stripe.</p>
-    
-    <button onclick="checkout()" style="padding: 10px 20px; background-color: #6772E5; color: white; border: none; cursor: pointer;">
-        Afrekenen
-    </button>
-
+    <div id="cart-content">
+        </div>
+    <br>
+    <button class="checkout-btn" onclick="checkout()">Afrekenen via Stripe</button>
     <br><br>
-    <a href="producten.html">Terug naar producten</a>
+    <a href="producten.html">Terug naar de winkel</a>
+
+    <script>
+        // Check of er iets in het mandje zit om te tonen
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const display = document.getElementById('cart-content');
+        if (cart.length === 0) {
+            display.innerHTML = "<p>Je mandje is op dit moment leeg.</p>";
+        } else {
+            display.innerHTML = `<p>Er zitten ${cart.length} items in je mandje.</p>`;
+        }
+    </script>
 </body>
 </html>
