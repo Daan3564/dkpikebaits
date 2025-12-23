@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://js.stripe.com/v3/"></script>
 </head>
-<body style="background-color: #000; color: white;">
+<body style="background: #000; color: white;">
     <nav class="navbar">
         <div class="nav-container">
             <a href="index.html" class="logo"><img src="logo.png" alt="DK"></a>
@@ -19,17 +19,25 @@
         </div>
     </nav>
 
-    <div style="padding: 120px 20px; text-align: center;">
-        <h1>JOUW WINKELMAND</h1>
+    <section style="padding: 120px 20px; text-align: center;">
+        <h1 style="color: gold;">JOUW WINKELMAND</h1>
         
-        <div id="lege-melding">Je mandje is nog leeg.</div>
-        <div id="mandje-inhoud"></div>
+        <div id="mandje-inhoud" style="max-width: 500px; margin: 0 auto; text-align: left;"></div>
 
-        <div id="totaal-sectie" style="display:none; margin-top:30px; border-top:1px solid var(--gold); padding-top:20px;">
-            <h3>Verzendkosten: € 4,50</h3>
-            <button class="cta-btn" onclick="naarKassa()" style="font-size:1.5rem; padding:20px 40px;">AFREKENEN VIA IDEAL</button>
+        <div id="totaal-sectie" style="margin-top: 40px; border-top: 2px solid #333; padding-top: 20px; display: none;">
+            <p style="font-size: 1.1rem;">Verzending (Nederland): <strong>€ 4,50</strong></p>
+            <p style="font-size: 0.9rem; color: #888;">Totaalbedrag wordt berekend bij Stripe</p>
+            <br>
+            <button class="cta-btn" onclick="naarKassa()" style="font-size: 1.3rem; padding: 15px 30px; background: gold; color: black; font-weight: bold;">
+                GA NAAR AFREKENEN
+            </button>
         </div>
-    </div>
+
+        <div id="lege-melding" style="display: none; margin-top: 30px;">
+            <p>Je mandje is op dit moment leeg.</p>
+            <a href="producten.html" class="cta-btn" style="text-decoration: none;">TERUG NAAR SHOP</a>
+        </div>
+    </section>
 
     <script src="script.js"></script>
 </body>
