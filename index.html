@@ -1,11 +1,47 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-  <meta charset="UTF-8">
-  <title>Shop</title>
+    <meta charset="UTF-8">
+    <title>Mijn Webshop</title>
+    <script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
-  <h1>Welkom</h1>
-  <a href="producten.html">Ga naar producten</a>
+
+    <h1>Jouw Product</h1>
+    <p>Product ID: prod_TewHTrCF34eF03</p>
+    
+    <button id="checkout-button">Nu Kopen</button>
+
+    <div id="error-message"></div>
+
+    <script>
+        // Initialiseer Stripe met jouw publieke sleutel
+        var stripe = Stripe('pk_test_51ShbijDKBwjX9ElPpXBRbO4BjbScRaXuaxNQeKeDF50Isnyw00K8a79HvgsU3JVkeWfdaai0Z1NpjV5uKXfjF6w700Mp1j02QU');
+        var checkoutButton = document.getElementById('checkout-button');
+
+        checkoutButton.addEventListener('click', function () {
+            // Hiermee stuur je de klant naar Stripe
+            stripe.redirectToCheckout({
+                lineItems: [{
+                    // Gebruik hier de Price ID (niet de Product ID)
+                    // Let op: In Stripe moet je een 'Price' aanmaken voor je product
+                    price: 'price_HIER_JE_PRICE_ID', 
+                    quantity: 1,
+                }],
+                mode: 'payment',
+                // Waar moet de klant heen na betaling?
+                successUrl: window.location.origin + '/succes.html',
+                cancelUrl: window.location.origin + '/geannuleerd.html',
+                shippingAddressCollection: {
+                    allowedCountries: ['NL', 'BE'],
+                },
+            }).then(function (result) {
+                if (result.error) {
+                    var displayError = document.getElementById('error-message');
+                    displayError.textContent = result.error.message;
+                }
+            });
+        });
+    </script>
 </body>
 </html>
