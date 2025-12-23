@@ -1,27 +1,19 @@
-// Gebruik je openbare sleutel uit de screenshot
+// Initialiseer Stripe met je Openbare sleutel uit je screenshot
 const stripe = Stripe('pk_test_51ShbijDKBwjX9ElPpXBRbo4BjbScRaXuanQeKeDF50Isnyw00K8a79HvgsU3JVkewfdaai0Z1NpjV5uKXfjF6w700Mp1j02QU');
 
-// Functie om product toe te voegen
+// 1. Functie om product toe te voegen
 function voegToe(priceId, naam, prijs) {
-    console.log("Toevoegen gestart voor:", naam);
     let mandje = JSON.parse(localStorage.getItem('dk_cart')) || [];
-    
-    mandje.push({ 
-        id: priceId, 
-        naam: naam, 
-        prijs: prijs 
-    });
-    
+    mandje.push({ id: priceId, naam: naam, prijs: prijs });
     localStorage.setItem('dk_cart', JSON.stringify(mandje));
-    alert(naam + " is toegevoegd aan je winkelmand!");
+    alert(naam + " is toegevoegd aan je mandje!");
     
-    // Ververs het mandje als we op de mandje-pagina zijn
     if (document.getElementById('mandje-inhoud')) {
         toonMandje();
     }
 }
 
-// Functie om mandje te tonen
+// 2. Functie om het mandje te laten zien
 function toonMandje() {
     const display = document.getElementById('mandje-inhoud');
     const totaalSectie = document.getElementById('totaal-sectie');
@@ -42,16 +34,17 @@ function toonMandje() {
     totaalSectie.style.display = "block";
     
     display.innerHTML = mandje.map((item, index) => `
-        <div style="display:flex; justify-content:space-between; align-items:center; background:#111; padding:15px; margin-bottom:10px; border:1px solid #333;">
-            <div style="text-align:left;">
-                <span style="color:gold; font-weight:bold;">${item.naam}</span><br>
+        <div style="display:flex; justify-content:space-between; align-items:center; background:#111; padding:15px; margin-bottom:10px; border:1px solid #333; color:white;">
+            <div>
+                <strong style="color:#d4af37;">${item.naam}</strong><br>
                 <span>€ ${item.prijs.toFixed(2)}</span>
             </div>
-            <button onclick="verwijderItem(${index})" style="background:red; color:white; border:none; padding:5px 10px; cursor:pointer; border-radius:4px;">Verwijder</button>
+            <button onclick="verwijderItem(${index})" style="background:#ff4444; color:white; border:none; padding:5px 10px; cursor:pointer; border-radius:4px;">Verwijder</button>
         </div>
     `).join('');
 }
 
+// 3. Item verwijderen
 function verwijderItem(index) {
     let mandje = JSON.parse(localStorage.getItem('dk_cart'));
     mandje.splice(index, 1);
@@ -59,28 +52,28 @@ function verwijderItem(index) {
     toonMandje();
 }
 
-// Afrekenen bij Stripe met verzendkosten
+// 4. Naar Stripe Kassa
 function naarKassa() {
     let mandje = JSON.parse(localStorage.getItem('dk_cart')) || [];
     if (mandje.length === 0) return;
 
-    const items = mandje.map(item => ({
-        price: item.id, // Hier moet de price_... ID staan!
+    const lineItems = mandje.map(item => ({
+        price: item.id, 
         quantity: 1
     }));
 
     stripe.redirectToCheckout({
-        lineItems: items,
+        lineItems: lineItems,
         mode: 'payment',
         successUrl: window.location.origin + '/succes.html',
         cancelUrl: window.location.origin + '/mandje.html',
         shippingOptions: [
-            { shipping_rate: 'shr_1ShcPvDKBwjX9ElPl5mAZOQG' } // Jouw €4,50 verzendkosten
+            { shipping_rate: 'shr_1ShcPvDKBwjX9ElPl5mAZOQG' }
         ],
     }).then(result => {
         if (result.error) alert(result.error.message);
     });
 }
 
-// Zorg dat het mandje direct laadt
+// Zorg dat alles laadt
 window.addEventListener('DOMContentLoaded', toonMandje);
