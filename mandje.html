@@ -1,20 +1,20 @@
-const stripe = Stripe('pk_test_51ShbijDKBwjX9ElPpXBRbO4BjbScRaXuaxNQeKeDF50Isnyw00K8a79HvgsU3JVkeWfdaai0Z1NpjV5uKXfjF6w700Mp1j02QU');
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Winkelmandje - DK Pike Baits</title>
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="script.js"></script>
+</head>
+<body>
+    <h1>Jouw Winkelmandje</h1>
+    <p>Klik op de knop hieronder om veilig af te rekenen via Stripe.</p>
+    
+    <button onclick="checkout()" style="padding: 10px 20px; background-color: #6772E5; color: white; border: none; cursor: pointer;">
+        Afrekenen
+    </button>
 
-async function checkout() {
-    const savedCart = JSON.parse(localStorage.getItem('cart'));
-
-    // We sturen de klant door naar Stripe Checkout
-    const { error } = await stripe.redirectToCheckout({
-        lineItems: savedCart,
-        mode: 'payment',
-        successUrl: 'https://jouwdomein.nl/success.html',
-        cancelUrl: 'https://jouwdomein.nl/cancel.html',
-        shippingAddressCollection: {
-            allowedCountries: ['NL', 'BE'],
-        },
-    });
-
-    if (error) {
-        console.error("Stripe error:", error.message);
-    }
-}
+    <br><br>
+    <a href="producten.html">Terug naar producten</a>
+</body>
+</html>
