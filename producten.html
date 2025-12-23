@@ -1,28 +1,18 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>DK PIKEBAITS | Shop</title>
+    <title>Shop</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://js.stripe.com/v3/"></script>
 </head>
-<body style="background:#000; color:white; font-family:sans-serif; text-align:center;">
-    <nav style="padding:20px; border-bottom:1px solid #333;">
-        <a href="index.html" style="color:white; margin:15px; text-decoration:none;">Home</a>
-        <a href="producten.html" style="color:white; margin:15px; text-decoration:none;">Shop</a>
-        <a href="mandje.html" style="color:white; margin:15px; text-decoration:none;">Winkelmand</a>
-    </nav>
+<body style="background:#000; color:#fff; text-align:center; font-family:sans-serif;">
+    <nav style="padding:20px;"><a href="index.html">Home</a> | <a href="producten.html">Shop</a> | <a href="mandje.html">Winkelmand</a></nav>
 
-    <h1 style="margin-top:50px;">SHOP PIKE BAITS</h1>
-    
-    <div style="background:#111; padding:30px; border-radius:15px; display:inline-block; border:1px solid #333;">
-        <img src="logo.png" alt="DK Original" style="width:200px; margin-bottom:15px;">
+    <h1>PRODUCTEN</h1>
+    <div style="border:1px solid #333; padding:20px; display:inline-block;">
         <h2>DK Original</h2>
-        <p style="color:gold; font-size:1.5rem; margin:10px 0;">€ 16,00</p>
-        <button class="cta-btn" onclick="voegToe('prod_TewHTrCF34eF03', 'DK Original', 16.00)" 
-                style="background:gold; color:black; border:none; padding:15px 30px; font-weight:bold; cursor:pointer; border-radius:5px;">
-            IN WINKELMAND
-        </button>
+        <p>€ 16,00</p>
+        <button onclick="voegToe('price_VUL_HIER_JE_PRICE_ID_IN', 'DK Original', 16.00)" style="background:gold; padding:10px;">IN WINKELMAND</button>
     </div>
 
     <script src="script.js"></script>
